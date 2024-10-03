@@ -1,3 +1,11 @@
+html{
+  background-color: darkgrey;
+}
+
+li{
+  list-style-type: none;
+}
+
 .grid-data-input {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -8,11 +16,11 @@ form {
   padding: 10px;
   border-radius: 20px;
   width: 80%;
-}
+  height: auto;}
 
 input {
-  width: 50%;
-  padding: 5px;
+  width: auto;
+  padding: 0,015rem;
   border-radius: 10px;
   border: solid 1px black;
 }
@@ -22,11 +30,31 @@ button {
   border-radius: 20px;
   border: solid 1px black;
   background-color: transparent;
-  width: 20%;
+  width: 50%;
   transition: 0.4s;
+  margin-top: 8px;
 }
 
 button:hover {
   background-color: lightgray;
   cursor: pointer;
 }
+
+p {
+  font-size: 1rem;
+  margin: 0.2rem;
+}
+
+.cards{
+  display: grid;
+  justify-items: center;
+  grid-template-columns: repeat(3,1fr);
+
+  div{
+    border: solid 1px black;
+    padding: 10px;
+  }
+}
+ 
+
+
