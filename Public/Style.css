@@ -1,0 +1,32 @@
+.grid-data-input {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+form {
+  border: solid 1px gray;
+  padding: 10px;
+  border-radius: 20px;
+  width: 80%;
+}
+
+input {
+  width: 50%;
+  padding: 5px;
+  border-radius: 10px;
+  border: solid 1px black;
+}
+
+button {
+  padding: 5px;
+  border-radius: 20px;
+  border: solid 1px black;
+  background-color: transparent;
+  width: 20%;
+  transition: 0.4s;
+}
+
+button:hover {
+  background-color: lightgray;
+  cursor: pointer;
+}
