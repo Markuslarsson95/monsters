@@ -119,8 +119,13 @@ renderMonsters = () => {
         e.preventDefault();
         const formData = state.getFormData();
         console.log(formData);
+        const updatedData = {};
+        fields.forEach((field) => {
+          // Tar bort "-input" för att matcha nycklar i objektet
+          updatedData[field.replace("-input", "")] = formData[field]; // Sätter rätt nyckel och värde från formData
+        });
 
-        formData.forEach((data) => {});
+        state.monsters[index] = updatedData;
       });
     });
   });
