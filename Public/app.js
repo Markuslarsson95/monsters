@@ -71,14 +71,12 @@ const state = {
     document.querySelector("#color-input").value = "Blue";
   },
 
+  //funktion för att hämta inputfältens data
   getFormData: () => {
-    const values = [];
-    for (const field of fields) {
-      values.push(document.querySelector(`#${field}`).value);
-    }
-    return values;
+    return fields.map((field) => document.querySelector(`#${field}`).value);
   },
 
+  //funktion för att fylla i inputfälten med data
   populateForm: (monster) => {
     fields.forEach((field) => {
       document.querySelector(`#${field}`).value =
@@ -87,7 +85,7 @@ const state = {
   },
 };
 
-// Event listener för att redigera varje monster
+//renderAll-funktion
 const renderMonsters = () => {
   const card = document.querySelector(".cards");
   card.innerHTML = "";
@@ -106,35 +104,41 @@ const renderMonsters = () => {
     `;
     card.appendChild(monster);
   });
-
-  document.querySelectorAll(".edit").forEach((button) => {
-    button.addEventListener("click", () => {
-      const index = button.getAttribute("data-index");
-      const monster = state.monsters[index];
-      state.populateForm(monster);
-
-      saveButton.setAttribute("data-index", index);
-      saveButton.style.display = "inline-block"; // Gör knappen synlig
-    });
-  });
 };
 
-// Start rendering
+// initial render
 renderMonsters();
 
-const editButtons = document.querySelectorAll("#edit");
-editButtons.forEach((button) => {
-  button.addEventListener("click", () => {
-    //populera form med aktuellt monster
+//app
 
-    const index = button.getAttribute("data-index");
-    console.log(index);
+//lyssnare för Add Monster
+document.querySelector("#submit").addEventListener("click", (e) => {
+  e.preventDefault();
 
-    const monster = state.monsters[index];
+  const formData = state.getFormData();
 
-    state.populateForm(monster);
-  });
+  state.addMonster(...formData);
+
+  state.clearForm();
+  renderMonsters();
 });
+
+//lyssnare för edit
+const cardContainer = document.querySelector(".cards");
+
+//hur funkar det med event.target osv.?
+cardContainer.addEventListener("click", (event) => {
+  if (event.target && event.target.classList.contains("edit")) {
+    const index = event.target.getAttribute("data-index");
+    const monster = state.monsters[index];
+    state.populateForm(monster);
+
+    saveButton.setAttribute("data-index", index);
+    saveButton.style.display = "inline-block"; // Gör knappen synlig
+  }
+});
+
+//lyssnare saveButton
 saveButton.addEventListener("click", (e) => {
   e.preventDefault();
   const index = saveButton.getAttribute("data-index");
@@ -143,33 +147,13 @@ saveButton.addEventListener("click", (e) => {
   const updatedMonster = {}; // Skapa ett tomt objekt för att lagra de uppdaterade värdena
 
   fields.forEach((field, i) => {
-    updatedMonster[field.replace("-input", "")] = formData[i]; // Omvandla till nummer om det är numeriskt
+    updatedMonster[field.replace("-input", "")] = formData[i];
   });
 
   state.monsters[index] = updatedMonster; // Tilldela det uppdaterade monstret till rätt index
 
   state.clearForm();
   saveButton.removeAttribute("data-index");
+  saveButton.style.display = "none";
   renderMonsters(); // Rendera om listan
-});
-
-//app
-
-renderMonsters();
-
-document.querySelector("#submit").addEventListener("click", (e) => {
-  e.preventDefault();
-
-  const type = document.querySelector("#type-input").value;
-  const name = document.querySelector("#name-input").value;
-  const color = document.querySelector("#color-input").value;
-  const size = document.querySelector("#size-input").value;
-  const eyes = document.querySelector("#eyes-input").value;
-  const viciousness = document.querySelector("#viciousness-input").value;
-  const head = document.querySelector("#head-input").value;
-
-  state.addMonster(type, name, color, size, eyes, viciousness, head);
-
-  state.clearForm();
-  renderMonsters();
 });
