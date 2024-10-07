@@ -1,157 +1,197 @@
-// state- Skapa array med objekt(monster)
-const state = {
-  select: [
+// En global array för att lagra ID:n för alla inputfält
+const fields = [
+  "type-input",
+  "name-input",
+  "color-input",
+  "size-input",
+  "eyes-input",
+  "viciousness-input",
+  "head-input",
+];
+
+// Application state - Array för att lagra monster-objekt
+// appState håller alla monsterobjekt som dynamiskt läggs till eller uppdateras
+const appState = {
+  monsters: [
     {
-      type: "Maritime Monster",
-      name: "Kraken",
-      color: "blue",
-      size: 50,
-      eyeNum: 256,
-      viciousness: 100,
-      headNum: 4,
+      type: "Maritime Monster", // Typ av monster (kategori)
+      name: "Kraken", // Monstrets namn
+      color: "blue", // Monstrets färg
+      size: 50, // Monstrets storlek
+      eyes: 256, // Antal ögon
+      viciousness: 100, // Grad av farlighet
+      heads: 4, // Antal huvuden
     },
     {
       type: "Terrestrial Beast",
       name: "Mudfang",
-      color: "Red",
+      color: "red",
       size: 80,
-      eyeNum: 2,
+      eyes: 2,
       viciousness: 10,
-      headNum: 700,
+      heads: 700,
     },
     {
       type: "Winged Horror",
       name: "Grimpflap",
       color: "black",
       size: 30,
-      eyeNum: 5,
+      eyes: 5,
       viciousness: 51,
-      headNum: 1,
+      heads: 1,
     },
   ],
 
-  //add Monster
-  addMonster: function (type, name, color, size, eyeNum, viciousness, headNum) {
-    this.select.push({ type, name, color, size, eyeNum, viciousness, headNum });
-  },
-
-  //edit monster
-  editMonster: function (
-    type,
-    name,
-    color,
-    size,
-    eyeNum,
-    viciousness,
-    headNum
-  ) {
-    this.select.push({ type, name, color, size, eyeNum, viciousness, headNum });
+  // Funktion för att lägga till ett nytt monster i arrayen monsters
+  addMonster: () => {
+    const newMonster = {};
+    fields.forEach((field) => {
+      newMonster[field.replace("-input", "")] = document.querySelector(
+        `#${field}`
+      ).value;
+    });
+    appState.monsters.push(newMonster);
   },
 };
-
-const resetForm = () => {
-  // Reset form and button text
-  document.querySelector("#type-input").value = "";
-  document.querySelector("#name-input").value = "";
-  document.querySelector("#color-input").value = "";
-  document.querySelector("#size-input").value = "";
-  document.querySelector("#eyes-input").value = "";
-  document.querySelector("#viciousness-input").value = "";
-  document.querySelector("#head-input").value = "";
+// Funktion för att hämta värden från alla inputfält i formuläret
+const getFormData = () => {
+  const values = {}; // Ett objekt för att lagra inputvärdena
+  fields.forEach((field) => {
+    // Fyll objektet med värden från formuläret. Sparar ex color-input: blue. Som en nyckel och dess inmatade värde
+    values[field] = document.querySelector(`#${field}`).value;
+  });
+  return values; // Returnera värdena som ett objekt
 };
 
-//render()
-const render = () => {
-  const card = document.querySelector(".cards");
-  card.innerHTML = "";
+// Funktion för att fylla formuläret med data från ett monster
+const populateForm = (monster) => {
+  // Iterera genom fälten och sätt värden i formuläret baserat på monster-data
+  fields.forEach((field) => {
+    document.querySelector(`#${field}`).value =
+      monster[field.replace("-input", "")]; // Tar bort "-input" för att matcha med objekt-nycklar
+  });
+};
 
-  for (const m of state.select) {
-    const monster = document.createElement("div");
+// Funktion för att återställa formulärfälten till tomma
+const clearForm = () => {
+  // Loop genom varje fält och töm deras värde
+  fields.forEach((field) => {
+    document.querySelector(`#${field}`).value = "";
+  });
+};
 
-    monster.innerHTML = `<h2> ${m.name} </h2><p> Type: ${m.type}. <p> Color: ${
-      m.color
-    }. <p> Size: ${m.size}. <p> Eye Amount: ${m.eyeNum}. <p> Viciousness: ${
-      m.viciousness
-    }<p>Head Amount: ${
-      m.headNum
-    } <button type="submit" id="edit" data-index="${state.select.indexOf(
-      m
-    )}">Edit</button>`;
-
-    card.appendChild(monster);
+// Funktion för att skrolla till ett specifikt monsterkort efter att det har lagts till eller redigerats
+const scrollToMonsterCard = (index) => {
+  const monsterCard = document.querySelector(`#monster-${index}`); // Hitta rätt monsterkort genom dess ID
+  if (monsterCard) {
+    monsterCard.scrollIntoView({ behavior: "smooth", block: "start" }); // Skrolla till rätt monsterkort
   }
 };
-render();
 
-//app
+// Funktion för att rendera alla monsterkort på sidan
+// Loopar genom arrayen monsters i appState och skapar HTML för varje monster
+const renderMonsters = () => {
+  const cardContainer = document.querySelector(".cards"); // Hämtar containern för korten
+  cardContainer.innerHTML = ""; // Tömmer kortcontainern
+
+  // Loopar genom alla monster och skapar ett kort för varje
+  appState.monsters.forEach((monster, index) => {
+    const monsterCard = document.createElement("div"); // Skapar en ny div för monsterkortet
+    monsterCard.id = `monster-${index}`; // Tilldelar ett ID till div:en för skrollning
+
+    // Skapar HTML-strukturen för varje monsters detaljer
+    let monsterDetails = `<h2>${monster.name}</h2>`;
+    Object.entries(monster).forEach(([key, value]) => {
+      // Lägger till varje monster-egenskap som ett stycke
+      monsterDetails += `<p>${key.charAt(0).toUpperCase() + key.slice(1)}: ${value}</p>`;
+    });
+
+    // Lägger till en redigeringsknapp för varje kort
+    monsterDetails += `<button type="button" id="edit" data-index="${index}">Edit</button>`;
+    monsterCard.innerHTML = monsterDetails; // Sätter HTML-innehållet för monsterkortet
+
+    cardContainer.appendChild(monsterCard); // Lägger till monsterkortet i containern
+  });
+};
+
+// Initial render av alla monsterkort
+renderMonsters();
+
+// Event listener för att lägga till ett nytt monster när "Add Monster"-knappen trycks
 document.querySelector("#submit").addEventListener("click", (e) => {
-  e.preventDefault();
+  e.preventDefault(); // Förhindrar den vanliga formulärinlämningen
 
-  const type = document.querySelector("#type-input").value;
-  const name = document.querySelector("#name-input").value;
-  const color = document.querySelector("#color-input").value;
-  const size = document.querySelector("#size-input").value;
-  const eyeNum = document.querySelector("#eyes-input").value;
-  const viciousness = document.querySelector("#viciousness-input").value;
-  const headNum = document.querySelector("#head-input").value;
+  const formData = getFormData(); // Hämtar data från formuläret
+  const monsterData = [];
 
-  state.addMonster(type, name, color, size, eyeNum, viciousness, headNum);
+  fields.forEach((field) => {
+    monsterData.push(formData[field]);
+  });
 
-  resetForm();
-  render();
+  appState.addMonster();
+
+  const newIndex = appState.monsters.length - 1; // Hämtar indexet för det nyligen tillagda monstret
+
+  clearForm(); // Tömmer formuläret efter inlämning
+  renderMonsters(); // Renderar om alla monster med det nya monstret
+  scrollToMonsterCard(newIndex); // Skrollar till det nyligen tillagda monsterkortet
 });
 
-// Add event listener to edit buttons
-const editButtons = document.querySelectorAll("#edit");
-editButtons.forEach((button) => {
-  button.addEventListener("click", (e) => {
-    const index = button.getAttribute("data-index");
-    const monster = state.select[index];
+// Event listener för att redigera ett monster när "Edit"-knappen trycks
+document.addEventListener("click", (e) => {
+  if (e.target && e.target.id === "edit") {
+    // Skrolla till toppen när ett monster redigeras
+    window.scrollTo({ top: 0, behavior: "smooth" });
 
-    // Fill form with monster values
-    document.querySelector("#type-input").value = monster.type;
-    document.querySelector("#name-input").value = monster.name;
-    document.querySelector("#color-input").value = monster.color;
-    document.querySelector("#size-input").value = monster.size;
-    document.querySelector("#eyes-input").value = monster.eyeNum;
-    document.querySelector("#viciousness-input").value = monster.viciousness;
-    document.querySelector("#head-input").value = monster.headNum;
+    const index = e.target.getAttribute("data-index"); // Hämtar indexet för monstret som ska redigeras
+    const monster = appState.monsters[index]; // Hämtar rätt monster från appState
 
-    // Update button text to "Save Monster"
-    document.getElementById("submit").style.visibility = "hidden";
+    populateForm(monster); // Fyller formuläret med monsterdata
 
-    const saveButton = document.createElement("button");
-    saveButton.textContent = "Save Monster";
-    document.querySelector("#submit").parentNode.appendChild(saveButton);
+    // Skapar en "Save"-knapp om den inte redan finns
+    let saveButton = document.querySelector("#save-button");
+    if (!saveButton) {
+      saveButton = document.createElement("button");
+      saveButton.textContent = "Save Monster";
+      saveButton.id = "save-button";
+      document.querySelector("#submit").parentNode.appendChild(saveButton); // Lägger till save-knappen
+    }
 
-    // Add cancel button
-    const cancelButton = document.createElement("button");
-    cancelButton.textContent = "Cancel";
-    cancelButton.addEventListener("click", (e) => {
-      resetForm();
-      saveButton.remove();
-      cancelButton.remove();
-    });
-    document.querySelector("#submit").parentNode.appendChild(cancelButton);
+    // Event listener för att spara ändringarna
+    saveButton.onclick = (e) => {
+      e.preventDefault(); // Förhindrar den vanliga knappfunktionen
 
-    // Update submit event listener to save monster
-    saveButton.addEventListener("click", (e) => {
-      e.preventDefault();
-      const updatedMonster = {
-        type: document.querySelector("#type-input").value,
-        name: document.querySelector("#name-input").value,
-        color: document.querySelector("#color-input").value,
-        size: document.querySelector("#size-input").value,
-        eyeNum: document.querySelector("#eyes-input").value,
-        viciousness: document.querySelector("#viciousness-input").value,
-        headNum: document.querySelector("#head-input").value,
+      const updatedMonster = getFormData(); // Hämtar uppdaterad data från formuläret
+      const updatedData = {};
+
+      fields.forEach((field) => {
+        const key = field.replace("-input", ""); // Tar bort "-input" för att matcha nycklar i objektet
+        updatedData[key] = updatedMonster[field]; // Sätter rätt nyckel och värde från updatedMonster
+      });
+
+      appState.monsters[index] = updatedData;
+
+      clearForm(); // Tömmer formuläret efter sparandet
+      saveButton.remove(); // Tar bort save-knappen efter sparandet
+      document.querySelector("#cancel-button").remove(); // Tar bort cancel-knappen
+      renderMonsters(); // Renderar om den uppdaterade monsterlistan
+      scrollToMonsterCard(index); // Skrollar till det uppdaterade monsterkortet
+    };
+
+    // Skapar en cancel-knapp om den inte redan finns
+    let cancelButton = document.querySelector("#cancel-button");
+    if (!cancelButton) {
+      cancelButton = document.createElement("button");
+      cancelButton.textContent = "Cancel";
+      cancelButton.id = "cancel-button";
+      document.querySelector("#submit").parentNode.appendChild(cancelButton); // Lägger till cancel-knappen
+
+      // Event listener för att avbryta redigeringen
+      cancelButton.onclick = () => {
+        clearForm(); // Återställer formulärfälten
+        saveButton.remove(); // Tar bort save-knappen
+        cancelButton.remove(); // Tar bort cancel-knappen
       };
-      state.select[index] = updatedMonster;
-      resetForm();
-      saveButton.remove();
-      cancelButton.remove();
-      document.getElementById("submit").style.visibility = "visible";
-      render();
-    });
-  });
+    }
+  }
 });
