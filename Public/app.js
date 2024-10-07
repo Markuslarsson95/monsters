@@ -1,3 +1,13 @@
+const fields = [
+  "type-input",
+  "name-input",
+  "color-input",
+  "size-input",
+  "eyes-input",
+  "viciousness-input",
+  "head-input",
+];
+
 // state- Skapa array med objekt(monster)
 const state = {
   select: [
@@ -47,17 +57,27 @@ const state = {
   ) {
     this.select.push({ type, name, color, size, eyeNum, viciousness, headNum });
   },
-};
 
-const resetForm = () => {
-  // Reset form and button text
-  document.querySelector("#type-input").value = "";
-  document.querySelector("#name-input").value = "";
-  document.querySelector("#color-input").value = "";
-  document.querySelector("#size-input").value = "";
-  document.querySelector("#eyes-input").value = "";
-  document.querySelector("#viciousness-input").value = "";
-  document.querySelector("#head-input").value = "";
+  //funktion för att rensa inputfälten i formen
+  clearForm: () => {
+    fields.forEach((field) => {
+      document.querySelector(`#${field}`).value = "";
+    });
+    document.querySelector("#type-input").value = "Maritime Monster";
+    document.querySelector("#color-input").value = "Blue";
+  },
+
+  getFormData: () => {
+    const values = [];
+    for (const field of fields) {
+      values.push(document.querySelector(`#${field}`).value);
+    }
+    return values;
+  },
+
+  populateForm: (monster) => {
+    monster = {};
+  },
 };
 
 //render()
@@ -99,6 +119,6 @@ document.querySelector("#submit").addEventListener("click", (e) => {
 
   state.addMonster(type, name, color, size, eyeNum, viciousness, headNum);
 
-  resetForm();
+  state.clearForm();
   renderMonsters();
 });
