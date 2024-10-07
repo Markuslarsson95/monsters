@@ -61,7 +61,7 @@ const resetForm = () => {
 };
 
 //render()
-const render = () => {
+renderMonsters = () => {
   const card = document.querySelector(".cards");
   card.innerHTML = "";
 
@@ -81,9 +81,11 @@ const render = () => {
     card.appendChild(monster);
   }
 };
-render();
 
 //app
+
+renderMonsters();
+
 document.querySelector("#submit").addEventListener("click", (e) => {
   e.preventDefault();
 
@@ -98,60 +100,5 @@ document.querySelector("#submit").addEventListener("click", (e) => {
   state.addMonster(type, name, color, size, eyeNum, viciousness, headNum);
 
   resetForm();
-  render();
-});
-
-// Add event listener to edit buttons
-const editButtons = document.querySelectorAll("#edit");
-editButtons.forEach((button) => {
-  button.addEventListener("click", (e) => {
-    const index = button.getAttribute("data-index");
-    const monster = state.select[index];
-
-    // Fill form with monster values
-    document.querySelector("#type-input").value = monster.type;
-    document.querySelector("#name-input").value = monster.name;
-    document.querySelector("#color-input").value = monster.color;
-    document.querySelector("#size-input").value = monster.size;
-    document.querySelector("#eyes-input").value = monster.eyeNum;
-    document.querySelector("#viciousness-input").value = monster.viciousness;
-    document.querySelector("#head-input").value = monster.headNum;
-
-    // Update button text to "Save Monster"
-    document.getElementById("submit").style.visibility = "hidden";
-
-    const saveButton = document.createElement("button");
-    saveButton.textContent = "Save Monster";
-    document.querySelector("#submit").parentNode.appendChild(saveButton);
-
-    // Add cancel button
-    const cancelButton = document.createElement("button");
-    cancelButton.textContent = "Cancel";
-    cancelButton.addEventListener("click", (e) => {
-      resetForm();
-      saveButton.remove();
-      cancelButton.remove();
-    });
-    document.querySelector("#submit").parentNode.appendChild(cancelButton);
-
-    // Update submit event listener to save monster
-    saveButton.addEventListener("click", (e) => {
-      e.preventDefault();
-      const updatedMonster = {
-        type: document.querySelector("#type-input").value,
-        name: document.querySelector("#name-input").value,
-        color: document.querySelector("#color-input").value,
-        size: document.querySelector("#size-input").value,
-        eyeNum: document.querySelector("#eyes-input").value,
-        viciousness: document.querySelector("#viciousness-input").value,
-        headNum: document.querySelector("#head-input").value,
-      };
-      state.select[index] = updatedMonster;
-      resetForm();
-      saveButton.remove();
-      cancelButton.remove();
-      document.getElementById("submit").style.visibility = "visible";
-      render();
-    });
-  });
+  renderMonsters();
 });
