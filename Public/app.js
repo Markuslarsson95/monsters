@@ -138,6 +138,7 @@ cardContainer.addEventListener("click", (event) => {
   }
 });
 
+//lyssnare saveButton
 saveButton.addEventListener("click", (e) => {
   e.preventDefault();
   const index = saveButton.getAttribute("data-index");
