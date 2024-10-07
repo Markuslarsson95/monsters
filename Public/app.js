@@ -1,3 +1,12 @@
+// Deklarera Save-knappen globalt
+let saveButton = document.querySelector("#save-monster");
+if (!saveButton) {
+  saveButton = document.createElement("button");
+  saveButton.id = "save-monster";
+  saveButton.textContent = "Save Monster";
+  document.querySelector("#add-form").appendChild(saveButton);
+}
+
 const fields = [
   "type-input",
   "name-input",
@@ -78,58 +87,71 @@ const state = {
   },
 };
 
-//render()
-renderMonsters = () => {
+// Event listener för att redigera varje monster
+const renderMonsters = () => {
   const card = document.querySelector(".cards");
   card.innerHTML = "";
 
-  for (const m of state.monsters) {
+  state.monsters.forEach((m, index) => {
     const monster = document.createElement("div");
-
-    monster.innerHTML = `<h2> ${m.name} </h2><p> Type: ${m.type}</p> <p> Color: ${
-      m.color
-    }</p><p> Size: ${m.size}</p> <p> Eye Amount: ${m.eyes}</p> <p> Viciousness: ${
-      m.viciousness
-    }</p><p>Head Amount: ${
-      m.head
-    }</p> <p><button type="submit" id="edit" data-index="${state.monsters.indexOf(
-      m
-    )}">Edit</button></p>`;
-
+    monster.innerHTML = `
+      <h2>${m.name}</h2>
+      <p>Type: ${m.type}</p>
+      <p>Color: ${m.color}</p>
+      <p>Size: ${m.size}</p>
+      <p>Eye Amount: ${m.eyes}</p>
+      <p>Viciousness: ${m.viciousness}</p>
+      <p>Head Amount: ${m.head}</p>
+      <button type="button" class="edit" data-index="${index}">Edit</button>
+    `;
     card.appendChild(monster);
-  }
+  });
 
-  const editButtons = document.querySelectorAll("#edit");
-  editButtons.forEach((button) => {
+  document.querySelectorAll(".edit").forEach((button) => {
     button.addEventListener("click", () => {
-      //populera form med aktuellt monster
-
       const index = button.getAttribute("data-index");
-      console.log(index);
-
       const monster = state.monsters[index];
-
       state.populateForm(monster);
 
-      const saveButton = document.createElement("button");
-      saveButton.textContent = "Save Monster";
-      document.querySelector("#add-form").appendChild(saveButton);
-
-      saveButton.addEventListener("click", (e) => {
-        e.preventDefault();
-        const formData = state.getFormData();
-        console.log(formData);
-        const updatedData = {};
-        fields.forEach((field) => {
-          // Tar bort "-input" för att matcha nycklar i objektet
-          updatedData[field.replace("-input", "")] = formData[field]; // Sätter rätt nyckel och värde från formData
-        });
-
-        state.monsters[index] = updatedData;
-      });
+      saveButton.setAttribute("data-index", index);
+      saveButton.style.display = "inline-block"; // Gör knappen synlig
     });
   });
 };
+
+// Start rendering
+renderMonsters();
+
+const editButtons = document.querySelectorAll("#edit");
+editButtons.forEach((button) => {
+  button.addEventListener("click", () => {
+    //populera form med aktuellt monster
+
+    const index = button.getAttribute("data-index");
+    console.log(index);
+
+    const monster = state.monsters[index];
+
+    state.populateForm(monster);
+  });
+});
+saveButton.addEventListener("click", (e) => {
+  e.preventDefault();
+  const index = saveButton.getAttribute("data-index");
+  const formData = state.getFormData();
+
+  const updatedMonster = {}; // Skapa ett tomt objekt för att lagra de uppdaterade värdena
+
+  fields.forEach((field, i) => {
+    updatedMonster[field.replace("-input", "")] = formData[i]; // Omvandla till nummer om det är numeriskt
+  });
+
+  state.monsters[index] = updatedMonster; // Tilldela det uppdaterade monstret till rätt index
+
+  state.clearForm();
+  saveButton.removeAttribute("data-index");
+  renderMonsters(); // Rendera om listan
+});
 
 //app
 
