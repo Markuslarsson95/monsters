@@ -75,8 +75,19 @@ const state = {
     return values;
   },
 
+  /*   // Funktion för att fylla formuläret med data från ett monster
+const populateForm = (monster) => {
+  // Iterera genom fälten och sätt värden i formuläret baserat på monster-data
+  fields.forEach((field) => {
+    document.querySelector(`#${field}`).value =
+      monster[field.replace("-input", "")]; // Tar bort "-input" för att matcha med objekt-nycklar
+  }); */
+
   populateForm: (monster) => {
-    monster = {};
+    fields.forEach((field) => {
+      document.querySelector(`#${field}`).value =
+        monster[field.replace("-input", "")];
+    });
   },
 };
 
@@ -119,6 +130,17 @@ document.querySelector("#submit").addEventListener("click", (e) => {
 
   state.addMonster(type, name, color, size, eyeNum, viciousness, headNum);
 
-  state.clearForm();
+  const abbamonster = {
+    type: "Maritime Monster",
+    name: "Janne",
+    color: "Red",
+    size: 7878,
+    eyes: 4545,
+    viciousness: 4343,
+    head: 98989,
+  };
+
+  state.populateForm(abbamonster);
+  // state.clearForm();
   renderMonsters();
 });
