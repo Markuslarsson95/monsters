@@ -39,11 +39,12 @@ const state = {
 //render()
 const render = () => {
   const card = document.querySelector(".cards");
+  card.innerHTML = "";
 
   for (const m of state.select) {
     const monster = document.createElement("div");
 
-    monster.innerHTML = `<h2> ${m.name} </h2>.<p> Type: ${m.type}. <p> Color: ${m.color}. <p> Size: ${m.size}. <p> Eye Amount: ${m.eyeNum}. <p> Viciousness: ${m.viciousness}  <p>  Head Amount: ${m.headNum}   `;
+    monster.innerHTML = `<h2> ${m.name} </h2><p> Type: ${m.type}. <p> Color: ${m.color}. <p> Size: ${m.size}. <p> Eye Amount: ${m.eyeNum}. <p> Viciousness: ${m.viciousness}  <p>  Head Amount: ${m.headNum}   `;
 
     card.appendChild(monster);
   }
@@ -51,3 +52,17 @@ const render = () => {
 render();
 
 //app
+document.querySelector("#submit").addEventListener("click", (e) => {
+  e.preventDefault();
+
+  const type = document.querySelector("#type-input").value;
+  const name = document.querySelector("#name-input").value;
+  const color = document.querySelector("#color-input").value;
+  const size = document.querySelector("#size-input").value;
+  const eyeNum = document.querySelector("#eyes-input").value;
+  const viciousness = document.querySelector("#viciousness-input").value;
+  const headNum = document.querySelector("#head-input").value;
+
+  state.addMonster(type, name, color, size, eyeNum, viciousness, headNum);
+  render();
+});
