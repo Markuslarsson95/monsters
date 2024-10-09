@@ -94,12 +94,12 @@ const state = {
 };
 
 const renderMonsterOptions = () => {
-  const selects = [];
-  selects.push(document.querySelector("#type-input"));
-  selects.push(document.querySelector("#type-select"));
-  selects.forEach((select) => {
+  const monsterSelects = [
+    document.querySelector("#type-input"),
+    document.querySelector("#type-select"),
+  ];
+  monsterSelects.forEach((select) => {
     select.innerHTML = "";
-
     monsterOptions.forEach((option) => {
       const optionElement = document.createElement("option");
       optionElement.value = option;
@@ -110,14 +110,13 @@ const renderMonsterOptions = () => {
 };
 
 const renderColorOptions = () => {
-  const select = document.querySelector("#color-input");
-  select.innerHTML = "";
-
-  colorOptions.forEach((option) => {
+  const colorSelect = document.querySelector("#color-input");
+  colorSelect.innerHTML = "";
+  colorOptions.forEach((color) => {
     const optionElement = document.createElement("option");
-    optionElement.value = option;
-    optionElement.textContent = option;
-    select.appendChild(optionElement);
+    optionElement.value = color;
+    optionElement.textContent = color;
+    colorSelect.appendChild(optionElement);
   });
 };
 
