@@ -5,6 +5,7 @@ if (!saveButton) {
   saveButton.id = "save-monster";
   saveButton.textContent = "Save Monster";
   document.querySelector("#add-form").appendChild(saveButton);
+  saveButton.style.display = "none";
 }
 
 const monsterOptions = [
@@ -75,13 +76,18 @@ const state = {
     fields.forEach((field) => {
       document.querySelector(`#${field}`).value = "";
     });
-    document.querySelector("#type-input").value = "Maritime Monster";
-    document.querySelector("#color-input").value = "Blue";
+    document.querySelector("#type-input").value = monsterOptions[0];
+    document.querySelector("#color-input").value = colorOptions[0];
   },
 
-  //funktion för att hämta inputfältens data
+  //funktion för att hämta data från inputfälten
   getFormData: () => {
-    return fields.map((field) => document.querySelector(`#${field}`).value);
+    const formData = [];
+    fields.forEach((field) => {
+      const value = document.querySelector(`#${field}`).value;
+      formData.push(value);
+    });
+    return formData;
   },
 
   //funktion för att fylla i inputfälten med data
@@ -146,10 +152,9 @@ const renderMonsters = () => {
   });
 };
 
+// app
 // initial render
 renderMonsters();
-
-//app
 
 //lyssnare för Add Monster
 document.querySelector("#submit").addEventListener("click", (e) => {
@@ -186,8 +191,8 @@ saveButton.addEventListener("click", (e) => {
 
   const updatedMonster = {}; // Skapa ett tomt objekt för att lagra de uppdaterade värdena
 
-  fields.forEach((field, i) => {
-    updatedMonster[field.replace("-input", "")] = formData[i];
+  fields.forEach((field, inputValue) => {
+    updatedMonster[field.replace("-input", "")] = formData[inputValue];
   });
 
   state.monsters[index] = updatedMonster; // Tilldela det uppdaterade monstret till rätt index
