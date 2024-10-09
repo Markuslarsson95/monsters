@@ -242,6 +242,9 @@ document.querySelector("#submit").addEventListener("click", (e) => {
 
   state.clearForm();
   renderMonsters();
+
+  const scrollHeight = document.body.scrollHeight;
+  window.scrollTo(0, scrollHeight);
 });
 
 //lyssnare för edit
@@ -257,6 +260,7 @@ cardContainer.addEventListener("click", (event) => {
     saveButton.setAttribute("data-index", index);
     saveButton.style.display = "inline-block"; // Gör knappen synlig
   }
+  window.scrollTo(0, 0);
 });
 
 //lyssnare saveButton

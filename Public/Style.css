@@ -121,6 +121,21 @@ p {
       width: 80%;
     }
   }
+
+  footer {
+    h1 {
+      font-size: 25px;
+    }
+    li {
+      font-size: 15px;
+    }
+  }
+  header {
+    h1 {
+      font-size: 20px;
+      padding: 10px;
+    }
+  }
 }
 
 @media (width <= 535px) {
