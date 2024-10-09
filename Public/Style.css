@@ -1,5 +1,28 @@
+header {
+  display: flex;
+  justify-content: space-between;
+  background-color: #283845;
+
+  h1 {
+    padding: 5px;
+    color: white;
+  }
+}
+
+footer {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  background-color: #283845;
+  margin-top: 50px;
+  color: white;
+
+  div {
+    margin: 10px;
+  }
+}
 body {
-  background-color: #ffe0d1d7;
+  background: linear-gradient(to bottom, white, #488072);
+  margin: 0;
 }
 
 li {
@@ -104,7 +127,13 @@ p {
     display: grid;
     grid-template-columns: 1fr;
   }
-
+  .cards {
+    div {
+      p {
+        display: none;
+      }
+    }
+  }
   .top-divs {
     padding: 10px;
     border-radius: 20px;
