@@ -7,6 +7,14 @@ if (!saveButton) {
   document.querySelector("#add-form").appendChild(saveButton);
 }
 
+const monsterOptions = [
+  "Maritime Monster",
+  "Terrestrial Beast",
+  "Winged Horror",
+];
+
+const colorOptions = ["Blue", "Green", "Yellow", "Pink", "Red"];
+
 const fields = [
   "type-input",
   "name-input",
@@ -21,27 +29,27 @@ const fields = [
 const state = {
   monsters: [
     {
-      type: "Maritime Monster",
+      type: monsterOptions[0],
       name: "Kraken",
-      color: "Blue",
+      color: colorOptions[0],
       size: 50,
       eyes: 256,
       viciousness: 100,
       head: 4,
     },
     {
-      type: "Terrestrial Beast",
+      type: monsterOptions[1],
       name: "Mudfang",
-      color: "Red",
+      color: colorOptions[4],
       size: 80,
       eyes: 2,
       viciousness: 10,
       head: 700,
     },
     {
-      type: "Winged Horror",
+      type: monsterOptions[2],
       name: "Grimpflap",
-      color: "Pink",
+      color: colorOptions[3],
       size: 30,
       eyes: 5,
       viciousness: 51,
@@ -78,7 +86,6 @@ const state = {
     }
     return values;
   },
-
   populateForm: (monster) => {
     fields.forEach((field) => {
       document.querySelector(`#${field}`).value =
@@ -87,8 +94,41 @@ const state = {
   },
 };
 
-// Event listener för att redigera varje monster
+const renderMonsterOptions = () => {
+  const selects = [];
+  selects.push(document.querySelector("#type-input"));
+  selects.push(document.querySelector("#type-select"));
+  selects.forEach((select) => {
+    select.innerHTML = "";
+
+    monsterOptions.forEach((option) => {
+      const optionElement = document.createElement("option");
+      optionElement.value = option;
+      optionElement.textContent = option;
+      select.appendChild(optionElement);
+    });
+  });
+};
+
+const renderColorOptions = () => {
+  const select = document.querySelector("#color-input");
+  select.innerHTML = "";
+
+  colorOptions.forEach((option) => {
+    const optionElement = document.createElement("option");
+    optionElement.value = option;
+    optionElement.textContent = option;
+    select.appendChild(optionElement);
+  });
+};
+
+const renderFormOptions = () => {
+  renderMonsterOptions();
+  renderColorOptions();
+};
+
 const renderMonsters = () => {
+  renderFormOptions();
   const card = document.querySelector(".cards");
   card.innerHTML = "";
 
