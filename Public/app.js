@@ -125,86 +125,64 @@ const renderColorOptions = () => {
 const renderFormOptions = () => {
   renderMonsterOptions();
   renderColorOptions();
-  renderDataInfo();
+  renderMonsterStatistics();
 };
 
-const renderDataInfo = () => {
-  const typeData = document.querySelector("#type-data");
-  const colorData = document.querySelector("#color-data");
-  const allOptionsType = document.createElement("option");
-  const allOptionsColor = document.createElement("option");
-  allOptionsType.value = "All";
-  allOptionsType.textContent = "All";
-  allOptionsColor.value = "All";
-  allOptionsColor.textContent = "All";
+const renderMonsterStatistics = () => {
+  // Lägg till "All"-alternativ i dropdownmenyerna för monster-typ och -färg, och sätt "All" som förvalt val.
+  const typeDropdown = document.querySelector("#type-data");
+  const colorDropdown = document.querySelector("#color-data");
+  const typeOptionAll = new Option("All", "All");
+  const colorOptionAll = new Option("All", "All");
 
-  typeData.insertBefore(allOptionsType, typeData.firstChild);
-  colorData.insertBefore(allOptionsColor, colorData.firstChild);
-  typeData.value = allOptionsType.value;
-  colorData.value = allOptionsColor.value;
+  typeDropdown.insertBefore(typeOptionAll, typeDropdown.firstChild);
+  colorDropdown.insertBefore(colorOptionAll, colorDropdown.firstChild);
 
-  const dataForm = document.querySelector("#data-form");
+  // Sätt "All" som förvalt val
+  typeDropdown.value = "All";
+  colorDropdown.value = "All";
 
-  const typeAmount = document.createElement("div");
-  typeAmount.innerHTML = `Number of monsters: ${state.monsters.length}`;
-  const updateTypeData = () => {
-    if (typeData.value === typeOptions[0]) {
-      const filteredMonsters = state.monsters.filter(
-        (monster) => monster.type === typeOptions[0]
-      );
-      typeAmount.innerHTML = `Number of monster type ${typeOptions[0]}: ${filteredMonsters.length}`;
-    } else if (typeData.value === typeOptions[1]) {
-      const filteredMonsters = state.monsters.filter(
-        (monster) => monster.type === typeOptions[1]
-      );
-      typeAmount.innerHTML = `Number of monster type ${typeOptions[1]}: ${filteredMonsters.length}`;
-    } else if (typeData.value === typeOptions[2]) {
-      const filteredMonsters = state.monsters.filter(
-        (monster) => monster.type === typeOptions[2]
-      );
-      typeAmount.innerHTML = `Number of monster type ${typeOptions[2]}: ${filteredMonsters.length}`;
+  const statisticsContainer = document.querySelector("#data-form");
+
+  // Skapa ett element för att visa antalet monster i varje kategori i statistiksektionen.
+  const typeCountDisplay = document.createElement("div");
+  typeCountDisplay.className = "monster-stat type-display";
+  const colorCountDisplay = document.createElement("div");
+  colorCountDisplay.className = "monster-stat color-display";
+
+  // Uppdatera visningen av antalet monster i statisticsContainer baserat på typ
+  const updateTypeCount = () => {
+    // Om alla valts, visa totalt antal monster
+    if (typeDropdown.value === "All") {
+      typeCountDisplay.innerHTML = `Number of monsters: ${state.monsters.length}`;
     } else {
-      typeAmount.innerHTML = `Number of monsters: ${state.monsters.length}`;
+      // Filtrera baserat på det valda värdet
+      const filteredMonsters = state.monsters.filter(
+        (monster) => monster.type === typeDropdown.value
+      );
+      typeCountDisplay.innerHTML = `Number of monster type ${typeDropdown.value}: ${filteredMonsters.length}`;
     }
   };
 
-  const colorAmount = document.createElement("div");
-  colorAmount.innerHTML = `Number of monsters: ${state.monsters.length}`;
-  const updateColorData = () => {
-    if (colorData.value === colorOptions[0]) {
-      const filteredMonsters = state.monsters.filter(
-        (monster) => monster.color === colorOptions[0]
-      );
-      colorAmount.innerHTML = `Number of ${colorOptions[0]} monsters: ${filteredMonsters.length}`;
-    } else if (colorData.value === colorOptions[1]) {
-      const filteredMonsters = state.monsters.filter(
-        (monster) => monster.color === colorOptions[1]
-      );
-      colorAmount.innerHTML = `Number of ${colorOptions[1]} monsters: ${filteredMonsters.length}`;
-    } else if (colorData.value === colorOptions[2]) {
-      const filteredMonsters = state.monsters.filter(
-        (monster) => monster.color === colorOptions[2]
-      );
-      colorAmount.innerHTML = `Number of ${colorOptions[2]} monsters: ${filteredMonsters.length}`;
-    } else if (colorData.value === colorOptions[3]) {
-      const filteredMonsters = state.monsters.filter(
-        (monster) => monster.color === colorOptions[3]
-      );
-      colorAmount.innerHTML = `Number of ${colorOptions[3]} monsters: ${filteredMonsters.length}`;
-    } else if (colorData.value === colorOptions[4]) {
-      const filteredMonsters = state.monsters.filter(
-        (monster) => monster.color === colorOptions[4]
-      );
-      colorAmount.innerHTML = `Number of ${colorOptions[4]} monsters: ${filteredMonsters.length}`;
+  // Uppdatera visningen av antalet monster i statisticsContainer baserat på färg
+  const updateColorCount = () => {
+    // Om "All" valts, visa totalt antal monster
+    if (colorDropdown.value === "All") {
+      colorCountDisplay.innerHTML = `Number of monsters: ${state.monsters.length}`;
     } else {
-      colorAmount.innerHTML = `Number of monsters: ${state.monsters.length}`;
+      // Filtrera baserat på det valda värdet
+      const filteredMonsters = state.monsters.filter(
+        (monster) => monster.color === colorDropdown.value
+      );
+      colorCountDisplay.innerHTML = `Number of ${colorDropdown.value} monsters: ${filteredMonsters.length}`;
     }
   };
 
-  typeData.addEventListener("change", updateTypeData);
-  colorData.addEventListener("change", updateColorData);
-  dataForm.appendChild(typeAmount);
-  dataForm.appendChild(colorAmount);
+  typeDropdown.addEventListener("change", updateTypeCount);
+  colorDropdown.addEventListener("change", updateColorCount);
+  statisticsContainer.append(typeCountDisplay, colorCountDisplay);
+  updateTypeCount();
+  updateColorCount();
 };
 
 const renderMonsters = () => {
