@@ -8,11 +8,7 @@ if (!saveButton) {
   saveButton.style.display = "none";
 }
 
-const monsterOptions = [
-  "Maritime Monster",
-  "Terrestrial Beast",
-  "Winged Horror",
-];
+const typeOptions = ["Maritime Monster", "Terrestrial Beast", "Winged Horror"];
 
 const colorOptions = ["Blue", "Green", "Yellow", "Pink", "Red"];
 
@@ -30,7 +26,7 @@ const fields = [
 const state = {
   monsters: [
     {
-      type: monsterOptions[0],
+      type: typeOptions[0],
       name: "Kraken",
       color: colorOptions[0],
       size: 50,
@@ -39,7 +35,7 @@ const state = {
       head: 4,
     },
     {
-      type: monsterOptions[1],
+      type: typeOptions[1],
       name: "Mudfang",
       color: colorOptions[4],
       size: 80,
@@ -48,7 +44,7 @@ const state = {
       head: 700,
     },
     {
-      type: monsterOptions[2],
+      type: typeOptions[2],
       name: "Grimpflap",
       color: colorOptions[3],
       size: 30,
@@ -74,17 +70,17 @@ const state = {
   //funktion för att rensa inputfälten i formen
   clearForm: () => {
     fields.forEach((field) => {
-      document.querySelector(`#${field}`).value = "";
+      document.querySelector(`.${field}`).value = "";
     });
-    document.querySelector("#type-input").value = monsterOptions[0];
-    document.querySelector("#color-input").value = colorOptions[0];
+    document.querySelector(".type-input").value = typeOptions[0];
+    document.querySelector(".color-input").value = colorOptions[0];
   },
 
   //funktion för att hämta data från inputfälten
   getFormData: () => {
     const formData = [];
     fields.forEach((field) => {
-      const value = document.querySelector(`#${field}`).value;
+      const value = document.querySelector(`.${field}`).value;
       formData.push(value);
     });
     return formData;
@@ -93,42 +89,122 @@ const state = {
   //funktion för att fylla i inputfälten med data
   populateForm: (monster) => {
     fields.forEach((field) => {
-      document.querySelector(`#${field}`).value =
+      document.querySelector(`.${field}`).value =
         monster[field.replace("-input", "")];
     });
   },
 };
 
 const renderMonsterOptions = () => {
-  const monsterSelects = [
-    document.querySelector("#type-input"),
-    document.querySelector("#type-select"),
-  ];
-  monsterSelects.forEach((select) => {
-    select.innerHTML = "";
-    monsterOptions.forEach((option) => {
+  const typeSelectors = document.querySelectorAll(".type-input");
+  typeSelectors.forEach((typeSelector) => {
+    typeSelector.innerHTML = "";
+
+    typeOptions.forEach((option) => {
       const optionElement = document.createElement("option");
       optionElement.value = option;
       optionElement.textContent = option;
-      select.appendChild(optionElement);
+      typeSelector.appendChild(optionElement);
     });
   });
 };
 
 const renderColorOptions = () => {
-  const colorSelect = document.querySelector("#color-input");
-  colorSelect.innerHTML = "";
-  colorOptions.forEach((color) => {
-    const optionElement = document.createElement("option");
-    optionElement.value = color;
-    optionElement.textContent = color;
-    colorSelect.appendChild(optionElement);
+  const colorSelectors = document.querySelectorAll(".color-input");
+  colorSelectors.forEach((colorSelector) => {
+    colorSelector.innerHTML = "";
+    colorOptions.forEach((color) => {
+      const optionElement = document.createElement("option");
+      optionElement.value = color;
+      optionElement.textContent = color;
+      colorSelector.appendChild(optionElement);
+    });
   });
 };
 
 const renderFormOptions = () => {
   renderMonsterOptions();
   renderColorOptions();
+  renderDataInfo();
+};
+
+const renderDataInfo = () => {
+  const typeData = document.querySelector("#type-data");
+  const colorData = document.querySelector("#color-data");
+  const allOptionsType = document.createElement("option");
+  const allOptionsColor = document.createElement("option");
+  allOptionsType.value = "All";
+  allOptionsType.textContent = "All";
+  allOptionsColor.value = "All";
+  allOptionsColor.textContent = "All";
+
+  typeData.insertBefore(allOptionsType, typeData.firstChild);
+  colorData.insertBefore(allOptionsColor, colorData.firstChild);
+  typeData.value = allOptionsType.value;
+  colorData.value = allOptionsColor.value;
+
+  const dataForm = document.querySelector("#data-form");
+
+  const typeAmount = document.createElement("div");
+  typeAmount.innerHTML = `Number of monsters: ${state.monsters.length}`;
+  const updateTypeData = () => {
+    if (typeData.value === typeOptions[0]) {
+      const filteredMonsters = state.monsters.filter(
+        (monster) => monster.type === typeOptions[0]
+      );
+      typeAmount.innerHTML = `Number of monster type ${typeOptions[0]}: ${filteredMonsters.length}`;
+    } else if (typeData.value === typeOptions[1]) {
+      const filteredMonsters = state.monsters.filter(
+        (monster) => monster.type === typeOptions[1]
+      );
+      typeAmount.innerHTML = `Number of monster type ${typeOptions[1]}: ${filteredMonsters.length}`;
+    } else if (typeData.value === typeOptions[2]) {
+      const filteredMonsters = state.monsters.filter(
+        (monster) => monster.type === typeOptions[2]
+      );
+      typeAmount.innerHTML = `Number of monster type ${typeOptions[2]}: ${filteredMonsters.length}`;
+    } else {
+      typeAmount.innerHTML = `Number of monsters: ${state.monsters.length}`;
+    }
+  };
+
+  const colorAmount = document.createElement("div");
+  colorAmount.innerHTML = `Number of monsters: ${state.monsters.length}`;
+  const updateColorData = () => {
+    if (colorData.value === colorOptions[0]) {
+      const filteredMonsters = state.monsters.filter(
+        (monster) => monster.color === colorOptions[0]
+      );
+      colorAmount.innerHTML = `Number of ${colorOptions[0]} monsters: ${filteredMonsters.length}`;
+    } else if (colorData.value === colorOptions[1]) {
+      const filteredMonsters = state.monsters.filter(
+        (monster) => monster.color === colorOptions[1]
+      );
+      colorAmount.innerHTML = `Number of ${colorOptions[1]} monsters: ${filteredMonsters.length}`;
+    } else if (colorData.value === colorOptions[2]) {
+      const filteredMonsters = state.monsters.filter(
+        (monster) => monster.color === colorOptions[2]
+      );
+      colorAmount.innerHTML = `Number of ${colorOptions[2]} monsters: ${filteredMonsters.length}`;
+    } else if (colorData.value === colorOptions[3]) {
+      const filteredMonsters = state.monsters.filter(
+        (monster) => monster.color === colorOptions[3]
+      );
+      colorAmount.innerHTML = `Number of ${colorOptions[3]} monsters: ${filteredMonsters.length}`;
+    } else if (colorData.value === colorOptions[4]) {
+      const filteredMonsters = state.monsters.filter(
+        (monster) => monster.color === colorOptions[4]
+      );
+      colorAmount.innerHTML = `Number of ${colorOptions[4]} monsters: ${filteredMonsters.length}`;
+    } else {
+      colorAmount.innerHTML = `Number of monsters: ${state.monsters.length}`;
+    }
+  };
+
+  typeData.addEventListener("change", updateTypeData);
+  colorData.addEventListener("change", updateColorData);
+  dataForm.appendChild(typeAmount);
+  dataForm.appendChild(colorAmount);
 };
 
 const renderMonsters = () => {
