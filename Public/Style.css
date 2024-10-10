@@ -23,6 +23,9 @@ footer {
 body {
   background: linear-gradient(to bottom, white, #488072);
   margin: 0;
+  strong {
+    color: red;
+  }
 }
 
 li {
