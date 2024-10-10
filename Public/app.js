@@ -243,8 +243,8 @@ document.querySelector("#submit").addEventListener("click", (e) => {
   state.clearForm();
   renderMonsters();
 
-  const scrollHeight = document.body.scrollHeight;
-  window.scrollTo(0, scrollHeight);
+  const scrollBottom = document.querySelector("footer");
+  scrollBottom.scrollIntoView({ behavior: "smooth" });
 });
 
 //lyssnare för edit
@@ -260,7 +260,8 @@ cardContainer.addEventListener("click", (event) => {
     saveButton.setAttribute("data-index", index);
     saveButton.style.display = "inline-block"; // Gör knappen synlig
   }
-  window.scrollTo(0, 0);
+  const scrollTop = document.querySelector(".top-divs");
+  scrollTop.scrollIntoView({ behavior: "smooth" });
 });
 
 //lyssnare saveButton
@@ -281,4 +282,10 @@ saveButton.addEventListener("click", (e) => {
   saveButton.removeAttribute("data-index");
   saveButton.style.display = "none";
   renderMonsters(); // Rendera om listan
+
+  const monsterElements = document.querySelectorAll(".cards > div");
+  const monsterElement = monsterElements[index];
+  if (monsterElement) {
+    monsterElement.scrollIntoView({ behavior: "smooth" });
+  }
 });
