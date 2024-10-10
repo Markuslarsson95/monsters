@@ -8,6 +8,16 @@ if (!saveButton) {
   saveButton.style.display = "none";
 }
 
+// Deklarera Cancel-knappen globalt
+let cancelButton = document.querySelector("#cancel-monster");
+if (!cancelButton) {
+  cancelButton = document.createElement("button");
+  cancelButton.id = "cancel-edit";
+  cancelButton.textContent = "Cancel";
+  document.querySelector("#add-form").appendChild(cancelButton);
+  cancelButton.style.display = "none";
+}
+
 const typeOptions = ["Maritime Monster", "Terrestrial Beast", "Winged Horror"];
 
 const colorOptions = ["Blue", "Green", "Yellow", "Pink", "Red"];
@@ -258,7 +268,8 @@ cardContainer.addEventListener("click", (event) => {
     state.populateForm(monster);
 
     saveButton.setAttribute("data-index", index);
-    saveButton.style.display = "inline-block"; // Gör knappen synlig
+    saveButton.style.display = "inline-block"; // Gör saveButton synlig
+    cancelButton.style.display = "inline-block"; // Gör cancelButton synlig
   }
   const scrollTop = document.querySelector(".top-divs");
   scrollTop.scrollIntoView({ behavior: "smooth" });
@@ -288,4 +299,12 @@ saveButton.addEventListener("click", (e) => {
   if (monsterElement) {
     monsterElement.scrollIntoView({ behavior: "smooth" });
   }
+});
+
+
+//lyssnare cancellButton
+
+document.getElementById("cancel-edit").addEventListener("click", function(e) {
+  e.preventDefault();
+  document.getElementById("add-form").reset();
 });
