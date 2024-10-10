@@ -53,7 +53,7 @@ const updateTypeCount = () => {
       (monster) => monster.type === typeDropdown.value
     );
     if (filteredMonsters.length > 1) {
-      typeCountDisplay.innerHTML = `<strong>Behold!</strong> Your horde of ${typeDropdown.value}s now numbers <strong>${filteredMonsters.length}</strong> strong!`;
+      typeCountDisplay.innerHTML = `<strong>Behold!</strong> Your horde of <em>${typeDropdown.value}s</em> now numbers <strong>${filteredMonsters.length}</strong> strong!`;
     } else {
       console.log(typeDropdown.value);
       typeCountDisplay.innerHTML = `A <strong>lone</strong> <em>${typeDropdown.value}</em> has surfaced, fierce and ready!`;
@@ -71,13 +71,15 @@ const updateColorCount = () => {
     const filteredMonsters = state.monsters.filter(
       (monster) => monster.color === colorDropdown.value
     );
+
     if (filteredMonsters.length > 1) {
-      colorCountDisplay.innerHTML = `The land echoes with the footsteps of <em>${colorDropdown.value}</em> monsters, now numbering <strong>${filteredMonsters.length}</strong> strong!
-`;
-    } else {
+      colorCountDisplay.innerHTML = `The land echoes with the footsteps of <em class="${colorDropdown.value}">${colorDropdown.value}</em> monsters, now numbering <strong class="number">${filteredMonsters.length}</strong> strong!`;
+    } else if (filteredMonsters.length == 1) {
       console.log(colorDropdown.value);
-      colorCountDisplay.innerHTML = `A solitary <em>${colorDropdown.value}</em> monster roams the wild, fierce and mysterious.
-`;
+      console.log(`filteredMonsters.length=${filteredMonsters.length}`);
+      colorCountDisplay.innerHTML = `A solitary <em class="${colorDropdown.value}">${colorDropdown.value}</em> monster roams the wild, fierce and mysterious.`;
+    } else {
+      colorCountDisplay.innerHTML = "";
     }
   }
 };
@@ -107,13 +109,13 @@ const renderMonsterStatistics = () => {
 
   if (!typeCountDisplay) {
     typeCountDisplay = document.createElement("div");
-    typeCountDisplay.className = "monster-stat type-display";
+    typeCountDisplay.className = "monster-stat type-display number";
     dropdownsContainer.append(typeCountDisplay);
   }
 
   if (!colorCountDisplay) {
     colorCountDisplay = document.createElement("div");
-    colorCountDisplay.className = "monster-stat color-display";
+    colorCountDisplay.className = "monster-stat color-display number";
     dropdownsContainer.append(colorCountDisplay);
   }
 

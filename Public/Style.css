@@ -23,9 +23,40 @@ footer {
 body {
   background: linear-gradient(to bottom, white, #488072);
   margin: 0;
-  strong {
-    color: red;
+  strong,
+  em {
+    color: #a7eedb;
+    text-shadow:
+      -0.2px -0.2px 0#d5dce2,
+      0.2px -0.2px 0#d5dce2,
+      -0.2px 0.2px 0#d5dce2,
+      0.2px 0.2px 0#d5dce2;
   }
+
+  .Blue {
+    color: rgb(147, 147, 238);
+    text-shadow: none;
+  }
+  .Green {
+    color: rgb(52, 206, 52);
+    text-shadow: none;
+  }
+  .Yellow {
+    color: yellow;
+    text-shadow: none;
+  }
+  .Pink {
+    color: pink;
+    text-shadow: none;
+  }
+  .Red {
+    color: red;
+    text-shadow: none;
+  }
+}
+.number {
+  color: green;
+  font-weight: bold;
 }
 
 li {
