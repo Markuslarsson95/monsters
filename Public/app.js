@@ -1,14 +1,21 @@
 //variabler i Global Scope
-
 const typeDropdown = document.querySelector("#type-data");
 const colorDropdown = document.querySelector("#color-data");
 const statisticsContainer = document.querySelector("#data-form");
+
+let saveButton = document.querySelector("#save-monster");
+if (!saveButton) {
+  saveButton = document.createElement("button");
+  saveButton.id = "save-monster";
+  saveButton.textContent = "Save Monster";
+  document.querySelector("#add-form").appendChild(saveButton);
+  saveButton.style.display = "none";
+}
 
 let typeCountDisplay = statisticsContainer.querySelector(".type-display");
 let colorCountDisplay = statisticsContainer.querySelector(".color-display");
 
 //Funktioner i Global Scope
-
 const renderMonsterOptions = () => {
   const typeSelectors = document.querySelectorAll(".type-input");
   typeSelectors.forEach((typeSelector) => {
@@ -132,15 +139,25 @@ const renderMonsterStatistics = () => {
   updateColorCount();
 };
 
-// Deklarera Save-knappen globalt
-let saveButton = document.querySelector("#save-monster");
-if (!saveButton) {
-  saveButton = document.createElement("button");
-  saveButton.id = "save-monster";
-  saveButton.textContent = "Save Monster";
-  document.querySelector("#add-form").appendChild(saveButton);
-  saveButton.style.display = "none";
-}
+const renderMonsters = () => {
+  const card = document.querySelector(".cards");
+  card.innerHTML = "";
+
+  state.monsters.forEach((m, index) => {
+    const monster = document.createElement("div");
+    monster.innerHTML = `
+      <h2>${m.name}</h2>
+      <p>Type: ${m.type}</p>
+      <p>Color: ${m.color}</p>
+      <p>Size: ${m.size}</p>
+      <p>Eye Amount: ${m.eyes}</p>
+      <p>Viciousness: ${m.viciousness}</p>
+      <p>Head Amount: ${m.head}</p>
+      <button type="button" class="edit" data-index="${index}">Edit</button>
+    `;
+    card.appendChild(monster);
+  });
+};
 
 const typeOptions = ["Maritime Monster", "Terrestrial Beast", "Winged Horror"];
 
@@ -230,26 +247,6 @@ const state = {
 };
 
 renderFormOptions();
-
-const renderMonsters = () => {
-  const card = document.querySelector(".cards");
-  card.innerHTML = "";
-
-  state.monsters.forEach((m, index) => {
-    const monster = document.createElement("div");
-    monster.innerHTML = `
-      <h2>${m.name}</h2>
-      <p>Type: ${m.type}</p>
-      <p>Color: ${m.color}</p>
-      <p>Size: ${m.size}</p>
-      <p>Eye Amount: ${m.eyes}</p>
-      <p>Viciousness: ${m.viciousness}</p>
-      <p>Head Amount: ${m.head}</p>
-      <button type="button" class="edit" data-index="${index}">Edit</button>
-    `;
-    card.appendChild(monster);
-  });
-};
 
 // app
 // initial render
