@@ -46,17 +46,20 @@ const renderColorOptions = () => {
 const updateTypeCount = () => {
   // Om alla valts, visa totalt antal monster
   if (typeDropdown.value === "All") {
-    typeCountDisplay.innerHTML = `Number of monsters: ${state.monsters.length}`;
+    typeCountDisplay.innerHTML = `Monsters Roaming: <strong class="number">${state.monsters.length}</strong>`;
   } else {
     // Filtrera baserat på det valda värdet
     const filteredMonsters = state.monsters.filter(
       (monster) => monster.type === typeDropdown.value
     );
     if (filteredMonsters.length > 1) {
-      typeCountDisplay.innerHTML = `<strong>Behold!</strong> Your horde of <em>${typeDropdown.value}s</em> now numbers <strong>${filteredMonsters.length}</strong> strong!`;
-    } else {
+      typeCountDisplay.innerHTML = `<strong>Behold!</strong> Your horde of <em>${typeDropdown.value}s</em> now numbers <strong class="number">${filteredMonsters.length}</strong> strong!`;
+    } else if (filteredMonsters.length === 1) {
       console.log(typeDropdown.value);
       typeCountDisplay.innerHTML = `A <strong>lone</strong> <em>${typeDropdown.value}</em> has surfaced, fierce and ready!`;
+    } else {
+      typeCountDisplay.innerHTML =
+        "The land lies shrouded in an eerie silence...";
     }
   }
 };
@@ -65,7 +68,7 @@ const updateTypeCount = () => {
 const updateColorCount = () => {
   // Om "All" valts, visa totalt antal monster
   if (colorDropdown.value === "All") {
-    colorCountDisplay.innerHTML = `Number of monsters: ${state.monsters.length}`;
+    colorCountDisplay.innerHTML = `Monsters Roaming: <strong class="number">${state.monsters.length}</strong>`;
   } else {
     // Filtrera baserat på det valda värdet
     const filteredMonsters = state.monsters.filter(
@@ -74,7 +77,7 @@ const updateColorCount = () => {
 
     if (filteredMonsters.length > 1) {
       colorCountDisplay.innerHTML = `The land echoes with the footsteps of <em class="${colorDropdown.value}">${colorDropdown.value}</em> monsters, now numbering <strong class="number">${filteredMonsters.length}</strong> strong!`;
-    } else if (filteredMonsters.length == 1) {
+    } else if (filteredMonsters.length === 1) {
       console.log(colorDropdown.value);
       console.log(`filteredMonsters.length=${filteredMonsters.length}`);
       colorCountDisplay.innerHTML = `A solitary <em class="${colorDropdown.value}">${colorDropdown.value}</em> monster roams the wild, fierce and mysterious.`;
@@ -109,13 +112,13 @@ const renderMonsterStatistics = () => {
 
   if (!typeCountDisplay) {
     typeCountDisplay = document.createElement("div");
-    typeCountDisplay.className = "monster-stat type-display number";
+    typeCountDisplay.className = "monster-stat type-display";
     dropdownsContainer.append(typeCountDisplay);
   }
 
   if (!colorCountDisplay) {
     colorCountDisplay = document.createElement("div");
-    colorCountDisplay.className = "monster-stat color-display number";
+    colorCountDisplay.className = "monster-stat color-display";
     dropdownsContainer.append(colorCountDisplay);
   }
 
@@ -137,8 +140,6 @@ const renderMonsterStatistics = () => {
   typeDropdown.addEventListener("change", updateTypeCount);
   colorDropdown.addEventListener("change", updateColorCount);
   dropdownsContainer.append(typeCountDisplay, colorCountDisplay);
-  updateTypeCount();
-  updateColorCount();
 };
 
 const renderMonsters = () => {
@@ -304,4 +305,6 @@ saveButton.addEventListener("click", (e) => {
   saveButton.removeAttribute("data-index");
   saveButton.style.display = "none";
   renderMonsters(); // Rendera om listan
+  updateTypeCount();
+  updateColorCount();
 });

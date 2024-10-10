@@ -55,8 +55,13 @@ body {
   }
 }
 .number {
-  color: green;
-  font-weight: bold;
+  all: initial;
+  color: #ebb28c;
+  text-shadow:
+    -0.2px -0.2px 0#ff0000,
+    0.2px -0.2px 0#ff0000,
+    -0.2px 0.2px 0#ff0000,
+    0.2px 0.2px 0#ff0000;
 }
 
 li {
