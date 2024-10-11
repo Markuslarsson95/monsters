@@ -301,10 +301,10 @@ saveButton.addEventListener("click", (e) => {
   }
 });
 
-
 //lyssnare cancellButton
 
-document.getElementById("cancel-edit").addEventListener("click", function(e) {
+cancelButton.addEventListener("click", function (e) {
   e.preventDefault();
   document.getElementById("add-form").reset();
+  cancelButton.style.display = "none";
 });
