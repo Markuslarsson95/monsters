@@ -12,6 +12,16 @@ if (!saveButton) {
   saveButton.style.display = "none";
 }
 
+// Deklarera Cancel-knappen globalt
+let cancelButton = document.querySelector("#cancel-monster");
+if (!cancelButton) {
+  cancelButton = document.createElement("button");
+  cancelButton.id = "cancel-edit";
+  cancelButton.textContent = "Cancel";
+  document.querySelector("#add-form").appendChild(cancelButton);
+  cancelButton.style.display = "none";
+}
+
 let typeCountDisplay = statisticsContainer.querySelector(".type-display");
 let colorCountDisplay = statisticsContainer.querySelector(".color-display");
 
@@ -267,6 +277,9 @@ document.querySelector("#submit").addEventListener("click", (e) => {
   state.clearForm();
   // Rendera om monsterlistan
   renderMonsters();
+
+  const scrollBottom = document.querySelector("footer");
+  scrollBottom.scrollIntoView({ behavior: "smooth" });
   // Uppdatera statistiken för typ och färg efter att ha lagt till ett nytt monster
   updateTypeCount();
   updateColorCount();
@@ -283,8 +296,11 @@ cardContainer.addEventListener("click", (event) => {
     state.populateForm(monster);
 
     saveButton.setAttribute("data-index", index);
-    saveButton.style.display = "inline-block"; // Gör knappen synlig
+    saveButton.style.display = "inline-block"; // Gör saveButton synlig
+    cancelButton.style.display = "inline-block"; // Gör cancelButton synlig
   }
+  const scrollTop = document.querySelector(".top-divs");
+  scrollTop.scrollIntoView({ behavior: "smooth" });
 });
 
 //lyssnare saveButton
@@ -305,6 +321,20 @@ saveButton.addEventListener("click", (e) => {
   saveButton.removeAttribute("data-index");
   saveButton.style.display = "none";
   renderMonsters(); // Rendera om listan
+
+  const monsterElements = document.querySelectorAll(".cards > div");
+  const monsterElement = monsterElements[index];
+  if (monsterElement) {
+    monsterElement.scrollIntoView({ behavior: "smooth" });
+  }
+});
+
+//lyssnare cancellButton
+
+cancelButton.addEventListener("click", function (e) {
+  e.preventDefault();
+  document.getElementById("add-form").reset();
+  cancelButton.style.display = "none";
   updateTypeCount();
   updateColorCount();
 });
