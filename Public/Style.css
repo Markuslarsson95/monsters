@@ -4,7 +4,7 @@ header {
   background-color: #283845;
 
   h1 {
-    padding: 5px;
+    padding: 0.1em 30px;
     color: white;
   }
 }
@@ -26,11 +26,8 @@ body {
   strong,
   em {
     color: #a7eedb;
-    text-shadow:
-      -0.2px -0.2px 0#d5dce2,
-      0.2px -0.2px 0#d5dce2,
-      -0.2px 0.2px 0#d5dce2,
-      0.2px 0.2px 0#d5dce2;
+    text-shadow: -0.2px -0.2px 0#d5dce2, 0.2px -0.2px 0#d5dce2,
+      -0.2px 0.2px 0#d5dce2, 0.2px 0.2px 0#d5dce2;
   }
 
   .Blue {
@@ -57,11 +54,8 @@ body {
 .number {
   all: initial;
   color: #ebb28c;
-  text-shadow:
-    -0.2px -0.2px 0#ff0000,
-    0.2px -0.2px 0#ff0000,
-    -0.2px 0.2px 0#ff0000,
-    0.2px 0.2px 0#ff0000;
+  text-shadow: -0.2px -0.2px 0#ff0000, 0.2px -0.2px 0#ff0000,
+    -0.2px 0.2px 0#ff0000, 0.2px 0.2px 0#ff0000;
 }
 
 li {
@@ -74,8 +68,11 @@ li {
 }
 
 .top-divs {
-  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  padding: 0.1em 30px;
   border-radius: 20px;
+  width: 50%;
   height: auto;
   box-shadow: 2px 2px 4px #283845;
   background-color: #283845;
@@ -87,9 +84,26 @@ li {
     font-size: 17px;
     margin-top: 4px;
   }
+  input {
+    width: 80%;
+    padding: 2px;
+    border-radius: 10px;
+    border: solid 1px #283845;
+    height: 25px;
+    font-size: 15px;
+  }
+  select {
+    width: 80%;
+    padding: 2px;
+    border-radius: 10px;
+    border: solid 1px #283845;
+    height: 25px;
+    font-size: 15px;
+  }
 }
 
 #data-form {
+  height: 100%;
   .dropdowns {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -102,21 +116,10 @@ li {
       border-radius: clamp(1rem, 2vw, 2rem);
     }
     .monster-stat {
-      margin: 10px clamp(0.1rem, 0.5vw, 1rem) clamp(0.1rem, 0.5vw, 1rem)
-        clamp(0.1rem, 0.5vw, 1rem);
       padding: 1px;
-      font-size: clamp(1rem, 2vw, 2rem);
+      font-size: 20px;
     }
   }
-}
-
-input {
-  width: auto;
-  padding: 2px;
-  border-radius: 10px;
-  border: solid 1px #283845;
-  height: 5%;
-  font-size: 15px;
 }
 
 button {
@@ -157,7 +160,6 @@ p {
     margin-top: 20px;
 
     h2 {
-      text-decoration: underline;
       font-size: 30px;
     }
 
