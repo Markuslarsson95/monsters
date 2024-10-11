@@ -55,7 +55,7 @@ const renderColorOptions = () => {
 
 const updateTypeCount = () => {
   // Om alla valts, visa totalt antal monster
-  if (typeDropdown.value === "All") {
+  if (typeDropdown.value === "All Types") {
     typeCountDisplay.innerHTML = `Monsters Roaming: <strong class="number">${state.monsters.length}</strong>`;
   } else {
     // Filtrera baserat på det valda värdet
@@ -76,7 +76,7 @@ const updateTypeCount = () => {
 // Uppdatera visningen av antalet monster i statisticsContainer baserat på färg
 const updateColorCount = () => {
   // Om "All" valts, visa totalt antal monster
-  if (colorDropdown.value === "All") {
+  if (colorDropdown.value === "All Colors") {
     colorCountDisplay.innerHTML = `Monsters Roaming: <strong class="number">${state.monsters.length}</strong>`;
   } else {
     // Filtrera baserat på det valda värdet
@@ -89,7 +89,7 @@ const updateColorCount = () => {
     } else if (filteredMonsters.length === 1) {
       colorCountDisplay.innerHTML = `A solitary <em class="${colorDropdown.value}">${colorDropdown.value}</em> monster roams the wild, fierce and mysterious.`;
     } else {
-      colorCountDisplay.innerHTML = "";
+      colorCountDisplay.innerHTML = `The world remains untouched by monsters of <em class="${colorDropdown.value}">${colorDropdown.value}</em>...`;
     }
   }
 };
@@ -102,17 +102,22 @@ const renderFormOptions = () => {
 
 const renderMonsterStatistics = () => {
   // Uppdatera visningen av antalet monster i statisticsContainer baserat på typ
-  // Lägg till "All"-alternativ i dropdownmenyerna för monster-typ och -färg, och sätt "All" som förvalt val.
-  if (!typeDropdown.querySelector("option[value='All]")) {
-    const typeOptionAll = new Option("All", "All");
-    const colorOptionAll = new Option("All", "All");
+  // Lägg till "All Types"-alternativ i dropdownmenyerna för monster-typ och -färg, och sätt "All Types" som förvalt val.
+  if (!typeDropdown.querySelector("option[value='All Types]")) {
+    const typeOptionAll = new Option("All Types", "All Types");
 
     typeDropdown.insertBefore(typeOptionAll, typeDropdown.firstChild);
+
+    // Sätt "All" som förvalt val
+    typeDropdown.value = "All Types";
+  }
+  if (!colorDropdown.querySelector("option[value='All Colors]")) {
+    const colorOptionAll = new Option("All Colors", "All Colors");
+
     colorDropdown.insertBefore(colorOptionAll, colorDropdown.firstChild);
 
     // Sätt "All" som förvalt val
-    typeDropdown.value = "All";
-    colorDropdown.value = "All";
+    colorDropdown.value = "All Colors";
   }
 
   const dropdownsContainer = document.querySelector(".dropdowns");
@@ -333,6 +338,8 @@ saveButton.addEventListener("click", (e) => {
   if (monsterElement) {
     monsterElement.scrollIntoView({ behavior: "smooth" });
   }
+  updateTypeCount();
+  updateColorCount();
 });
 
 //lyssnare cancellButton
