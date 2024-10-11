@@ -65,7 +65,6 @@ const updateTypeCount = () => {
     if (filteredMonsters.length > 1) {
       typeCountDisplay.innerHTML = `<strong>Behold!</strong> Your horde of <em>${typeDropdown.value}s</em> now numbers <strong class="number">${filteredMonsters.length}</strong> strong!`;
     } else if (filteredMonsters.length === 1) {
-      console.log(typeDropdown.value);
       typeCountDisplay.innerHTML = `A <strong>lone</strong> <em>${typeDropdown.value}</em> has surfaced, fierce and ready!`;
     } else {
       typeCountDisplay.innerHTML =
@@ -88,8 +87,6 @@ const updateColorCount = () => {
     if (filteredMonsters.length > 1) {
       colorCountDisplay.innerHTML = `The land echoes with the footsteps of <em class="${colorDropdown.value}">${colorDropdown.value}</em> monsters, now numbering <strong class="number">${filteredMonsters.length}</strong> strong!`;
     } else if (filteredMonsters.length === 1) {
-      console.log(colorDropdown.value);
-      console.log(`filteredMonsters.length=${filteredMonsters.length}`);
       colorCountDisplay.innerHTML = `A solitary <em class="${colorDropdown.value}">${colorDropdown.value}</em> monster roams the wild, fierce and mysterious.`;
     } else {
       colorCountDisplay.innerHTML = `The world remains untouched by monsters of <em class="${colorDropdown.value}">${colorDropdown.value}</em>...`;
@@ -168,9 +165,9 @@ const renderMonsters = () => {
       <p>Type: ${m.type}</p>
       <p>Color: ${m.color}</p>
       <p>Size: ${m.size}</p>
-      <p>Eye Amount: ${m.eyes}</p>
+      <p>Eyes: ${m.eyes}</p>
       <p>Viciousness: ${m.viciousness}</p>
-      <p>Head Amount: ${m.head}</p>
+      <p>Heads: ${m.head}</p>
       <button type="button" class="edit" data-index="${index}">Edit</button>
     `;
     card.appendChild(monster);
@@ -268,13 +265,16 @@ renderFormOptions();
 
 // app
 // initial render
-console.log("Rendering monsters:", state.monsters);
+
 renderMonsters();
 
 //lyssnare för Add Monster
 document.querySelector("#submit").addEventListener("click", (e) => {
   e.preventDefault();
 
+  cancelButton.style.display = "none";
+  saveButton.style.display = "none";
+  addTextChange.textContent = "Add Monster";
   const formData = state.getFormData();
 
   state.addMonster(...formData);
@@ -292,7 +292,7 @@ document.querySelector("#submit").addEventListener("click", (e) => {
 
 //lyssnare för edit
 const cardContainer = document.querySelector(".cards");
-
+const addTextChange = document.querySelector("#submit");
 //hur funkar det med event.target osv.?
 cardContainer.addEventListener("click", (event) => {
   if (event.target && event.target.classList.contains("edit")) {
@@ -303,14 +303,19 @@ cardContainer.addEventListener("click", (event) => {
     saveButton.setAttribute("data-index", index);
     saveButton.style.display = "inline-block"; // Gör saveButton synlig
     cancelButton.style.display = "inline-block"; // Gör cancelButton synlig
+
+    //för att scrolla upp
+    const scrollTop = document.querySelector(".top-divs");
+    scrollTop.scrollIntoView({ behavior: "smooth" });
+
+    addTextChange.textContent = "Copy Monster";
   }
-  const scrollTop = document.querySelector(".top-divs");
-  scrollTop.scrollIntoView({ behavior: "smooth" });
 });
 
 //lyssnare saveButton
 saveButton.addEventListener("click", (e) => {
   e.preventDefault();
+  addTextChange.textContent = "Add Monster";
   const index = saveButton.getAttribute("data-index");
   const formData = state.getFormData();
 
@@ -325,6 +330,7 @@ saveButton.addEventListener("click", (e) => {
   state.clearForm();
   saveButton.removeAttribute("data-index");
   saveButton.style.display = "none";
+  cancelButton.style.display = "none";
   renderMonsters(); // Rendera om listan
 
   const monsterElements = document.querySelectorAll(".cards > div");
@@ -342,4 +348,8 @@ cancelButton.addEventListener("click", function (e) {
   e.preventDefault();
   document.getElementById("add-form").reset();
   cancelButton.style.display = "none";
+  saveButton.style.display = "none";
+  addTextChange.textContent = "Add Monster"; //Gör så att texten återvänder till "add monster" istället för "copy monster"
+  updateTypeCount();
+  updateColorCount();
 });
