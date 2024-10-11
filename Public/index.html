@@ -1,10 +1,10 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Monsters</title>
-    <script src="app.js" defer></script>
+    <script type="module" src="app.js" defer></script>
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
@@ -31,10 +31,16 @@
           <select name="type" class="color-input"></select>
         </label>
 
-        <label for="size-input">
-          <p>Size:</p>
-          <input name="size" class="size-input" type="number" />
-        </label>
+        <p>
+          <label for="size-input"> Size: </label>
+        </p>
+        <input
+          id="size-input"
+          name="size"
+          class="size-input"
+          type="number"
+          min="0"
+        />
 
         <label for="eyes-input">
           <p>Eyes amount:</p>
@@ -55,8 +61,18 @@
 
       <!--DATA DIV-->
       <div class="top-divs" id="data-form">
-        <select name="type" id="type-data" class="type-input"></select>
-        <select name="color" id="color-data" class="color-input"></select>
+        <div class="dropdowns">
+          <select
+            name="type"
+            id="type-data"
+            class="type-input statistics"
+          ></select>
+          <select
+            name="color"
+            id="color-data"
+            class="color-input statistics"
+          ></select>
+        </div>
       </div>
     </div>
 

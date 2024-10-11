@@ -23,6 +23,45 @@ footer {
 body {
   background: linear-gradient(to bottom, white, #488072);
   margin: 0;
+  strong,
+  em {
+    color: #a7eedb;
+    text-shadow:
+      -0.2px -0.2px 0#d5dce2,
+      0.2px -0.2px 0#d5dce2,
+      -0.2px 0.2px 0#d5dce2,
+      0.2px 0.2px 0#d5dce2;
+  }
+
+  .Blue {
+    color: rgb(147, 147, 238);
+    text-shadow: none;
+  }
+  .Green {
+    color: rgb(52, 206, 52);
+    text-shadow: none;
+  }
+  .Yellow {
+    color: yellow;
+    text-shadow: none;
+  }
+  .Pink {
+    color: pink;
+    text-shadow: none;
+  }
+  .Red {
+    color: red;
+    text-shadow: none;
+  }
+}
+.number {
+  all: initial;
+  color: #ebb28c;
+  text-shadow:
+    -0.2px -0.2px 0#ff0000,
+    0.2px -0.2px 0#ff0000,
+    -0.2px 0.2px 0#ff0000,
+    0.2px 0.2px 0#ff0000;
 }
 
 li {
@@ -37,22 +76,37 @@ li {
 .top-divs {
   padding: 10px;
   border-radius: 20px;
-  width: 40%;
   height: auto;
   box-shadow: 2px 2px 4px #283845;
   background-color: #283845;
   color: white;
   margin: 20px;
+  font-size: clamp(1rem, 2vw, 2rem);
 
   p {
     font-size: 17px;
     margin-top: 4px;
   }
-  select {
-    padding: 3px;
-    border-radius: 20px;
-    width: 180px;
-    font-size: 16px;
+}
+
+#data-form {
+  .dropdowns {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    margin: 1px;
+    padding: 1px;
+    .statistics {
+      margin: clamp(0.1rem, 0.5vw, 1rem);
+      width: clamp(3rem, 20vw, 35vw);
+      border-radius: clamp(1rem, 2vw, 2rem);
+    }
+    .monster-stat {
+      margin: 10px clamp(0.1rem, 0.5vw, 1rem) clamp(0.1rem, 0.5vw, 1rem)
+        clamp(0.1rem, 0.5vw, 1rem);
+      padding: 1px;
+      font-size: clamp(1rem, 2vw, 2rem);
+    }
   }
 }
 
