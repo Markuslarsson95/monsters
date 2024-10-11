@@ -92,7 +92,7 @@ const updateColorCount = () => {
       console.log(`filteredMonsters.length=${filteredMonsters.length}`);
       colorCountDisplay.innerHTML = `A solitary <em class="${colorDropdown.value}">${colorDropdown.value}</em> monster roams the wild, fierce and mysterious.`;
     } else {
-      colorCountDisplay.innerHTML = "";
+      colorCountDisplay.innerHTML = `The world remains untouched by monsters of <em class="${colorDropdown.value}">${colorDropdown.value}</em>...`;
     }
   }
 };
@@ -327,6 +327,8 @@ saveButton.addEventListener("click", (e) => {
   if (monsterElement) {
     monsterElement.scrollIntoView({ behavior: "smooth" });
   }
+  updateTypeCount();
+  updateColorCount();
 });
 
 //lyssnare cancellButton
@@ -335,6 +337,4 @@ cancelButton.addEventListener("click", function (e) {
   e.preventDefault();
   document.getElementById("add-form").reset();
   cancelButton.style.display = "none";
-  updateTypeCount();
-  updateColorCount();
 });
