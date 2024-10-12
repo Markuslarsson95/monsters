@@ -2,6 +2,7 @@
 const typeDropdown = document.querySelector("#type-data");
 const colorDropdown = document.querySelector("#color-data");
 const statisticsContainer = document.querySelector("#data-form");
+const addForm = document.querySelector("#add-form");
 
 let saveButton = document.querySelector("#save-monster");
 if (!saveButton) {
@@ -25,9 +26,43 @@ if (!cancelButton) {
 let typeCountDisplay = statisticsContainer.querySelector(".type-display");
 let colorCountDisplay = statisticsContainer.querySelector(".color-display");
 
+const typeOptions = ["Maritime Monster", "Terrestrial Beast", "Winged Horror"];
+
+const colorOptions = ["Blue", "Green", "Yellow", "Pink", "Red"];
+
+// ändra denna för att kunna ändra på utseendealternativen
+const looks = ["size", "eyes", "viciousness", "head"];
+
+const fields = ["type", "name", "color"];
+
+fields.push(...looks);
+
 //Funktioner i Global Scope
-const renderMonsterOptions = () => {
-  const typeSelectors = document.querySelectorAll(".type-input");
+
+const renderAddForm = () => {
+  looks.forEach((look) => {
+    const pElement = document.createElement("p");
+    const labelElement = document.createElement("label");
+    labelElement.textContent = look.charAt(0).toUpperCase() + look.slice(1);
+    pElement.appendChild(labelElement);
+    const inputElement = document.createElement("input");
+    inputElement.name = `${look}`;
+    inputElement.className = `${look}`;
+    inputElement.type = "number";
+    addForm.appendChild(pElement);
+    addForm.appendChild(inputElement);
+  });
+  const buttonElement = document.createElement("button");
+  buttonElement.type = "submit";
+  buttonElement.id = "submit";
+  buttonElement.textContent = "Add Monster";
+  addForm.appendChild(buttonElement);
+  addForm.appendChild(saveButton);
+  addForm.appendChild(cancelButton);
+};
+
+const renderTypeOptions = () => {
+  const typeSelectors = document.querySelectorAll(".type");
   typeSelectors.forEach((typeSelector) => {
     typeSelector.innerHTML = "";
 
@@ -41,7 +76,7 @@ const renderMonsterOptions = () => {
 };
 
 const renderColorOptions = () => {
-  const colorSelectors = document.querySelectorAll(".color-input");
+  const colorSelectors = document.querySelectorAll(".color");
   colorSelectors.forEach((colorSelector) => {
     colorSelector.innerHTML = "";
     colorOptions.forEach((color) => {
@@ -50,6 +85,30 @@ const renderColorOptions = () => {
       optionElement.textContent = color;
       colorSelector.appendChild(optionElement);
     });
+  });
+};
+
+const renderMonsters = () => {
+  const card = document.querySelector(".cards");
+  card.innerHTML = "";
+
+  state.monsters.forEach((m, index) => {
+    const monster = document.createElement("div");
+    const content = [
+      `<h2>${m.name}</h2>`,
+      `<p>Type: ${m.type}</p>`,
+      `<p>Color: ${m.color}</p>`,
+    ];
+    looks.forEach((look) => {
+      content.push(
+        `<p>${look.charAt(0).toUpperCase() + look.slice(1)}: ${m[look]}</p>`
+      );
+    });
+    content.push(
+      `<button type="button" class="edit" data-index="${index}">Edit</button>`
+    );
+    monster.innerHTML = content.join("");
+    card.appendChild(monster);
   });
 };
 
@@ -92,12 +151,6 @@ const updateColorCount = () => {
       colorCountDisplay.innerHTML = `The world remains untouched by monsters of <em class="${colorDropdown.value}">${colorDropdown.value}</em>...`;
     }
   }
-};
-
-const renderFormOptions = () => {
-  renderMonsterOptions();
-  renderColorOptions();
-  renderMonsterStatistics();
 };
 
 const renderMonsterStatistics = () => {
@@ -154,39 +207,39 @@ const renderMonsterStatistics = () => {
   dropdownsContainer.append(typeCountDisplay, colorCountDisplay);
 };
 
-const renderMonsters = () => {
-  const card = document.querySelector(".cards");
-  card.innerHTML = "";
-
-  state.monsters.forEach((m, index) => {
-    const monster = document.createElement("div");
-    monster.innerHTML = `
-      <h2>${m.name}</h2>
-      <p>Type: ${m.type}</p>
-      <p>Color: ${m.color}</p>
-      <p>Size: ${m.size}</p>
-      <p>Eyes: ${m.eyes}</p>
-      <p>Viciousness: ${m.viciousness}</p>
-      <p>Heads: ${m.head}</p>
-      <button type="button" class="edit" data-index="${index}">Edit</button>
-    `;
-    card.appendChild(monster);
-  });
+const render = () => {
+  renderAddForm();
+  renderTypeOptions();
+  renderColorOptions();
+  renderMonsters();
+  renderMonsterStatistics();
 };
 
-const typeOptions = ["Maritime Monster", "Terrestrial Beast", "Winged Horror"];
+//funktion för att rensa inputfälten i formen
+const clearForm = () => {
+  fields.forEach((field) => {
+    document.querySelector(`.${field}`).value = "";
+  });
+  document.querySelector(".type").value = typeOptions[0];
+  document.querySelector(".color").value = colorOptions[0];
+};
 
-const colorOptions = ["Blue", "Green", "Yellow", "Pink", "Red"];
+//funktion för att hämta data från inputfälten
+const getFormData = () => {
+  const formData = [];
+  fields.forEach((field) => {
+    const value = document.querySelector(`.${field}`).value;
+    formData.push(value);
+  });
+  return formData;
+};
 
-const fields = [
-  "type-input",
-  "name-input",
-  "color-input",
-  "size-input",
-  "eyes-input",
-  "viciousness-input",
-  "head-input",
-];
+//funktion för att fylla i inputfälten med data
+const populateForm = (monster) => {
+  fields.forEach((field) => {
+    document.querySelector(`.${field}`).value = monster[field];
+  });
+};
 
 // state- Skapa array med objekt(monster)
 const state = {
@@ -195,28 +248,28 @@ const state = {
       type: typeOptions[0],
       name: "Kraken",
       color: colorOptions[0],
-      size: 50,
-      eyes: 256,
-      viciousness: 100,
-      head: 4,
+      [looks[0]]: 50,
+      [looks[1]]: 100,
+      [looks[2]]: 50,
+      [looks[3]]: 4,
     },
     {
       type: typeOptions[1],
       name: "Mudfang",
       color: colorOptions[4],
-      size: 80,
-      eyes: 2,
-      viciousness: 10,
-      head: 700,
+      [looks[0]]: 80,
+      [looks[1]]: 2,
+      [looks[2]]: 10,
+      [looks[3]]: 100,
     },
     {
       type: typeOptions[2],
       name: "Grimpflap",
       color: colorOptions[3],
-      size: 30,
-      eyes: 5,
-      viciousness: 51,
-      head: 1,
+      [looks[0]]: 30,
+      [looks[1]]: 5,
+      [looks[2]]: 51,
+      [looks[3]]: 1,
     },
   ],
 
@@ -232,41 +285,11 @@ const state = {
       head,
     });
   },
-
-  //funktion för att rensa inputfälten i formen
-  clearForm: () => {
-    fields.forEach((field) => {
-      document.querySelector(`.${field}`).value = "";
-    });
-    document.querySelector(".type-input").value = typeOptions[0];
-    document.querySelector(".color-input").value = colorOptions[0];
-  },
-
-  //funktion för att hämta data från inputfälten
-  getFormData: () => {
-    const formData = [];
-    fields.forEach((field) => {
-      const value = document.querySelector(`.${field}`).value;
-      formData.push(value);
-    });
-    return formData;
-  },
-
-  //funktion för att fylla i inputfälten med data
-  populateForm: (monster) => {
-    fields.forEach((field) => {
-      document.querySelector(`.${field}`).value =
-        monster[field.replace("-input", "")];
-    });
-  },
 };
-
-renderFormOptions();
 
 // app
 // initial render
-
-renderMonsters();
+render();
 
 //lyssnare för Add Monster
 document.querySelector("#submit").addEventListener("click", (e) => {
@@ -275,11 +298,11 @@ document.querySelector("#submit").addEventListener("click", (e) => {
   cancelButton.style.display = "none";
   saveButton.style.display = "none";
   addTextChange.textContent = "Add Monster";
-  const formData = state.getFormData();
+  const formData = getFormData();
 
   state.addMonster(...formData);
 
-  state.clearForm();
+  clearForm();
   // Rendera om monsterlistan
   renderMonsters();
 
@@ -298,7 +321,7 @@ cardContainer.addEventListener("click", (event) => {
   if (event.target && event.target.classList.contains("edit")) {
     const index = event.target.getAttribute("data-index");
     const monster = state.monsters[index];
-    state.populateForm(monster);
+    populateForm(monster);
 
     saveButton.setAttribute("data-index", index);
     saveButton.style.display = "inline-block"; // Gör saveButton synlig
@@ -317,17 +340,17 @@ saveButton.addEventListener("click", (e) => {
   e.preventDefault();
   addTextChange.textContent = "Add Monster";
   const index = saveButton.getAttribute("data-index");
-  const formData = state.getFormData();
+  const formData = getFormData();
 
   const updatedMonster = {}; // Skapa ett tomt objekt för att lagra de uppdaterade värdena
 
   fields.forEach((field, inputValue) => {
-    updatedMonster[field.replace("-input", "")] = formData[inputValue];
+    updatedMonster[field] = formData[inputValue];
   });
 
   state.monsters[index] = updatedMonster; // Tilldela det uppdaterade monstret till rätt index
 
-  state.clearForm();
+  clearForm();
   saveButton.removeAttribute("data-index");
   saveButton.style.display = "none";
   cancelButton.style.display = "none";

@@ -16,61 +16,30 @@
     <!-- form -->
     <div class="grid-data-input">
       <form class="top-divs" action="" id="add-form">
-        <label for="type-input">
+        <label for="type">
           <p>Type:</p>
-          <select name="type" class="type-input"></select>
+          <select name="type" class="type"></select>
         </label>
 
-        <label for="name-input">
+        <label for="name">
           <p>Name:</p>
-          <input class="name-input" name="nameinput" type="text" />
+          <input class="name" name="name" type="text" />
         </label>
 
-        <label for="color-input">
+        <label for="color">
           <p>Color:</p>
-          <select name="type" class="color-input"></select>
+          <select name="type" class="color"></select>
         </label>
-
-        <p>
-          <label for="size-input"> Size: </label>
-        </p>
-        <input
-          id="size-input"
-          name="size"
-          class="size-input"
-          type="number"
-          min="0"
-        />
-
-        <label for="eyes-input">
-          <p>Eyes:</p>
-          <input name="eyes" class="eyes-input" type="number" />
-        </label>
-
-        <label for="viciousness-input">
-          <p>Viciousness:</p>
-          <input name="viciousness" class="viciousness-input" type="number" />
-        </label>
-
-        <label for="head-input">
-          <p>Heads:</p>
-          <input name="head" class="head-input" type="number" />
-        </label>
-        <p><button type="submit" id="submit">Add Monster</button></p>
       </form>
 
       <!--DATA DIV-->
       <div class="top-divs" id="data-form">
         <div class="dropdowns">
-          <select
-            name="type"
-            id="type-data"
-            class="type-input statistics"
-          ></select>
+          <select name="type" id="type-data" class="type statistics"></select>
           <select
             name="color"
             id="color-data"
-            class="color-input statistics"
+            class="color statistics"
           ></select>
         </div>
       </div>
