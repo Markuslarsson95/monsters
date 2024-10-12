@@ -42,7 +42,7 @@ const createMonster = (type, name, color, lookValues) => {
   return monster;
 };
 
-const renderAddForm = () => {
+const renderMonsterForm = () => {
   config.looks.forEach((look) => {
     const pElement = document.createElement("p");
     const labelElement = document.createElement("label");
@@ -92,7 +92,7 @@ const renderColorOptions = () => {
   });
 };
 
-const renderMonsters = () => {
+const renderMonsterCards = () => {
   const card = document.querySelector(".cards");
   card.innerHTML = "";
 
@@ -210,16 +210,16 @@ const renderMonsterStatistics = () => {
 };
 
 const render = () => {
-  renderAddForm();
+  renderMonsterForm();
   renderTypeOptions();
   renderColorOptions();
-  renderMonsters();
+  renderMonsterCards();
   renderMonsterStatistics();
 };
 
 const formHandler = {
   //funktion för att rensa inputfälten i formen
-  clearForm: () => {
+  resetForm: () => {
     config.fields.forEach((field) => {
       document.querySelector(`.${field}`).value = "";
     });
@@ -305,14 +305,14 @@ document.querySelector("#submit").addEventListener("click", (e) => {
 
   cancelButton.style.display = "none";
   saveButton.style.display = "none";
-  addTextChange.textContent = "Add Monster";
+  submitButton.textContent = "Add Monster";
   const formData = formHandler.getFormData();
 
   state.addMonster(...formData);
 
-  formHandler.clearForm();
+  formHandler.resetForm();
   // Rendera om monsterlistan
-  renderMonsters();
+  renderMonsterCards();
 
   const scrollBottom = document.querySelector("footer");
   scrollBottom.scrollIntoView({ behavior: "smooth" });
@@ -323,7 +323,7 @@ document.querySelector("#submit").addEventListener("click", (e) => {
 
 //lyssnare för edit
 const cardContainer = document.querySelector(".cards");
-const addTextChange = document.querySelector("#submit");
+const submitButton = document.querySelector("#submit");
 //hur funkar det med event.target osv.?
 cardContainer.addEventListener("click", (event) => {
   if (event.target && event.target.classList.contains("edit")) {
@@ -339,14 +339,14 @@ cardContainer.addEventListener("click", (event) => {
     const scrollTop = document.querySelector(".top-divs");
     scrollTop.scrollIntoView({ behavior: "smooth" });
 
-    addTextChange.textContent = "Copy Monster";
+    submitButton.textContent = "Copy Monster";
   }
 });
 
 //lyssnare saveButton
 saveButton.addEventListener("click", (e) => {
   e.preventDefault();
-  addTextChange.textContent = "Add Monster";
+  submitButton.textContent = "Add Monster";
   const index = saveButton.getAttribute("data-index");
   const formData = formHandler.getFormData();
 
@@ -358,11 +358,11 @@ saveButton.addEventListener("click", (e) => {
 
   state.monsters[index] = updatedMonster; // Tilldela det uppdaterade monstret till rätt index
 
-  formHandler.clearForm();
+  formHandler.resetForm();
   saveButton.removeAttribute("data-index");
   saveButton.style.display = "none";
   cancelButton.style.display = "none";
-  renderMonsters(); // Rendera om listan
+  renderMonsterCards(); // Rendera om listan
 
   const monsterElements = document.querySelectorAll(".cards > div");
   const monsterElement = monsterElements[index];
@@ -380,7 +380,7 @@ cancelButton.addEventListener("click", function (e) {
   document.getElementById("add-form").reset();
   cancelButton.style.display = "none";
   saveButton.style.display = "none";
-  addTextChange.textContent = "Add Monster"; //Gör så att texten återvänder till "add monster" istället för "copy monster"
+  submitButton.textContent = "Add Monster"; //Gör så att texten återvänder till "add monster" istället för "copy monster"
   updateTypeCount();
   updateColorCount();
 });
