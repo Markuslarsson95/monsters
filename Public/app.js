@@ -2,7 +2,7 @@
 const typeDropdown = document.querySelector("#type-data");
 const colorDropdown = document.querySelector("#color-data");
 const statisticsContainer = document.querySelector("#data-form");
-const addForm = document.querySelector("#add-form");
+const monsterForm = document.querySelector("#add-form");
 
 let saveButton = document.querySelector("#save-monster");
 if (!saveButton) {
@@ -52,16 +52,16 @@ const renderMonsterForm = () => {
     inputElement.name = `${look}`;
     inputElement.className = `${look}`;
     inputElement.type = "number";
-    addForm.appendChild(pElement);
-    addForm.appendChild(inputElement);
+    monsterForm.appendChild(pElement);
+    monsterForm.appendChild(inputElement);
   });
   const buttonElement = document.createElement("button");
   buttonElement.type = "submit";
   buttonElement.id = "submit";
   buttonElement.textContent = "Add Monster";
-  addForm.appendChild(buttonElement);
-  addForm.appendChild(saveButton);
-  addForm.appendChild(cancelButton);
+  monsterForm.appendChild(buttonElement);
+  monsterForm.appendChild(saveButton);
+  monsterForm.appendChild(cancelButton);
 };
 
 const renderTypeOptions = () => {
