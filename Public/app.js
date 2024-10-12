@@ -28,6 +28,20 @@ let colorCountDisplay = statisticsContainer.querySelector(".color-display");
 
 //Funktioner i Global Scope
 
+//funktion för att bygga monster dynamiskt
+const createMonster = (type, name, color, lookValues) => {
+  const monster = {
+    type,
+    name,
+    color,
+  };
+  //iterera igenom looks-egenskaper och tilldela värden
+  config.looks.forEach((look, index) => {
+    monster[look] = lookValues[index];
+  });
+  return monster;
+};
+
 const renderAddForm = () => {
   config.looks.forEach((look) => {
     const pElement = document.createElement("p");
@@ -203,30 +217,32 @@ const render = () => {
   renderMonsterStatistics();
 };
 
-//funktion för att rensa inputfälten i formen
-const clearForm = () => {
-  config.fields.forEach((field) => {
-    document.querySelector(`.${field}`).value = "";
-  });
-  typeDropdown.value = config.typeOptions[0];
-  colorDropdown.value = config.colorOptions[0];
-};
+const formHandler = {
+  //funktion för att rensa inputfälten i formen
+  clearForm: () => {
+    config.fields.forEach((field) => {
+      document.querySelector(`.${field}`).value = "";
+    });
+    typeDropdown.value = config.typeOptions[0];
+    colorDropdown.value = config.colorOptions[0];
+  },
 
-//funktion för att hämta data från inputfälten
-const getFormData = () => {
-  const formData = [];
-  config.fields.forEach((field) => {
-    const value = document.querySelector(`.${field}`).value;
-    formData.push(value);
-  });
-  return formData;
-};
+  //funktion för att hämta data från inputfälten
+  getFormData: () => {
+    const formData = [];
+    config.fields.forEach((field) => {
+      const value = document.querySelector(`.${field}`).value;
+      formData.push(value);
+    });
+    return formData;
+  },
 
-//funktion för att fylla i inputfälten med data
-const populateForm = (monster) => {
-  config.fields.forEach((field) => {
-    document.querySelector(`.${field}`).value = monster[field];
-  });
+  //funktion för att fylla i inputfälten med data
+  populateForm: (monster) => {
+    config.fields.forEach((field) => {
+      document.querySelector(`.${field}`).value = monster[field];
+    });
+  },
 };
 
 // Konfigurationsobjekt för att lagra monster-relaterade inställningar
@@ -242,21 +258,6 @@ const config = {
 
   fields: ["type", "name", "color"],
 };
-
-//funktion för att bygga monster dynamiskt
-const createMonster = (type, name, color, lookValues) => {
-  const monster = {
-    type,
-    name,
-    color,
-  };
-  //iterera igenom looks-egenskaper och tilldela värden
-  config.looks.forEach((look, index) => {
-    monster[look] = lookValues[index];
-  });
-  return monster;
-};
-
 config.fields.push(...config.looks);
 
 // state- Skapa array med objekt(monster)
@@ -305,11 +306,11 @@ document.querySelector("#submit").addEventListener("click", (e) => {
   cancelButton.style.display = "none";
   saveButton.style.display = "none";
   addTextChange.textContent = "Add Monster";
-  const formData = getFormData();
+  const formData = formHandler.getFormData();
 
   state.addMonster(...formData);
 
-  clearForm();
+  formHandler.clearForm();
   // Rendera om monsterlistan
   renderMonsters();
 
@@ -328,7 +329,7 @@ cardContainer.addEventListener("click", (event) => {
   if (event.target && event.target.classList.contains("edit")) {
     const index = event.target.getAttribute("data-index");
     const monster = state.monsters[index];
-    populateForm(monster);
+    formHandler.populateForm(monster);
 
     saveButton.setAttribute("data-index", index);
     saveButton.style.display = "inline-block"; // Gör saveButton synlig
@@ -347,7 +348,7 @@ saveButton.addEventListener("click", (e) => {
   e.preventDefault();
   addTextChange.textContent = "Add Monster";
   const index = saveButton.getAttribute("data-index");
-  const formData = getFormData();
+  const formData = formHandler.getFormData();
 
   const updatedMonster = {}; // Skapa ett tomt objekt för att lagra de uppdaterade värdena
 
@@ -357,7 +358,7 @@ saveButton.addEventListener("click", (e) => {
 
   state.monsters[index] = updatedMonster; // Tilldela det uppdaterade monstret till rätt index
 
-  clearForm();
+  formHandler.clearForm();
   saveButton.removeAttribute("data-index");
   saveButton.style.display = "none";
   cancelButton.style.display = "none";
