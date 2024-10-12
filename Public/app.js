@@ -192,8 +192,6 @@ const renderMonsterStatistics = () => {
   updateTypeCount();
   updateColorCount();
 
-  typeDropdown.addEventListener("change", updateTypeCount);
-  colorDropdown.addEventListener("change", updateColorCount);
   dropdownsContainer.append(typeCountDisplay, colorCountDisplay);
 };
 
