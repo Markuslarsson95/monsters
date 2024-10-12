@@ -26,21 +26,23 @@ if (!cancelButton) {
 let typeCountDisplay = statisticsContainer.querySelector(".type-display");
 let colorCountDisplay = statisticsContainer.querySelector(".color-display");
 
-const typeOptions = ["Maritime Monster", "Terrestrial Beast", "Winged Horror"];
+const config = {
+  typeOptions: ["Maritime Monster", "Terrestrial Beast", "Winged Horror"],
 
-const colorOptions = ["Blue", "Green", "Yellow", "Pink", "Red"];
+  colorOptions: ["Blue", "Green", "Yellow", "Pink", "Red"],
 
-// ändra denna för att kunna ändra på utseendealternativen
-const looks = ["size", "eyes", "viciousness", "head"];
+  // ändra denna för att kunna ändra på utseendealternativen
+  looks: ["size", "eyes", "viciousness", "head"],
 
-const fields = ["type", "name", "color"];
+  fields: ["type", "name", "color"],
+};
 
-fields.push(...looks);
+config.fields.push(...config.looks);
 
 //Funktioner i Global Scope
 
 const renderAddForm = () => {
-  looks.forEach((look) => {
+  config.looks.forEach((look) => {
     const pElement = document.createElement("p");
     const labelElement = document.createElement("label");
     labelElement.textContent = look.charAt(0).toUpperCase() + look.slice(1);
@@ -62,11 +64,12 @@ const renderAddForm = () => {
 };
 
 const renderTypeOptions = () => {
+  console.log(config.typeOptions);
   const typeSelectors = document.querySelectorAll(".type");
   typeSelectors.forEach((typeSelector) => {
     typeSelector.innerHTML = "";
 
-    typeOptions.forEach((option) => {
+    config.typeOptions.forEach((option) => {
       const optionElement = document.createElement("option");
       optionElement.value = option;
       optionElement.textContent = option;
@@ -79,7 +82,7 @@ const renderColorOptions = () => {
   const colorSelectors = document.querySelectorAll(".color");
   colorSelectors.forEach((colorSelector) => {
     colorSelector.innerHTML = "";
-    colorOptions.forEach((color) => {
+    config.colorOptions.forEach((color) => {
       const optionElement = document.createElement("option");
       optionElement.value = color;
       optionElement.textContent = color;
@@ -99,7 +102,7 @@ const renderMonsters = () => {
       `<p>Type: ${m.type}</p>`,
       `<p>Color: ${m.color}</p>`,
     ];
-    looks.forEach((look) => {
+    config.looks.forEach((look) => {
       content.push(
         `<p>${look.charAt(0).toUpperCase() + look.slice(1)}: ${m[look]}</p>`
       );
@@ -156,7 +159,7 @@ const updateColorCount = () => {
 const renderMonsterStatistics = () => {
   // Uppdatera visningen av antalet monster i statisticsContainer baserat på typ
   // Lägg till "All Types"-alternativ i dropdownmenyerna för monster-typ och -färg, och sätt "All Types" som förvalt val.
-  if (!typeDropdown.querySelector("option[value='All Types]")) {
+  if (!typeDropdown.querySelector("option[value='All Types']")) {
     const typeOptionAll = new Option("All Types", "All Types");
 
     typeDropdown.insertBefore(typeOptionAll, typeDropdown.firstChild);
@@ -164,7 +167,7 @@ const renderMonsterStatistics = () => {
     // Sätt "All" som förvalt val
     typeDropdown.value = "All Types";
   }
-  if (!colorDropdown.querySelector("option[value='All Colors]")) {
+  if (!colorDropdown.querySelector("option[value='All Colors']")) {
     const colorOptionAll = new Option("All Colors", "All Colors");
 
     colorDropdown.insertBefore(colorOptionAll, colorDropdown.firstChild);
@@ -217,17 +220,17 @@ const render = () => {
 
 //funktion för att rensa inputfälten i formen
 const clearForm = () => {
-  fields.forEach((field) => {
+  config.fields.forEach((field) => {
     document.querySelector(`.${field}`).value = "";
   });
-  document.querySelector(".type").value = typeOptions[0];
-  document.querySelector(".color").value = colorOptions[0];
+  document.querySelector(".type").value = config.typeOptions[0];
+  document.querySelector(".color").value = config.colorOptions[0];
 };
 
 //funktion för att hämta data från inputfälten
 const getFormData = () => {
   const formData = [];
-  fields.forEach((field) => {
+  config.fields.forEach((field) => {
     const value = document.querySelector(`.${field}`).value;
     formData.push(value);
   });
@@ -236,7 +239,7 @@ const getFormData = () => {
 
 //funktion för att fylla i inputfälten med data
 const populateForm = (monster) => {
-  fields.forEach((field) => {
+  config.fields.forEach((field) => {
     document.querySelector(`.${field}`).value = monster[field];
   });
 };
@@ -245,31 +248,31 @@ const populateForm = (monster) => {
 const state = {
   monsters: [
     {
-      type: typeOptions[0],
+      type: config.typeOptions[0],
       name: "Kraken",
-      color: colorOptions[0],
-      [looks[0]]: 50,
-      [looks[1]]: 100,
-      [looks[2]]: 50,
-      [looks[3]]: 4,
+      color: config.colorOptions[0],
+      [config.looks[0]]: 50,
+      [config.looks[1]]: 100,
+      [config.looks[2]]: 50,
+      [config.looks[3]]: 4,
     },
     {
-      type: typeOptions[1],
+      type: config.typeOptions[1],
       name: "Mudfang",
-      color: colorOptions[4],
-      [looks[0]]: 80,
-      [looks[1]]: 2,
-      [looks[2]]: 10,
-      [looks[3]]: 100,
+      color: config.colorOptions[4],
+      [config.looks[0]]: 80,
+      [config.looks[1]]: 2,
+      [config.looks[2]]: 10,
+      [config.looks[3]]: 100,
     },
     {
-      type: typeOptions[2],
+      type: config.typeOptions[2],
       name: "Grimpflap",
-      color: colorOptions[3],
-      [looks[0]]: 30,
-      [looks[1]]: 5,
-      [looks[2]]: 51,
-      [looks[3]]: 1,
+      color: config.colorOptions[3],
+      [config.looks[0]]: 30,
+      [config.looks[1]]: 5,
+      [config.looks[2]]: 51,
+      [config.looks[3]]: 1,
     },
   ],
 
@@ -344,7 +347,7 @@ saveButton.addEventListener("click", (e) => {
 
   const updatedMonster = {}; // Skapa ett tomt objekt för att lagra de uppdaterade värdena
 
-  fields.forEach((field, inputValue) => {
+  config.fields.forEach((field, inputValue) => {
     updatedMonster[field] = formData[inputValue];
   });
 
