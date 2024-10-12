@@ -26,19 +26,6 @@ if (!cancelButton) {
 let typeCountDisplay = statisticsContainer.querySelector(".type-display");
 let colorCountDisplay = statisticsContainer.querySelector(".color-display");
 
-const config = {
-  typeOptions: ["Maritime Monster", "Terrestrial Beast", "Winged Horror"],
-
-  colorOptions: ["Blue", "Green", "Yellow", "Pink", "Red"],
-
-  // ändra denna för att kunna ändra på utseendealternativen
-  looks: ["size", "eyes", "viciousness", "head"],
-
-  fields: ["type", "name", "color"],
-};
-
-config.fields.push(...config.looks);
-
 //Funktioner i Global Scope
 
 const renderAddForm = () => {
@@ -223,8 +210,8 @@ const clearForm = () => {
   config.fields.forEach((field) => {
     document.querySelector(`.${field}`).value = "";
   });
-  document.querySelector(".type").value = config.typeOptions[0];
-  document.querySelector(".color").value = config.colorOptions[0];
+  typeDropdown.value = config.typeOptions[0];
+  colorDropdown.value = config.colorOptions[0];
 };
 
 //funktion för att hämta data från inputfälten
@@ -244,49 +231,68 @@ const populateForm = (monster) => {
   });
 };
 
+// Konfigurationsobjekt för att lagra monster-relaterade inställningar
+// Innehåller typalternativ, färgalternativ, utseendeattribut och fält
+// Dessa inställningar används för att bygga och rendera monsterkort i applikationen
+const config = {
+  typeOptions: ["Maritime Monster", "Terrestrial Beast", "Winged Horror"],
+
+  colorOptions: ["Blue", "Green", "Yellow", "Pink", "Red"],
+
+  // ändra denna för att kunna ändra på utseendealternativen
+  looks: ["size", "eyes", "viciousness", "head"],
+
+  fields: ["type", "name", "color"],
+};
+
+//funktion för att bygga monster dynamiskt
+const createMonster = (type, name, color, lookValues) => {
+  const monster = {
+    type,
+    name,
+    color,
+  };
+  //iterera igenom looks-egenskaper och tilldela värden
+  config.looks.forEach((look, index) => {
+    monster[look] = lookValues[index];
+  });
+  return monster;
+};
+
+config.fields.push(...config.looks);
+
 // state- Skapa array med objekt(monster)
 const state = {
   monsters: [
-    {
-      type: config.typeOptions[0],
-      name: "Kraken",
-      color: config.colorOptions[0],
-      [config.looks[0]]: 50,
-      [config.looks[1]]: 100,
-      [config.looks[2]]: 50,
-      [config.looks[3]]: 4,
-    },
-    {
-      type: config.typeOptions[1],
-      name: "Mudfang",
-      color: config.colorOptions[4],
-      [config.looks[0]]: 80,
-      [config.looks[1]]: 2,
-      [config.looks[2]]: 10,
-      [config.looks[3]]: 100,
-    },
-    {
-      type: config.typeOptions[2],
-      name: "Grimpflap",
-      color: config.colorOptions[3],
-      [config.looks[0]]: 30,
-      [config.looks[1]]: 5,
-      [config.looks[2]]: 51,
-      [config.looks[3]]: 1,
-    },
+    createMonster(
+      config.typeOptions[0],
+      "Kraken",
+      config.colorOptions[0],
+      [50, 100, 50, 4]
+    ),
+    createMonster(
+      config.typeOptions[1],
+      "Mudfang",
+      config.colorOptions[4],
+      [30, 5, 51, 1]
+    ),
+    createMonster(
+      config.typeOptions[2],
+      "Grimflap",
+      config.colorOptions[3],
+      [30, 5, 51, 1]
+    ),
   ],
 
   //add Monster
   addMonster: function (type, name, color, size, eyes, viciousness, head) {
-    this.monsters.push({
-      type,
-      name,
-      color,
+    const newMonster = createMonster(type, name, color, [
       size,
       eyes,
       viciousness,
       head,
-    });
+    ]);
+    this.monsters.push(newMonster);
   },
 };
 
