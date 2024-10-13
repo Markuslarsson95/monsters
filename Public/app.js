@@ -1,4 +1,6 @@
-//variabler i Global Scope
+//////////////////////////////////Variables Scope Functions///////////////////////////////////
+//////////////////////////////////|||||||||||||||||||||||||///////////////////////////////////
+
 const typeDropdown = document.querySelector("#type-data");
 const colorDropdown = document.querySelector("#color-data");
 const statisticsContainer = document.querySelector("#data-form");
@@ -26,7 +28,8 @@ if (!cancelButton) {
 let typeCountDisplay = statisticsContainer.querySelector(".type-display");
 let colorCountDisplay = statisticsContainer.querySelector(".color-display");
 
-//Funktioner i Global Scope
+//////////////////////////////////Global Scope Functions///////////////////////////////////
+//////////////////////////////////||||||||||||||||||||||///////////////////////////////////
 
 //funktion för att bygga monster dynamiskt
 const createMonster = (type, name, color, lookValues) => {
@@ -217,33 +220,8 @@ const render = () => {
   renderMonsterStatistics();
 };
 
-const formHandler = {
-  //funktion för att rensa inputfälten i formen
-  resetForm: () => {
-    config.fields.forEach((field) => {
-      document.querySelector(`.${field}`).value = "";
-    });
-    typeDropdown.value = config.typeOptions[0];
-    colorDropdown.value = config.colorOptions[0];
-  },
-
-  //funktion för att hämta data från inputfälten
-  getFormData: () => {
-    const formData = [];
-    config.fields.forEach((field) => {
-      const value = document.querySelector(`.${field}`).value;
-      formData.push(value);
-    });
-    return formData;
-  },
-
-  //funktion för att fylla i inputfälten med data
-  populateForm: (monster) => {
-    config.fields.forEach((field) => {
-      document.querySelector(`.${field}`).value = monster[field];
-    });
-  },
-};
+//////////////////////////////////configuration and state///////////////////////////////////
+//////////////////////////////////||||||||||||||||||||||||///////////////////////////////////
 
 // Konfigurationsobjekt för att lagra monster-relaterade inställningar
 // Innehåller typalternativ, färgalternativ, utseendeattribut och fält
@@ -295,7 +273,37 @@ const state = {
   },
 };
 
-// app
+const formHandler = {
+  //funktion för att rensa inputfälten i formen
+  resetForm: () => {
+    config.fields.forEach((field) => {
+      document.querySelector(`.${field}`).value = "";
+    });
+    typeDropdown.value = config.typeOptions[0];
+    colorDropdown.value = config.colorOptions[0];
+  },
+
+  //funktion för att hämta data från inputfälten
+  getFormData: () => {
+    const formData = [];
+    config.fields.forEach((field) => {
+      const value = document.querySelector(`.${field}`).value;
+      formData.push(value);
+    });
+    return formData;
+  },
+
+  //funktion för att fylla i inputfälten med data
+  populateForm: (monster) => {
+    config.fields.forEach((field) => {
+      document.querySelector(`.${field}`).value = monster[field];
+    });
+  },
+};
+
+/////////////////////////////////////////////App///////////////////////////////////
+////////////////////////////////////////////||||//////////////////////////////////
+
 // initial render
 render();
 
