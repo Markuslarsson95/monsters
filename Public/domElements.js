@@ -3,8 +3,8 @@
 
 export const monsterForm = document.querySelector("#monster-form");
 export const statisticsContainer = document.querySelector("#statistics-form");
-export const typeDropdown = document.querySelector(".type");
-export const colorDropdown = document.querySelector(".color");
+export const typeDropdown = document.querySelector("#type-data");
+export const colorDropdown = document.querySelector("#color-data");
 export const dropdownsContainer = document.querySelector(".dropdowns");
 
 // Deklarera Save-knappen globalt

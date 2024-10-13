@@ -16,6 +16,10 @@ import { config, state } from "./config.js";
 let typeCountDisplay = statisticsContainer.querySelector(".type-display");
 
 let colorCountDisplay = statisticsContainer.querySelector(".color-display");
+console.log("statisticsContainer:", statisticsContainer);
+
+console.log("typeCountDisplay:", typeCountDisplay);
+console.log("colorCountDisplay:", colorCountDisplay);
 
 //////////////////////////////////Global Scope Functions///////////////////////////////////
 //////////////////////////////////||||||||||||||||||||||///////////////////////////////////
@@ -107,6 +111,8 @@ export const updateTypeCount = () => {
   // Om alla valts, visa totalt antal monster
   if (typeDropdown.value === "All Types") {
     typeCountDisplay.innerHTML = `Monsters Roaming: <strong class="number">${state.monsters.length}</strong>`;
+    console.log("typeCountDisplay:", typeCountDisplay.innerHTML);
+    console.log(`typeDropdown.value${typeDropdown.value}`);
   } else {
     // Filtrera baserat på det valda värdet
     const filteredMonsters = state.monsters.filter(
@@ -127,6 +133,8 @@ export const updateColorCount = () => {
   // Om "All" valts, visa totalt antal monster
   if (colorDropdown.value === "All Colors") {
     colorCountDisplay.innerHTML = `Monsters Roaming: <strong class="number">${state.monsters.length}</strong>`;
+    console.log("colorCountDisplay:", colorCountDisplay.innerHTML);
+    console.log(`colorDropdown.value${colorDropdown.value}`);
   } else {
     // Filtrera baserat på det valda värdet
     const filteredMonsters = state.monsters.filter(
