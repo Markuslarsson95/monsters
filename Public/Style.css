@@ -26,8 +26,11 @@ body {
   strong,
   em {
     color: #a7eedb;
-    text-shadow: -0.2px -0.2px 0#d5dce2, 0.2px -0.2px 0#d5dce2,
-      -0.2px 0.2px 0#d5dce2, 0.2px 0.2px 0#d5dce2;
+    text-shadow:
+      -0.2px -0.2px 0#d5dce2,
+      0.2px -0.2px 0#d5dce2,
+      -0.2px 0.2px 0#d5dce2,
+      0.2px 0.2px 0#d5dce2;
   }
 
   .Blue {
@@ -54,8 +57,11 @@ body {
 .number {
   all: initial;
   color: #ebb28c;
-  text-shadow: -0.2px -0.2px 0#ff0000, 0.2px -0.2px 0#ff0000,
-    -0.2px 0.2px 0#ff0000, 0.2px 0.2px 0#ff0000;
+  text-shadow:
+    -0.2px -0.2px 0#ff0000,
+    0.2px -0.2px 0#ff0000,
+    -0.2px 0.2px 0#ff0000,
+    0.2px 0.2px 0#ff0000;
 }
 
 li {
@@ -102,7 +108,7 @@ li {
   }
 }
 
-#data-form {
+#statistics-form {
   height: 100%;
   .dropdowns {
     display: grid;
