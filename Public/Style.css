@@ -26,11 +26,8 @@ body {
   strong,
   em {
     color: #a7eedb;
-    text-shadow:
-      -0.2px -0.2px 0#d5dce2,
-      0.2px -0.2px 0#d5dce2,
-      -0.2px 0.2px 0#d5dce2,
-      0.2px 0.2px 0#d5dce2;
+    text-shadow: -0.2px -0.2px 0#d5dce2, 0.2px -0.2px 0#d5dce2,
+      -0.2px 0.2px 0#d5dce2, 0.2px 0.2px 0#d5dce2;
   }
 
   .Blue {
@@ -57,11 +54,8 @@ body {
 .number {
   all: initial;
   color: #ebb28c;
-  text-shadow:
-    -0.2px -0.2px 0#ff0000,
-    0.2px -0.2px 0#ff0000,
-    -0.2px 0.2px 0#ff0000,
-    0.2px 0.2px 0#ff0000;
+  text-shadow: -0.2px -0.2px 0#ff0000, 0.2px -0.2px 0#ff0000,
+    -0.2px 0.2px 0#ff0000, 0.2px 0.2px 0#ff0000;
 }
 
 li {
@@ -116,9 +110,9 @@ li {
     grid-template-rows: repeat(2, 1fr);
     margin: 1px;
     padding: 1px;
+    grid-gap: 10px;
     .statistics {
-      margin: clamp(0.1rem, 0.5vw, 1rem);
-      width: clamp(3rem, 20vw, 35vw);
+      width: auto;
       border-radius: clamp(1rem, 2vw, 2rem);
     }
     .monster-stat {
@@ -159,7 +153,7 @@ p {
   div {
     padding: 10px;
     width: 50%;
-    border-radius: 10px;
+    border-radius: 20px;
     box-shadow: 2px 2px 4px #283845;
     background-color: #283845;
     color: white;
@@ -167,6 +161,10 @@ p {
 
     h2 {
       font-size: 30px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
     }
 
     p {
@@ -175,7 +173,18 @@ p {
   }
 }
 
+@media (width >= 1080px) {
+  .top-divs {
+    width: clamp(20vw, 30vw, 50vw);
+    height: auto;
+  }
+}
 @media (width <= 850px) {
+  .top-divs {
+    width: 80%;
+    height: auto;
+    padding: 10px;
+  }
   .cards {
     grid-template-columns: repeat(2, 1fr);
     grid-gap: 20px;
@@ -200,27 +209,39 @@ p {
   }
 }
 
-@media (width <= 535px) {
+@media (width <= 700px) {
+  .top-divs {
+    width: 80%;
+    height: auto;
+  }
   .grid-data-input {
     display: grid;
     grid-template-columns: 1fr;
+    grid-gap: 20px;
+    margin-top: 20px;
   }
   .cards {
+    margin: 50px 20px 0px 20px;
     div {
+      width: 70%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+
       p {
         display: none;
       }
     }
   }
   .top-divs {
-    padding: 10px;
     border-radius: 20px;
-    width: auto;
+
     height: auto;
     box-shadow: 2px 2px 4px #283845;
     background-color: #283845;
     color: white;
-    margin: 20px;
+    margin: auto;
 
     p {
       font-size: 18px;
