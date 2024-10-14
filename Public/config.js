@@ -1,7 +1,7 @@
 //////////////////////////////////configuration and state///////////////////////////////////
 //////////////////////////////////||||||||||||||||||||||||///////////////////////////////////
 
-import { typeDropdown, colorDropdown } from "./domElements.js";
+import { formTypeDropdown, formColorDropdown } from "./domElements.js";
 import { createMonster } from "./monsterUI.js";
 
 export let x = undefined;
@@ -19,6 +19,7 @@ export const config = {
   fields: ["type", "name", "color"],
 };
 config.fields.push(...config.looks);
+
 // state- Skapa array med objekt(monster)
 export const state = {
   monsters: [
@@ -72,14 +73,15 @@ export const state = {
     return x;
   },
 };
+
 export const formHandler = {
   //funktion för att rensa inputfälten i formen
   resetForm: () => {
     config.fields.forEach((field) => {
       document.querySelector(`.${field}`).value = "";
     });
-    typeDropdown.value = config.typeOptions[0];
-    colorDropdown.value = config.colorOptions[0];
+    formTypeDropdown.value = config.typeOptions[0];
+    formColorDropdown.value = config.colorOptions[0];
   },
 
   //funktion för att hämta data från inputfälten
