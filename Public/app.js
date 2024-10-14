@@ -31,7 +31,7 @@ document.querySelector("#submit").addEventListener("click", (e) => {
     formHandler.resetForm();
     // Rendera om monsterlistan
     renderMonsterCards();
-
+  }
   //scrolla ner
   document.querySelector("footer").scrollIntoView({ behavior: "smooth" });
 
