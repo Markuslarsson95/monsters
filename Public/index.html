@@ -4,75 +4,78 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Monsters</title>
-    <script src="app.js" defer></script>
+    <script type="module" src="app.js" defer></script>
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <header></header>
+    <header>
+      <div><h1>Goblin Mode Hackers</h1></div>
+      <div><h1>The Monster Creator</h1></div>
+    </header>
 
     <!-- form -->
     <div class="grid-data-input">
-      <form class="top-divs" action="" id="add-form">
-        <label for="type-input">
+      <form class="top-divs" action="" id="monster-form">
+        <label for="type">
           <p>Type:</p>
-
-          <select name="type" id="type-input">
-            <option value="Maritime Monster">Maritime Monster</option>
-            <option value="Terrestrial Beast">Terrestrial Beast</option>
-            <option value="Winged Horror">Winged Horror</option>
-          </select>
+          <select name="type" class="type"></select>
         </label>
 
-        <label for="name-input">
+        <label for="name">
           <p>Name:</p>
-          <input id="name-input" name="nameinput" type="text" />
+          <input
+            class="name"
+            name="name"
+            type="text"
+            placeholder="Write your monster's name..."
+            required
+          />
         </label>
 
-        <label for="color-input">
+        <label for="color">
           <p>Color:</p>
-          <select name="type" id="color-input">
-            <option value="Blue">Blue</option>
-            <option value="Green">Green</option>
-            <option value="Yellow">Yellow</option>
-            <option value="Pink">Pink</option>
-            <option value="Red">Red</option>
-          </select>
+          <select name="color" class="color"></select>
         </label>
-
-        <label for="size-input">
-          <p>Size:</p>
-          <input name="size" id="size-input" type="number" />
-        </label>
-
-        <label for="eyes-input">
-          <p>Eyes amount:</p>
-          <input name="eyes" id="eyes-input" type="number" />
-        </label>
-
-        <label for="viciousness-input">
-          <p>Viciousness:</p>
-          <input name="viciousness" id="viciousness-input" type="number" />
-        </label>
-
-        <label for="head-input">
-          <p>Head amount:</p>
-          <input name="head" id="head-input" type="number" />
-        </label>
-        <button type="submit" id="submit">Add Monster</button>
       </form>
 
-      <div class="top-divs">
-        <!--DATA DIV-->
-        <select name="type" id="type-select">
-          <option value="Maritime Monster">Maritime Monster</option>
-          <option value="Terrestrial Beast">Terrestrial Beast</option>
-          <option value="Winged Horror">Winged Horror</option>
-        </select>
+      <!--DATA DIV-->
+      <div class="top-divs" id="statistics-form">
+        <div class="dropdowns">
+          <select name="type" id="type-data" class="type statistics"></select>
+          <select
+            name="color"
+            id="color-data"
+            class="color statistics"
+          ></select>
+        </div>
       </div>
     </div>
 
     <section class="cards"></section>
 
-    <footer></footer>
+    <footer>
+      <div>
+        <h1>Goblin Mode Hacker</h1>
+        <li>Markus</li>
+        <li>Mahdi</li>
+        <li>Fredrik</li>
+        <li>Elias</li>
+      </div>
+      <div>
+        <h1>Contact</h1>
+        <li>Markus@gmail.com</li>
+        <li>Mahdi@gmail.com</li>
+        <li>Fredrik@gmail.com</li>
+        <li>Elias@gmail.com</li>
+      </div>
+      <div>
+        <h1>Info</h1>
+        <p>
+          A small group of webdevelopers striving to create good websites for
+          the world and beyond. This is our Monster Creator App Go ahead and
+          create your monster!
+        </p>
+      </div>
+    </footer>
   </body>
 </html>

@@ -1,159 +1,103 @@
-// Deklarera Save-knappen globalt
-let saveButton = document.querySelector("#save-monster");
-if (!saveButton) {
-  saveButton = document.createElement("button");
-  saveButton.id = "save-monster";
-  saveButton.textContent = "Save Monster";
-  document.querySelector("#add-form").appendChild(saveButton);
-}
+/////////////////////////////////////////////App///////////////////////////////////
+////////////////////////////////////////////||||//////////////////////////////////
 
-const fields = [
-  "type-input",
-  "name-input",
-  "color-input",
-  "size-input",
-  "eyes-input",
-  "viciousness-input",
-  "head-input",
-];
+import { x, formHandler, state, config } from "./config.js";
 
-// state- Skapa array med objekt(monster)
-const state = {
-  monsters: [
-    {
-      type: "Maritime Monster",
-      name: "Kraken",
-      color: "Blue",
-      size: 50,
-      eyes: 256,
-      viciousness: 100,
-      head: 4,
-    },
-    {
-      type: "Terrestrial Beast",
-      name: "Mudfang",
-      color: "Red",
-      size: 80,
-      eyes: 2,
-      viciousness: 10,
-      head: 700,
-    },
-    {
-      type: "Winged Horror",
-      name: "Grimpflap",
-      color: "Pink",
-      size: 30,
-      eyes: 5,
-      viciousness: 51,
-      head: 1,
-    },
-  ],
-
-  //add Monster
-  addMonster: function (type, name, color, size, eyes, viciousness, head) {
-    this.monsters.push({
-      type,
-      name,
-      color,
-      size,
-      eyes,
-      viciousness,
-      head,
-    });
-  },
-
-  //funktion för att rensa inputfälten i formen
-  clearForm: () => {
-    fields.forEach((field) => {
-      document.querySelector(`#${field}`).value = "";
-    });
-    document.querySelector("#type-input").value = "Maritime Monster";
-    document.querySelector("#color-input").value = "Blue";
-  },
-
-  //funktion för att hämta inputfältens data
-  getFormData: () => {
-    return fields.map((field) => document.querySelector(`#${field}`).value);
-  },
-
-  //funktion för att fylla i inputfälten med data
-  populateForm: (monster) => {
-    fields.forEach((field) => {
-      document.querySelector(`#${field}`).value =
-        monster[field.replace("-input", "")];
-    });
-  },
-};
-
-//renderAll-funktion
-const renderMonsters = () => {
-  const card = document.querySelector(".cards");
-  card.innerHTML = "";
-
-  state.monsters.forEach((m, index) => {
-    const monster = document.createElement("div");
-    monster.innerHTML = `
-      <h2>${m.name}</h2>
-      <p>Type: ${m.type}</p>
-      <p>Color: ${m.color}</p>
-      <p>Size: ${m.size}</p>
-      <p>Eye Amount: ${m.eyes}</p>
-      <p>Viciousness: ${m.viciousness}</p>
-      <p>Head Amount: ${m.head}</p>
-      <button type="button" class="edit" data-index="${index}">Edit</button>
-    `;
-    card.appendChild(monster);
-  });
-};
+import {
+  renderMonsterCards,
+  updateTypeCount,
+  updateColorCount,
+  render,
+} from "./monsterUI.js";
+import { cancelButton, saveButton } from "./domElements.js";
 
 // initial render
-renderMonsters();
+render();
 
-//app
-
-//lyssnare för Add Monster
+//lyssnare för addMonster
 document.querySelector("#submit").addEventListener("click", (e) => {
   e.preventDefault();
 
-  const formData = state.getFormData();
+  cancelButton.style.display = "none";
+  saveButton.style.display = "none";
+  submitButton.textContent = "Add Monster";
+  const formData = formHandler.getFormData();
 
   state.addMonster(...formData);
 
-  state.clearForm();
-  renderMonsters();
+  if (x !== undefined) {
+    formHandler.resetForm();
+    // Rendera om monsterlistan
+    renderMonsterCards();
+
+    const scrollBottom = document.querySelector("footer");
+    scrollBottom.scrollIntoView({ behavior: "smooth" });
+    // Uppdatera statistiken för typ och färg efter att ha lagt till ett nytt monster
+    updateTypeCount();
+    updateColorCount();
+  }
 });
 
-//lyssnare för edit
+//lyssnare för editButton
 const cardContainer = document.querySelector(".cards");
-
+const submitButton = document.querySelector("#submit");
 //hur funkar det med event.target osv.?
 cardContainer.addEventListener("click", (event) => {
   if (event.target && event.target.classList.contains("edit")) {
     const index = event.target.getAttribute("data-index");
     const monster = state.monsters[index];
-    state.populateForm(monster);
+    formHandler.populateForm(monster);
 
     saveButton.setAttribute("data-index", index);
-    saveButton.style.display = "inline-block"; // Gör knappen synlig
+    saveButton.style.display = "inline-block"; // Gör saveButton synlig
+    cancelButton.style.display = "inline-block"; // Gör cancelButton synlig
+
+    //för att scrolla upp
+    const scrollTop = document.querySelector(".top-divs");
+    scrollTop.scrollIntoView({ behavior: "smooth" });
+
+    submitButton.textContent = "Copy Monster";
   }
 });
 
 //lyssnare saveButton
 saveButton.addEventListener("click", (e) => {
   e.preventDefault();
+  submitButton.textContent = "Add Monster";
   const index = saveButton.getAttribute("data-index");
-  const formData = state.getFormData();
+  const formData = formHandler.getFormData();
 
   const updatedMonster = {}; // Skapa ett tomt objekt för att lagra de uppdaterade värdena
 
-  fields.forEach((field, i) => {
-    updatedMonster[field.replace("-input", "")] = formData[i];
+  config.fields.forEach((field, inputValue) => {
+    updatedMonster[field] = formData[inputValue];
   });
 
   state.monsters[index] = updatedMonster; // Tilldela det uppdaterade monstret till rätt index
 
-  state.clearForm();
+  formHandler.resetForm();
   saveButton.removeAttribute("data-index");
   saveButton.style.display = "none";
-  renderMonsters(); // Rendera om listan
+  cancelButton.style.display = "none";
+  renderMonsterCards(); // Rendera om listan
+
+  const monsterElements = document.querySelectorAll(".cards > div");
+  const monsterElement = monsterElements[index];
+  if (monsterElement) {
+    monsterElement.scrollIntoView({ behavior: "smooth" });
+  }
+  updateTypeCount();
+  updateColorCount();
+});
+
+//lyssnare cancelButton
+
+cancelButton.addEventListener("click", function (e) {
+  e.preventDefault();
+  document.getElementById("monster-form").reset();
+  cancelButton.style.display = "none";
+  saveButton.style.display = "none";
+  submitButton.textContent = "Add Monster"; //Gör så att texten återvänder till "add monster" istället för "copy monster"
+  updateTypeCount();
+  updateColorCount();
 });
