@@ -4,17 +4,16 @@
 import { typeDropdown, colorDropdown } from "./domElements.js";
 import { createMonster } from "./monsterUI.js";
 
-export let x = undefined;
 // Konfigurationsobjekt för att lagra monster-relaterade inställningar
 // Innehåller typalternativ, färgalternativ, utseendeattribut och fält
 // Dessa inställningar används för att bygga och rendera monsterkort i applikationen
 export const config = {
   typeOptions: ["Maritime Monster", "Terrestrial Beast", "Winged Horror"],
 
-  colorOptions: ["Blue", "Green", "Yellow", "Pink", "Red"],
+  colorOptions: ["Blue", "Green", "Yellow", "Black", "Red"],
 
   // ändra denna för att kunna ändra på utseendealternativen
-  looks: ["size", "eyes", "viciousness", "head"],
+  looks: ["legs", "eyes", "viciousness", "head"],
 
   fields: ["type", "name", "color"],
 };
@@ -44,21 +43,6 @@ export const state = {
 
   //add Monster
   addMonster: function (type, name, color, size, eyes, viciousness, head) {
-    // Kontrollera att alla fält är ifyllda
-    if (
-      !type ||
-      !name ||
-      !color ||
-      size === undefined ||
-      eyes === undefined ||
-      viciousness === undefined ||
-      head === undefined
-    ) {
-      x = undefined;
-      alert("Alla fält måste vara ifyllda för att skapa ett monster.");
-      return x;
-    }
-
     const newMonster = createMonster(type, name, color, [
       size,
       eyes,
@@ -66,10 +50,6 @@ export const state = {
       head,
     ]);
     this.monsters.push(newMonster);
-
-    x = 0;
-    console.log(`x=${x}`);
-    return x;
   },
 };
 export const formHandler = {
@@ -86,7 +66,7 @@ export const formHandler = {
   getFormData: () => {
     const formData = [];
     config.fields.forEach((field) => {
-      const value = document.querySelector(`.${field}`).value;
+      const value = document.querySelector(`.${field}`).value.trim();
       formData.push(value);
     });
     return formData;
@@ -95,14 +75,19 @@ export const formHandler = {
   //funktion för att fylla i inputfälten med data
   populateForm: (monster) => {
     config.fields.forEach((field) => {
-      // Kontrollera att alla fält är ifyllda
-      if (!field === undefined) {
-        x = undefined;
-        alert("Alla fält måste vara ifyllda för att skapa ett monster.");
-        console.log(`x=${x}`);
-        return x;
-      }
       document.querySelector(`.${field}`).value = monster[field];
     });
+  },
+  //funktion för att validera att inputfälten inte är tomma
+  validateForm: () => {
+    console.log(`validateForm is running`);
+    let allFieldsFilled = true;
+    config.fields.forEach((field) => {
+      const value = document.querySelector(`.${field}`).value.trim();
+      if (!value) {
+        allFieldsFilled = false;
+      }
+    });
+    return allFieldsFilled;
   },
 };
