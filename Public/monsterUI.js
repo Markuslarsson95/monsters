@@ -46,8 +46,9 @@ const renderMonsterForm = () => {
     inputElement.min = "0";
     inputElement.max = "100";
     inputElement.required = true;
-    inputElement.addEventListener("input", function () {
-      if (this.value < 0) {
+    inputElement.addEventListener("input", function () {        // Lyssna på input-händelsen
+      this.value = this.value.replace(/[^0-9]/g, '');           // Ta bort allt som inte är siffror
+      if (this.value < 0) {                                     // Begränsa värden mellan 0 och 100
         this.value = 0;
       } else if (this.value > 100) {
         this.value = 100;
