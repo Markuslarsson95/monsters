@@ -70,24 +70,32 @@ saveButton.addEventListener("click", (e) => {
   const updatedMonster = {}; // Skapa ett tomt objekt för att lagra de uppdaterade värdena
 
   config.fields.forEach((field, inputValue) => {
+    // Kontrollera att alla fält är ifyllda
+    if (!inputValue) {
+      alert("Alla fält måste vara ifyllda för att skapa ett monster.");
+
+      return;
+    }
+
     updatedMonster[field] = formData[inputValue];
   });
+  if (x !== undefined) {
+    state.monsters[index] = updatedMonster; // Tilldela det uppdaterade monstret till rätt index
 
-  state.monsters[index] = updatedMonster; // Tilldela det uppdaterade monstret till rätt index
+    formHandler.resetForm();
+    saveButton.removeAttribute("data-index");
+    saveButton.style.display = "none";
+    cancelButton.style.display = "none";
+    renderMonsterCards(); // Rendera om listan
 
-  formHandler.resetForm();
-  saveButton.removeAttribute("data-index");
-  saveButton.style.display = "none";
-  cancelButton.style.display = "none";
-  renderMonsterCards(); // Rendera om listan
-
-  const monsterElements = document.querySelectorAll(".cards > div");
-  const monsterElement = monsterElements[index];
-  if (monsterElement) {
-    monsterElement.scrollIntoView({ behavior: "smooth" });
+    const monsterElements = document.querySelectorAll(".cards > div");
+    const monsterElement = monsterElements[index];
+    if (monsterElement) {
+      monsterElement.scrollIntoView({ behavior: "smooth" });
+    }
+    updateTypeCount();
+    updateColorCount();
   }
-  updateTypeCount();
-  updateColorCount();
 });
 
 //lyssnare cancelButton

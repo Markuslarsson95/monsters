@@ -95,6 +95,13 @@ export const formHandler = {
   //funktion för att fylla i inputfälten med data
   populateForm: (monster) => {
     config.fields.forEach((field) => {
+      // Kontrollera att alla fält är ifyllda
+      if (!field === undefined) {
+        x = undefined;
+        alert("Alla fält måste vara ifyllda för att skapa ett monster.");
+        console.log(`x=${x}`);
+        return x;
+      }
       document.querySelector(`.${field}`).value = monster[field];
     });
   },

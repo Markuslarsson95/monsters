@@ -49,6 +49,7 @@ const renderMonsterForm = () => {
     inputElement.setAttribute("placeholder", "0-100");
     inputElement.min = "0";
     inputElement.max = "100";
+    inputElement.step = "1";
     inputElement.required = true;
     inputElement.addEventListener("input", function () {
       if (this.value < 0) {
