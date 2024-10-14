@@ -31,12 +31,14 @@ export const createMonster = (type, name, color, lookValues) => {
     name,
     color,
   };
+
   //iterera igenom looks-egenskaper och tilldela värden
   config.looks.forEach((look, index) => {
     monster[look] = lookValues[index];
   });
   return monster;
 };
+
 const renderMonsterForm = () => {
   config.looks.forEach((look) => {
     const pElement = document.createElement("p");
@@ -44,6 +46,20 @@ const renderMonsterForm = () => {
     labelElement.textContent = look.charAt(0).toUpperCase() + look.slice(1);
     pElement.appendChild(labelElement);
     const inputElement = document.createElement("input");
+    inputElement.setAttribute("placeholder", "0-100");
+    inputElement.min = "0";
+    inputElement.max = "100";
+    inputElement.required = true;
+    inputElement.addEventListener("input", function () {
+      if (this.value < 0) {
+        this.value = 0;
+      } else if (this.value > 100) {
+        this.value = 100;
+      }
+    });
+
+    // inputElement.setAttribute("min", "0");
+    // inputElement.setAttribute("max", "3");
     inputElement.name = `${look}`;
     inputElement.className = `${look}`;
     inputElement.type = "number";

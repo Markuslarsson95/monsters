@@ -1,7 +1,7 @@
 /////////////////////////////////////////////App///////////////////////////////////
 ////////////////////////////////////////////||||//////////////////////////////////
 
-import { formHandler, state, config } from "./config.js";
+import { x, formHandler, state, config } from "./config.js";
 
 import {
   renderMonsterCards,
@@ -25,15 +25,17 @@ document.querySelector("#submit").addEventListener("click", (e) => {
 
   state.addMonster(...formData);
 
-  formHandler.resetForm();
-  // Rendera om monsterlistan
-  renderMonsterCards();
+  if (x !== undefined) {
+    formHandler.resetForm();
+    // Rendera om monsterlistan
+    renderMonsterCards();
 
-  const scrollBottom = document.querySelector("footer");
-  scrollBottom.scrollIntoView({ behavior: "smooth" });
-  // Uppdatera statistiken för typ och färg efter att ha lagt till ett nytt monster
-  updateTypeCount();
-  updateColorCount();
+    const scrollBottom = document.querySelector("footer");
+    scrollBottom.scrollIntoView({ behavior: "smooth" });
+    // Uppdatera statistiken för typ och färg efter att ha lagt till ett nytt monster
+    updateTypeCount();
+    updateColorCount();
+  }
 });
 
 //lyssnare för editButton
