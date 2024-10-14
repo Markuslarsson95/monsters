@@ -4,6 +4,7 @@
 import { formTypeDropdown, formColorDropdown } from "./domElements.js";
 import { createMonster } from "./monsterUI.js";
 
+export let x = undefined;
 // Konfigurationsobjekt för att lagra monster-relaterade inställningar
 // Innehåller typalternativ, färgalternativ, utseendeattribut och fält
 // Dessa inställningar används för att bygga och rendera monsterkort i applikationen
@@ -44,6 +45,21 @@ export const state = {
 
   //add Monster
   addMonster: function (type, name, color, size, eyes, viciousness, head) {
+    // Kontrollera att alla fält är ifyllda
+    if (
+      !type ||
+      !name ||
+      !color ||
+      size === undefined ||
+      eyes === undefined ||
+      viciousness === undefined ||
+      head === undefined
+    ) {
+      x = undefined;
+      alert("Alla fält måste vara ifyllda för att skapa ett monster.");
+      return x;
+    }
+
     const newMonster = createMonster(type, name, color, [
       size,
       eyes,
@@ -51,6 +67,10 @@ export const state = {
       head,
     ]);
     this.monsters.push(newMonster);
+
+    x = 0;
+    console.log(`x=${x}`);
+    return x;
   },
 };
 

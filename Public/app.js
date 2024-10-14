@@ -1,7 +1,7 @@
 /////////////////////////////////////////////App///////////////////////////////////
 ////////////////////////////////////////////||||//////////////////////////////////
 
-import { formHandler, state, config } from "./config.js";
+import { x, formHandler, state, config } from "./config.js";
 
 import {
   renderMonsterCards,
@@ -27,9 +27,10 @@ document.querySelector("#submit").addEventListener("click", (e) => {
 
   state.addMonster(...formData);
 
-  formHandler.resetForm();
-  // Rendera om monsterlistan
-  renderMonsterCards();
+  if (x !== undefined) {
+    formHandler.resetForm();
+    // Rendera om monsterlistan
+    renderMonsterCards();
 
   //scrolla ner
   document.querySelector("footer").scrollIntoView({ behavior: "smooth" });
