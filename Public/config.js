@@ -49,14 +49,20 @@ export const state = {
       !type ||
       !name ||
       !color ||
-      size === undefined ||
-      eyes === undefined ||
-      viciousness === undefined ||
-      head === undefined
+      size === "" ||
+      eyes === "" ||
+      viciousness === "" ||
+      head === ""
     ) {
       x = undefined;
       alert("Alla fält måste vara ifyllda för att skapa ett monster.");
       return x;
+    }
+
+    const nameControl = /^[A-Za-z\s]+$/;
+    if (!nameControl.test(name)) {
+      alert("The name can only contain letters. No Numbers or special symbols");
+      return;
     }
 
     const newMonster = createMonster(type, name, color, [
