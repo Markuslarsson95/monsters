@@ -14,6 +14,8 @@ import { cancelButton, saveButton } from "./domElements.js";
 // initial render
 render();
 
+const submitButton = document.querySelector("#submit");
+
 //lyssnare för addMonster
 document.querySelector("#submit").addEventListener("click", (e) => {
   e.preventDefault();
@@ -29,8 +31,9 @@ document.querySelector("#submit").addEventListener("click", (e) => {
   // Rendera om monsterlistan
   renderMonsterCards();
 
-  const scrollBottom = document.querySelector("footer");
-  scrollBottom.scrollIntoView({ behavior: "smooth" });
+  //scrolla ner
+  document.querySelector("footer").scrollIntoView({ behavior: "smooth" });
+
   // Uppdatera statistiken för typ och färg efter att ha lagt till ett nytt monster
   updateTypeCount();
   updateColorCount();
@@ -38,8 +41,6 @@ document.querySelector("#submit").addEventListener("click", (e) => {
 
 //lyssnare för editButton
 const cardContainer = document.querySelector(".cards");
-const submitButton = document.querySelector("#submit");
-//hur funkar det med event.target osv.?
 cardContainer.addEventListener("click", (event) => {
   if (event.target && event.target.classList.contains("edit")) {
     const index = event.target.getAttribute("data-index");
@@ -51,8 +52,7 @@ cardContainer.addEventListener("click", (event) => {
     cancelButton.style.display = "inline-block"; // Gör cancelButton synlig
 
     //för att scrolla upp
-    const scrollTop = document.querySelector(".top-divs");
-    scrollTop.scrollIntoView({ behavior: "smooth" });
+    document.querySelector(".top-divs").scrollIntoView({ behavior: "smooth" });
 
     submitButton.textContent = "Copy Monster";
   }
@@ -89,10 +89,10 @@ saveButton.addEventListener("click", (e) => {
 });
 
 //lyssnare cancelButton
-
-cancelButton.addEventListener("click", function (e) {
+cancelButton.addEventListener("click", (e) => {
   e.preventDefault();
-  document.getElementById("monster-form").reset();
+  // document.getElementById("monster-form").reset();
+  formHandler.resetForm();
   cancelButton.style.display = "none";
   saveButton.style.display = "none";
   submitButton.textContent = "Add Monster"; //Gör så att texten återvänder till "add monster" istället för "copy monster"
