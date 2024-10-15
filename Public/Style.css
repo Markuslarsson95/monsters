@@ -2,11 +2,13 @@ header {
   display: flex;
   justify-content: space-between;
   background-color: #283845;
+}
+h1,
+h2 {
+  margin: clamp(0.4rem, 1.6rem, 2.3rem);
+  font-size: clamp(1rem, 1.28rem, 2rem);
 
-  h1 {
-    padding: 0.1em 30px;
-    color: white;
-  }
+  color: white;
 }
 
 footer {
@@ -16,8 +18,20 @@ footer {
   margin-top: 50px;
   color: white;
 
-  div {
+  section,
+  address {
     margin: 10px;
+    h3 {
+      font-size: clamp(0.8rem, 1rem, 1.2rem);
+
+      color: white;
+
+      font-style: normal;
+    }
+
+    li {
+      font-style: normal;
+    }
   }
 }
 body {
@@ -31,6 +45,20 @@ body {
       0.2px -0.2px 0#d5dce2,
       -0.2px 0.2px 0#d5dce2,
       0.2px 0.2px 0#d5dce2;
+  }
+
+  label input,
+  select {
+    display: block;
+    margin: 5px;
+  }
+
+  ul {
+    margin-block-start: 0;
+    margin-block-end: 0;
+    margin-inline-start: 0;
+    margin-inline-end: 0;
+    padding-inline-start: 0;
   }
 
   .Blue {
@@ -227,17 +255,23 @@ p {
 }
 
 footer {
-  h1 {
-    font-size: 25px;
+  h1,
+  h2 {
+    font-size: clamp(1rem, 1.28rem, 1.5rem);
+
+    color: white;
   }
-  li {
-    font-size: 15px;
+  li,
+  p {
+    font-size: clamp(0.7rem, 0.8rem, 1.2rem);
   }
 }
 header {
-  h1 {
-    font-size: 20px;
-    padding: 10px;
+  h1,
+  h2 {
+    font-size: clamp(1rem, 1.28rem, 1.5rem);
+
+    color: white;
   }
 }
 
