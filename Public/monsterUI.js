@@ -37,15 +37,15 @@ export const createMonster = (type, name, color, lookValues) => {
 
 const renderMonsterForm = () => {
   config.looks.forEach((look) => {
-    const pElement = document.createElement("p");
-    const labelElement = document.createElement("label");
-    labelElement.textContent = look.charAt(0).toUpperCase() + look.slice(1);
-    pElement.appendChild(labelElement);
     const inputElement = document.createElement("input");
-    inputElement.setAttribute("placeholder", "0-100");
+    inputElement.setAttribute("id", `${look}`);
     inputElement.min = "0";
     inputElement.max = "100";
+    inputElement.setAttribute("placeholder", "0-100");
     inputElement.required = true;
+    const labelElement = document.createElement("label");
+    labelElement.textContent = look.charAt(0).toUpperCase() + look.slice(1);
+    labelElement.setAttribute("for", inputElement.id);
     inputElement.addEventListener("input", function () {
       if (this.value < 0) {
         this.value = 0;
@@ -59,8 +59,8 @@ const renderMonsterForm = () => {
     inputElement.name = `${look}`;
     inputElement.className = `${look}`;
     inputElement.type = "number";
-    monsterForm.appendChild(pElement);
-    monsterForm.appendChild(inputElement);
+    monsterForm.appendChild(labelElement);
+    labelElement.appendChild(inputElement);
   });
   const buttonElement = document.createElement("button");
   buttonElement.type = "submit";

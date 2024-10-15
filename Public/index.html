@@ -14,16 +14,17 @@
     </header>
 
     <!-- form -->
-    <div class="grid-data-input">
+    <section class="grid-data-input">
       <form class="top-divs" action="" id="monster-form">
-        <label for="type">
-          <p>Type:</p>
-          <select name="type" class="type"></select>
+        <label for="type"
+          >Type:
+          <select id="type" name="type" class="type"></select>
         </label>
 
-        <label for="name">
-          <p>Name:</p>
+        <label for="name"
+          >Name:
           <input
+            id="name"
             class="name"
             name="name"
             type="text"
@@ -32,24 +33,28 @@
           />
         </label>
 
-        <label for="color">
-          <p>Color:</p>
-          <select name="color" class="color"></select>
+        <label for="color"
+          >Color:
+          <select id="color" name="color" class="color"></select>
         </label>
       </form>
 
       <!--DATA DIV-->
-      <div class="top-divs" id="statistics-form">
-        <div class="dropdowns">
-          <select name="type" id="type-data" class="type statistics"></select>
-          <select
-            name="color"
-            id="color-data"
-            class="color statistics"
-          ></select>
-        </div>
-      </div>
-    </div>
+      <section class="top-divs" id="statistics-form">
+        <section class="dropdowns">
+          <label for="type-data"
+            ><select name="type" id="type-data" class="type statistics"></select
+          ></label>
+          <label for="color-data">
+            <select
+              name="color"
+              id="color-data"
+              class="color statistics"
+            ></select>
+          </label>
+        </section>
+      </section>
+    </section>
 
     <section class="cards"></section>
 
