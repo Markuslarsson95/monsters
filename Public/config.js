@@ -14,7 +14,7 @@ export const config = {
   colorOptions: ["Blue", "Green", "Yellow", "Pink", "Red"],
 
   // ändra denna för att kunna ändra på utseendealternativen
-  looks: ["size", "eyes", "viciousness", "head"],
+  looks: ["size", "eyes", "viciousness", "head", "janne"],
 
   fields: ["type", "name", "color"],
 };
