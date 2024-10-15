@@ -1,7 +1,7 @@
 /////////////////////////////////////////////App///////////////////////////////////
 ////////////////////////////////////////////||||//////////////////////////////////
 
-import { x, formHandler, state, config } from "./config.js";
+import { formHandler, state, config } from "./config and state.js";
 
 import {
   renderMonsterCards,
@@ -11,6 +11,7 @@ import {
 } from "./monsterUI.js";
 import { cancelButton, saveButton } from "./domElements.js";
 
+let isEditing = false;
 // initial render
 render();
 
@@ -20,10 +21,25 @@ const submitButton = document.querySelector("#submit");
 document.querySelector("#submit").addEventListener("click", (e) => {
   e.preventDefault();
 
+  // Om vi är i redigeringsläge, hoppa över denna händelse
+  if (isEditing) {
+    // Validera att alla fält är ifyllda
+    if (!formHandler.validateForm()) {
+      alert("Please complete all required fields to proceed!");
+      return; // Avbryt om något fält är tomt
+    }
+  }
+
   cancelButton.style.display = "none";
   saveButton.style.display = "none";
   submitButton.textContent = "Add Monster";
   const formData = formHandler.getFormData();
+
+  // Validera att alla fält är ifyllda
+  if (!formHandler.validateForm()) {
+    alert("Please complete all required fields to proceed!");
+    return; // Avbryt om något fält är tomt
+  }
 
   state.addMonster(...formData);
 
@@ -44,6 +60,7 @@ document.querySelector("#submit").addEventListener("click", (e) => {
 const cardContainer = document.querySelector(".cards");
 cardContainer.addEventListener("click", (event) => {
   if (event.target && event.target.classList.contains("edit")) {
+    isEditing = true;
     const index = event.target.getAttribute("data-index");
     const monster = state.monsters[index];
     formHandler.populateForm(monster);
@@ -62,7 +79,7 @@ cardContainer.addEventListener("click", (event) => {
 //lyssnare saveButton
 saveButton.addEventListener("click", (e) => {
   e.preventDefault();
-  submitButton.textContent = "Add Monster";
+
   const index = saveButton.getAttribute("data-index");
   const formData = formHandler.getFormData();
 
@@ -72,6 +89,13 @@ saveButton.addEventListener("click", (e) => {
     updatedMonster[field] = formData[inputValue];
   });
 
+  // Validera att alla fält är ifyllda
+  if (!formHandler.validateForm()) {
+    alert("Please complete all required fields to proceed!");
+    return; // Avbryt om något fält är tomt
+  }
+  isEditing = false;
+  submitButton.textContent = "Add Monster";
   state.monsters[index] = updatedMonster; // Tilldela det uppdaterade monstret till rätt index
 
   formHandler.resetForm();
@@ -97,6 +121,4 @@ cancelButton.addEventListener("click", (e) => {
   cancelButton.style.display = "none";
   saveButton.style.display = "none";
   submitButton.textContent = "Add Monster"; //Gör så att texten återvänder till "add monster" istället för "copy monster"
-  updateTypeCount();
-  updateColorCount();
 });
