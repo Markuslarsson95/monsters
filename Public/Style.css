@@ -26,8 +26,11 @@ body {
   strong,
   em {
     color: #a7eedb;
-    text-shadow: -0.2px -0.2px 0#d5dce2, 0.2px -0.2px 0#d5dce2,
-      -0.2px 0.2px 0#d5dce2, 0.2px 0.2px 0#d5dce2;
+    text-shadow:
+      -0.2px -0.2px 0#d5dce2,
+      0.2px -0.2px 0#d5dce2,
+      -0.2px 0.2px 0#d5dce2,
+      0.2px 0.2px 0#d5dce2;
   }
 
   .Blue {
@@ -54,8 +57,11 @@ body {
 .number {
   all: initial;
   color: #ebb28c;
-  text-shadow: -0.2px -0.2px 0#ff0000, 0.2px -0.2px 0#ff0000,
-    -0.2px 0.2px 0#ff0000, 0.2px 0.2px 0#ff0000;
+  text-shadow:
+    -0.2px -0.2px 0#ff0000,
+    0.2px -0.2px 0#ff0000,
+    -0.2px 0.2px 0#ff0000,
+    0.2px 0.2px 0#ff0000;
 }
 
 li {
@@ -70,7 +76,7 @@ li {
 .top-divs {
   display: flex;
   flex-direction: column;
-  padding: 0.1em 30px;
+  padding: clamp(1rem, 2vw, 2rem);
   border-radius: 20px;
   width: 50%;
   height: auto;
@@ -81,43 +87,45 @@ li {
   font-size: clamp(1rem, 2vw, 2rem);
 
   p {
-    font-size: 17px;
+    font-size: clamp(1rem, 2vw, 2rem);
     margin-top: 4px;
   }
   input {
-    width: 80%;
+    width: 90%;
     padding: 2px;
     border-radius: 10px;
     border: solid 1px #283845;
-    height: 25px;
-    font-size: 15px;
+    height: auto;
+    font-size: clamp(1rem, 2vw, 1rem);
   }
   select {
-    width: 80%;
+    width: 90%;
     padding: 2px;
     border-radius: 10px;
     border: solid 1px #283845;
-    height: 25px;
-    font-size: 15px;
+    height: auto;
+    font-size: clamp(1rem, 2vw, 1rem);
   }
 }
 
 #statistics-form {
+  margin: 0 clamp(1rem, 8vw, 3rem) 0 clamp(1rem, 8vw, 3rem);
   height: 100%;
+
   .dropdowns {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    grid-template-rows: repeat(2, 1fr);
     margin: 1px;
     padding: 1px;
-    grid-gap: 10px;
+    grid-gap: clamp(0.66rem, 2vw, 2rem);
     .statistics {
-      width: auto;
-      border-radius: clamp(1rem, 2vw, 2rem);
+      width: clamp(8vw, 14vw, 50vw);
+      font-size: clamp(0.66rem, 2vw, 1rem);
+      border-radius: clamp(1rem, 2vw, 1rem);
     }
     .monster-stat {
       padding: 1px;
-      font-size: 20px;
+      font-size: clamp(0.8rem, 2vw, 1rem);
     }
   }
 }
@@ -173,13 +181,28 @@ p {
   }
 }
 
-@media (width >= 1080px) {
+@media (width >= 1023px) {
   .top-divs {
     width: clamp(20vw, 30vw, 50vw);
     height: auto;
+    input {
+      width: 100%;
+    }
+    select {
+      width: 100%;
+    }
+  }
+  #statistics-form {
+    .dropdowns {
+      .statistics {
+        width: clamp(8vw, 14vw, 35vw);
+        font-size: clamp(0.66rem, 1.5vw, 1.5rem);
+        border-radius: clamp(1rem, 2vw, 2rem);
+      }
+    }
   }
 }
-@media (width <= 850px) {
+@media (width <= 930px) {
   .top-divs {
     width: 80%;
     height: auto;
@@ -192,20 +215,29 @@ p {
       width: 80%;
     }
   }
-
-  footer {
-    h1 {
-      font-size: 25px;
-    }
-    li {
-      font-size: 15px;
+  #statistics-form {
+    .dropdowns {
+      .statistics {
+        width: clamp(8vw, 20vw, 50vw);
+        font-size: clamp(0.5rem, 2.7vw, 1rem);
+        border-radius: clamp(1rem, 2vw, 1rem);
+      }
     }
   }
-  header {
-    h1 {
-      font-size: 20px;
-      padding: 10px;
-    }
+}
+
+footer {
+  h1 {
+    font-size: 25px;
+  }
+  li {
+    font-size: 15px;
+  }
+}
+header {
+  h1 {
+    font-size: 20px;
+    padding: 10px;
   }
 }
 
@@ -216,6 +248,7 @@ p {
   }
   .grid-data-input {
     display: grid;
+    justify-items: center;
     grid-template-columns: 1fr;
     grid-gap: 20px;
     margin-top: 20px;
