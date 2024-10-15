@@ -24,7 +24,16 @@ let colorCountDisplay = statisticsContainer.querySelector(".color-display");
 //////////////////////////////////||||||||||||||||||||||///////////////////////////////////
 
 //funktion för att bygga monster dynamiskt
-export const createMonster = (type, name, color, lookValues) => {
+export const createMonster = (
+  type,
+  name,
+  color,
+  lookValues,
+  defaultMonsterAttributes
+) => {
+  //pusha dynamiska utseendeattribut som skapas i looks-arrayen
+  lookValues.push(...defaultMonsterAttributes);
+  console.log(`snookValues=${lookValues}`);
   const monster = {
     type,
     name,
@@ -50,9 +59,11 @@ const renderMonsterForm = () => {
     inputElement.max = "100";
     inputElement.step = "1";
     inputElement.required = true;
-    inputElement.addEventListener("input", function () {        // Lyssna på input-händelsen
-      this.value = this.value.replace(/[^0-9]/g, '');           // Ta bort allt som inte är siffror
-      if (this.value < 0) {                                     // Begränsa värden mellan 0 och 100
+    inputElement.addEventListener("input", function () {
+      // Lyssna på input-händelsen
+      this.value = this.value.replace(/[^0-9]/g, ""); // Ta bort allt som inte är siffror
+      if (this.value < 0) {
+        // Begränsa värden mellan 0 och 100
         this.value = 0;
       } else if (this.value > 100) {
         this.value = 100;

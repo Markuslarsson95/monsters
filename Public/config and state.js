@@ -13,11 +13,19 @@ export const config = {
   colorOptions: ["Blue", "Green", "Yellow", "Black", "Red"],
 
   // ändra denna för att kunna ändra på utseendealternativen
-  looks: ["legs", "eyes", "viciousness", "head", "janne", "olle"],
+  looks: ["legs", "eyes", "viciousness", "head", "death", "life"],
 
   fields: ["type", "name", "color"],
 };
 config.fields.push(...config.looks);
+
+const defaultMonsterAttribute = 0;
+const defaultMonsterAttributes = config.looks.map(
+  () => defaultMonsterAttribute
+);
+console.log(`defaultLooksValue=${defaultMonsterAttributes}`);
+defaultMonsterAttributes.splice(0, 4);
+console.log(`spliceddefaultLooksValue=${defaultMonsterAttributes}`);
 
 // state- Skapa array med objekt(monster)
 export const state = {
@@ -26,19 +34,22 @@ export const state = {
       config.typeOptions[0],
       "Kraken",
       config.colorOptions[0],
-      [50, 100, 50, 4, 22, 33]
+      [10, 2, 39, 3],
+      defaultMonsterAttributes
     ),
     createMonster(
       config.typeOptions[1],
       "Mudfang",
       config.colorOptions[4],
-      [30, 5, 51, 1, 22, 33]
+      [10, 2, 39, 3],
+      defaultMonsterAttributes
     ),
     createMonster(
       config.typeOptions[2],
       "Grimflap",
       config.colorOptions[3],
-      [30, 5, 51, 1, 22, 33]
+      [10, 2, 39, 3],
+      defaultMonsterAttributes
     ),
   ],
 
