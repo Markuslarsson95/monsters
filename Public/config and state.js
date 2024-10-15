@@ -13,7 +13,7 @@ export const config = {
   colorOptions: ["Blue", "Green", "Yellow", "Black", "Red"],
 
   // ändra denna för att kunna ändra på utseendealternativen
-  looks: ["legs", "eyes", "viciousness", "head"],
+  looks: ["legs", "eyes", "viciousness", "head", "janne", "olle"],
 
   fields: ["type", "name", "color"],
 };
@@ -25,30 +25,28 @@ export const state = {
       config.typeOptions[0],
       "Kraken",
       config.colorOptions[0],
-      [50, 100, 50, 4]
+      [50, 100, 50, 4, 22, 33]
     ),
     createMonster(
       config.typeOptions[1],
       "Mudfang",
       config.colorOptions[4],
-      [30, 5, 51, 1]
+      [30, 5, 51, 1, 22, 33]
     ),
     createMonster(
       config.typeOptions[2],
       "Grimflap",
       config.colorOptions[3],
-      [30, 5, 51, 1]
+      [30, 5, 51, 1, 22, 33]
     ),
   ],
 
   //add Monster
-  addMonster: function (type, name, color, size, eyes, viciousness, head) {
-    const newMonster = createMonster(type, name, color, [
-      size,
-      eyes,
-      viciousness,
-      head,
-    ]);
+  addMonster: function (type, name, color, ...attributeValues) {
+    // De första tre fälten är alltid type, name, color
+    const lookValues = attributeValues;
+
+    const newMonster = createMonster(type, name, color, lookValues);
     this.monsters.push(newMonster);
   },
 };
@@ -63,11 +61,13 @@ export const formHandler = {
   },
 
   //funktion för att hämta data från inputfälten
+
   getFormData: () => {
     const formData = [];
-    config.fields.forEach((field) => {
-      const value = document.querySelector(`.${field}`).value.trim();
-      formData.push(value);
+    config.fields.concat(config.looks).forEach((field) => {
+      const inputElement = document.querySelector(`.${field}`);
+      const inputValue = inputElement ? inputElement.value : "";
+      formData.push(inputValue);
     });
     return formData;
   },
