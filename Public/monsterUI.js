@@ -31,7 +31,8 @@ export const createMonster = (
   lookValues,
   defaultMonsterAttributes
 ) => {
-  //pusha dynamiska utseendeattribut som skapas i looks-arrayen
+  // Lägger till standardutseendeattribut från defaultLooksValues till lookValues,
+  // vilket säkerställer att varje monster får dessa attribut om inga andra anges.
   lookValues.push(...defaultMonsterAttributes);
   console.log(`snookValues=${lookValues}`);
   const monster = {

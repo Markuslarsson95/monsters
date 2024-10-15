@@ -34,7 +34,7 @@ export const state = {
       config.typeOptions[0],
       "Kraken",
       config.colorOptions[0],
-      [10, 2, 39, 3],
+      [10, 2, 39, 3, 23, 23],
       defaultMonsterAttributes
     ),
     createMonster(
