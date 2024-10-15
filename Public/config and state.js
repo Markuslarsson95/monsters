@@ -92,4 +92,14 @@ export const formHandler = {
     });
     return allFieldsFilled;
   },
+
+  validateName: () => {
+    const nameControl = /^[A-Za-z\s]+$/;
+    const name = document.querySelector(".name").value.trim();
+    if (!nameControl.test(name)) {
+      alert("The name can only contain letters. No Numbers or special symbols");
+      return false;
+    }
+    return true;
+  },
 };

@@ -40,6 +40,9 @@ document.querySelector("#submit").addEventListener("click", (e) => {
     alert("Please complete all required fields to proceed!");
     return; // Avbryt om något fält är tomt
   }
+  if (!formHandler.validateName()) {
+    return;
+  }
 
   state.addMonster(...formData);
 
