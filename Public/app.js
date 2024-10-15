@@ -43,11 +43,9 @@ document.querySelector("#submit").addEventListener("click", (e) => {
 
   state.addMonster(...formData);
 
-  if (x !== undefined) {
-    formHandler.resetForm();
-    // Rendera om monsterlistan
-    renderMonsterCards();
-  }
+  formHandler.resetForm();
+
+  renderMonsterCards();
   //scrolla ner
   document.querySelector("footer").scrollIntoView({ behavior: "smooth" });
 
