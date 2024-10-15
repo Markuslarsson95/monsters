@@ -39,12 +39,12 @@ body {
   margin: 0;
   strong,
   em {
-    color: #a7eedb;
+    color: #a7ed08;
     text-shadow:
-      -0.2px -0.2px 0#d5dce2,
-      0.2px -0.2px 0#d5dce2,
-      -0.2px 0.2px 0#d5dce2,
-      0.2px 0.2px 0#d5dce2;
+      -0.025rem -0.025rem 0#d42222,
+      0.025rem -0.025rem 0#d42222,
+      -0.025rem 0.025rem 0#d42222,
+      0.025rem 0.025rem 0#d42222;
   }
 
   label input,
@@ -86,10 +86,10 @@ body {
   all: initial;
   color: #ebb28c;
   text-shadow:
-    -0.2px -0.2px 0#ff0000,
-    0.2px -0.2px 0#ff0000,
-    -0.2px 0.2px 0#ff0000,
-    0.2px 0.2px 0#ff0000;
+    -0.025rem -0.025rem 0#ff0000,
+    0.025rem -0.025rem 0#ff0000,
+    -0.025rem 0.025rem 0#ff0000,
+    0.025rem 0.025rem 0#ff0000;
 }
 
 li {
