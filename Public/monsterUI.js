@@ -10,7 +10,7 @@ import {
   cancelButton,
   saveButton,
 } from "./domElements.js";
-import { config, state } from "./config and state.js";
+import { config, state } from "./configAndState.js";
 
 //////////////////////////////////Global Scope variables///////////////////////////////////
 //////////////////////////////////||||||||||||||||||||||///////////////////////////////////
