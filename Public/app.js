@@ -25,7 +25,6 @@ document.querySelector("#submit").addEventListener("click", (e) => {
   if (isEditing) {
     // Validera att alla fält är ifyllda
     if (!formHandler.validateForm()) {
-      alert("Please complete all required fields to proceed!");
       return; // Avbryt om något fält är tomt
     }
   }
@@ -37,13 +36,8 @@ document.querySelector("#submit").addEventListener("click", (e) => {
 
   // Validera att alla fält är ifyllda
   if (!formHandler.validateForm()) {
-    alert("Please complete all required fields to proceed!");
     return; // Avbryt om något fält är tomt
   }
-  if (!formHandler.validateName()) {
-    return;
-  }
-  console.log(`formData när vi kopierar: ${formData}`);
 
   // Kopiera monstret
   state.addMonster(...formData);
@@ -94,7 +88,6 @@ saveButton.addEventListener("click", (e) => {
 
   // Validera att alla fält är ifyllda
   if (!formHandler.validateForm()) {
-    alert("Please complete all required fields to proceed!");
     return; // Avbryt om något fält är tomt
   }
   isEditing = false;

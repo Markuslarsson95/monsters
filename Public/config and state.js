@@ -84,24 +84,25 @@ export const formHandler = {
   },
   //funktion för att validera att inputfälten inte är tomma
   validateForm: () => {
-    console.log(`validateForm is running`);
     let allFieldsFilled = true;
+    let allFieldsValid = true;
     config.fields.forEach((field) => {
       const value = document.querySelector(`.${field}`).value.trim();
       if (!value) {
         allFieldsFilled = false;
       }
-    });
-    return allFieldsFilled;
-  },
 
-  validateName: () => {
-    const nameControl = /^[A-Za-z\s]+$/;
-    const name = document.querySelector(".name").value.trim();
-    if (!nameControl.test(name)) {
-      alert("The name can only contain letters. No Numbers or special symbols");
-      return false;
+      // Kolla om fältet innehåller ogiltiga tecken
+      const invalidCharacters = /[^a-zA-Z0-9 ]/; // Tillåt bara bokstäver, siffror och mellanslag
+      if (invalidCharacters.test(value)) {
+        allFieldsValid = false;
+        alert(`The ${field} field contains invalid characters.`);
+      }
+    });
+    if (allFieldsFilled && allFieldsValid) {
+      return true;
+    } else {
+      alert("Complete all fields");
     }
-    return true;
   },
 };
