@@ -43,7 +43,9 @@ document.querySelector("#submit").addEventListener("click", (e) => {
   if (!formHandler.validateName()) {
     return;
   }
+  console.log(`formData när vi kopierar: ${formData}`);
 
+  // Kopiera monstret
   state.addMonster(...formData);
 
   formHandler.resetForm();

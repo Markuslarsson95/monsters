@@ -33,23 +33,22 @@ export const createMonster = (type, name, color, lookValues) => {
 
   //iterera igenom looks-egenskaper och tilldela värden
   config.looks.forEach((look, index) => {
-    monster[look] = lookValues[index];
+    monster[look] = lookValues[index] !== undefined ? lookValues[index] : 0;
   });
   return monster;
 };
 
 const renderMonsterForm = () => {
   config.looks.forEach((look) => {
-    const pElement = document.createElement("p");
-    const labelElement = document.createElement("label");
-    labelElement.textContent = look.charAt(0).toUpperCase() + look.slice(1);
-    pElement.appendChild(labelElement);
     const inputElement = document.createElement("input");
-    inputElement.setAttribute("placeholder", "0-100");
+    inputElement.setAttribute("id", `${look}`);
     inputElement.min = "0";
     inputElement.max = "100";
     inputElement.step = "1";
     inputElement.required = true;
+    const labelElement = document.createElement("label");
+    labelElement.textContent = look.charAt(0).toUpperCase() + look.slice(1);
+    labelElement.setAttribute("for", inputElement.id);
     inputElement.addEventListener("input", function () {
       // Lyssna på input-händelsen
       this.value = this.value.replace(/[^0-9]/g, ""); // Ta bort allt som inte är siffror
@@ -66,8 +65,8 @@ const renderMonsterForm = () => {
     inputElement.name = `${look}`;
     inputElement.className = `${look}`;
     inputElement.type = "number";
-    monsterForm.appendChild(pElement);
-    monsterForm.appendChild(inputElement);
+    monsterForm.appendChild(labelElement);
+    labelElement.appendChild(inputElement);
   });
   const buttonElement = document.createElement("button");
   buttonElement.type = "submit";

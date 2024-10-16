@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -10,20 +10,26 @@
   <body>
     <header>
       <div><h1>Goblin Mode Hackers</h1></div>
-      <div><h1>The Monster Creator</h1></div>
+      <img
+        id="logo"
+        src="pics/DALL·E 2024-10-16 02.14.49 - A stylized logo representing a 'Goblin Mode Hacker'. The logo should feature a playful yet fierce goblin character with digital elements, such as code.webp"
+        alt="A Goblin Mode Hacker"
+      />
+      <div><h2>The Monster Creator</h2></div>
     </header>
 
     <!-- form -->
-    <div class="grid-data-input">
+    <section class="grid-data-input">
       <form class="top-divs" action="" id="monster-form">
-        <label for="type">
-          <p>Type:</p>
-          <select name="type" class="type"></select>
+        <label for="type"
+          >Type:
+          <select id="type" name="type" class="type"></select>
         </label>
 
-        <label for="name">
-          <p>Name:</p>
+        <label for="name"
+          >Name:
           <input
+            id="name"
             class="name"
             name="name"
             type="text"
@@ -33,50 +39,60 @@
           />
         </label>
 
-        <label for="color">
-          <p>Color:</p>
-          <select name="color" class="color"></select>
+        <label for="color"
+          >Color:
+          <select id="color" name="color" class="color"></select>
         </label>
       </form>
 
       <!--DATA DIV-->
-      <div class="top-divs" id="statistics-form">
-        <div class="dropdowns">
-          <select name="type" id="type-data" class="type statistics"></select>
-          <select
-            name="color"
-            id="color-data"
-            class="color statistics"
-          ></select>
-        </div>
-      </div>
-    </div>
+      <section class="top-divs" id="statistics-form">
+        <section class="dropdowns">
+          <label for="type-data"
+            ><select name="type" id="type-data" class="type statistics"></select
+          ></label>
+          <label for="color-data">
+            <select
+              name="color"
+              id="color-data"
+              class="color statistics"
+            ></select>
+          </label>
+        </section>
+      </section>
+    </section>
 
     <section class="cards"></section>
 
     <footer>
-      <div>
-        <h1>Goblin Mode Hacker</h1>
-        <li>Markus</li>
-        <li>Mahdi</li>
-        <li>Fredrik</li>
-        <li>Elias</li>
-      </div>
-      <div>
-        <h1>Contact</h1>
-        <li>Markus@gmail.com</li>
-        <li>Mahdi@gmail.com</li>
-        <li>Fredrik@gmail.com</li>
-        <li>Elias@gmail.com</li>
-      </div>
-      <div>
-        <h1>Info</h1>
+      <section>
+        <h3>Goblin Mode Hacker</h3>
+        <ul>
+          <li>Markus</li>
+          <li>Mahdi</li>
+          <li>Fredrik</li>
+          <li>Elias</li>
+        </ul>
+      </section>
+
+      <address>
+        <h3>Contact</h3>
+        <ul>
+          <li><a href="mailto: Marcus@gmail.com">Markus@gmail.com</a></li>
+          <li><a href="mailto: Mahdi@gmail.com">Mahdi@gmail.com</a></li>
+          <li><a href="mailto: Fredrik@gmail.com">Fredrik@gmail.com</a></li>
+          <li><a href="mailto: Elias@gmail.com">Elias@gmail.com</a></li>
+        </ul>
+      </address>
+
+      <section>
+        <h3>Info</h3>
         <p>
-          A small group of webdevelopers striving to create good websites for
+          A small group of web developers striving to create good websites for
           the world and beyond. This is our Monster Creator App Go ahead and
           create your monster!
         </p>
-      </div>
+      </section>
     </footer>
   </body>
 </html>

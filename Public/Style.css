@@ -1,12 +1,20 @@
 header {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   background-color: #283845;
-
-  h1 {
-    padding: 0.1em 30px;
-    color: white;
+  img {
+    width: clamp(3.5rem, 10vw, 12rem);
+    height: auto;
+    border-radius: 0.5em;
   }
+}
+h1,
+h2 {
+  margin: clamp(0.4rem, 1.6rem, 2.3rem);
+  font-size: clamp(1rem, 1.28rem, 1.5rem);
+
+  color: white;
 }
 
 footer {
@@ -16,8 +24,20 @@ footer {
   margin-top: 50px;
   color: white;
 
-  div {
+  section,
+  address {
     margin: 10px;
+    h3 {
+      font-size: clamp(0.8rem, 1rem, 1.2rem);
+
+      color: white;
+
+      font-style: normal;
+    }
+
+    li {
+      font-style: normal;
+    }
   }
 }
 body {
@@ -25,12 +45,26 @@ body {
   margin: 0;
   strong,
   em {
-    color: #a7eedb;
+    color: #a7ed08;
     text-shadow:
-      -0.2px -0.2px 0#d5dce2,
-      0.2px -0.2px 0#d5dce2,
-      -0.2px 0.2px 0#d5dce2,
-      0.2px 0.2px 0#d5dce2;
+      -0.025rem -0.025rem 0#d42222,
+      0.025rem -0.025rem 0#d42222,
+      -0.025rem 0.025rem 0#d42222,
+      0.025rem 0.025rem 0#d42222;
+  }
+
+  label input,
+  select {
+    display: block;
+    margin: 5px;
+  }
+
+  ul {
+    margin-block-start: 0;
+    margin-block-end: 0;
+    margin-inline-start: 0;
+    margin-inline-end: 0;
+    padding-inline-start: 0;
   }
 
   .Blue {
@@ -58,10 +92,10 @@ body {
   all: initial;
   color: #ebb28c;
   text-shadow:
-    -0.2px -0.2px 0#ff0000,
-    0.2px -0.2px 0#ff0000,
-    -0.2px 0.2px 0#ff0000,
-    0.2px 0.2px 0#ff0000;
+    -0.025rem -0.025rem 0#ff0000,
+    0.025rem -0.025rem 0#ff0000,
+    -0.025rem 0.025rem 0#ff0000,
+    0.025rem 0.025rem 0#ff0000;
 }
 
 li {
@@ -76,18 +110,18 @@ li {
 .top-divs {
   display: flex;
   flex-direction: column;
-  padding: clamp(1rem, 2vw, 2rem);
+  padding: clamp(1rem, 2vw, 1.5rem);
   border-radius: 20px;
   width: 50%;
   height: auto;
   box-shadow: 2px 2px 4px #283845;
   background-color: #283845;
   color: white;
-  margin: 20px;
-  font-size: clamp(1rem, 2vw, 2rem);
+  margin: 1rem clamp(1rem, 4vw, 3rem) 0 clamp(1rem, 4vw, 3rem);
+  font-size: clamp(1rem, 2vw, 1.5rem);
 
   p {
-    font-size: clamp(1rem, 2vw, 2rem);
+    font-size: clamp(1rem, 2vw, 1.5rem);
     margin-top: 4px;
   }
   input {
@@ -109,7 +143,7 @@ li {
 }
 
 #statistics-form {
-  margin: 0 clamp(1rem, 8vw, 3rem) 0 clamp(1rem, 8vw, 3rem);
+  margin: 1rem clamp(1rem, 8vw, 3rem) 0 clamp(1rem, 8vw, 3rem);
   height: 100%;
 
   .dropdowns {
@@ -117,7 +151,7 @@ li {
     grid-template-columns: repeat(2, 1fr);
     margin: 1px;
     padding: 1px;
-    grid-gap: clamp(0.66rem, 2vw, 2rem);
+    grid-gap: clamp(0.66rem, 1vw, 1.5rem);
     .statistics {
       width: clamp(8vw, 14vw, 50vw);
       font-size: clamp(0.66rem, 2vw, 1rem);
@@ -197,7 +231,7 @@ p {
       .statistics {
         width: clamp(8vw, 14vw, 35vw);
         font-size: clamp(0.66rem, 1.5vw, 1.5rem);
-        border-radius: clamp(1rem, 2vw, 2rem);
+        border-radius: clamp(1rem, 2vw, 1.5rem);
       }
     }
   }
@@ -227,21 +261,39 @@ p {
 }
 
 footer {
-  h1 {
-    font-size: 25px;
+  h1,
+  h2 {
+    font-size: clamp(1rem, 1.28rem, 1.5rem);
+
+    color: white;
   }
-  li {
-    font-size: 15px;
+  li,
+  p {
+    font-size: clamp(0.7rem, 0.8rem, 1.2rem);
   }
 }
 header {
-  h1 {
-    font-size: 20px;
-    padding: 10px;
+  h1,
+  h2 {
+    font-size: clamp(1rem, 1.28rem, 1.5rem);
+
+    color: white;
   }
 }
 
 @media (width <= 700px) {
+  header {
+    flex-direction: column;
+    height: auto;
+    h1,
+    h2 {
+      display: block;
+
+      margin-block-start: 0em;
+      margin-block-end: 0em;
+      margin: clamp(0.7rem, 0.7rem, 0.7rem);
+    }
+  }
   .top-divs {
     width: 80%;
     height: auto;
@@ -284,6 +336,9 @@ header {
 }
 
 @media (width <= 360px) {
+  header {
+    flex-direction: row;
+  }
   .cards {
     grid-template-columns: 1fr;
   }

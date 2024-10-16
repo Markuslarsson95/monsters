@@ -13,7 +13,7 @@ export const config = {
   colorOptions: ["Blue", "Green", "Yellow", "Black", "Red"],
 
   // ändra denna för att kunna ändra på utseendealternativen
-  looks: ["legs", "eyes", "viciousness", "head"],
+  looks: ["legs", "eyes", "viciousness", "head", "life", "death"],
 
   fields: ["type", "name", "color"],
 };
@@ -26,7 +26,7 @@ export const state = {
       config.typeOptions[0],
       "Kraken",
       config.colorOptions[0],
-      [50, 100, 50, 4]
+      [50, 100, 50, 4, 22, 32]
     ),
     createMonster(
       config.typeOptions[1],
@@ -43,13 +43,8 @@ export const state = {
   ],
 
   //add Monster
-  addMonster: function (type, name, color, size, eyes, viciousness, head) {
-    const newMonster = createMonster(type, name, color, [
-      size,
-      eyes,
-      viciousness,
-      head,
-    ]);
+  addMonster: function (type, name, color, ...lookValues) {
+    const newMonster = createMonster(type, name, color, lookValues);
     this.monsters.push(newMonster);
   },
 
