@@ -1,12 +1,18 @@
 header {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   background-color: #283845;
+  img {
+    width: clamp(3.5rem, 10vw, 12rem);
+    height: auto;
+    border-radius: 0.5em;
+  }
 }
 h1,
 h2 {
   margin: clamp(0.4rem, 1.6rem, 2.3rem);
-  font-size: clamp(1rem, 1.28rem, 2rem);
+  font-size: clamp(1rem, 1.28rem, 1.5rem);
 
   color: white;
 }
@@ -104,18 +110,18 @@ li {
 .top-divs {
   display: flex;
   flex-direction: column;
-  padding: clamp(1rem, 2vw, 2rem);
+  padding: clamp(1rem, 2vw, 1.5rem);
   border-radius: 20px;
   width: 50%;
   height: auto;
   box-shadow: 2px 2px 4px #283845;
   background-color: #283845;
   color: white;
-  margin: 20px;
-  font-size: clamp(1rem, 2vw, 2rem);
+  margin: 1rem clamp(1rem, 4vw, 3rem) 0 clamp(1rem, 4vw, 3rem);
+  font-size: clamp(1rem, 2vw, 1.5rem);
 
   p {
-    font-size: clamp(1rem, 2vw, 2rem);
+    font-size: clamp(1rem, 2vw, 1.5rem);
     margin-top: 4px;
   }
   input {
@@ -137,7 +143,7 @@ li {
 }
 
 #statistics-form {
-  margin: 0 clamp(1rem, 8vw, 3rem) 0 clamp(1rem, 8vw, 3rem);
+  margin: 1rem clamp(1rem, 8vw, 3rem) 0 clamp(1rem, 8vw, 3rem);
   height: 100%;
 
   .dropdowns {
@@ -145,7 +151,7 @@ li {
     grid-template-columns: repeat(2, 1fr);
     margin: 1px;
     padding: 1px;
-    grid-gap: clamp(0.66rem, 2vw, 2rem);
+    grid-gap: clamp(0.66rem, 1vw, 1.5rem);
     .statistics {
       width: clamp(8vw, 14vw, 50vw);
       font-size: clamp(0.66rem, 2vw, 1rem);
@@ -225,7 +231,7 @@ p {
       .statistics {
         width: clamp(8vw, 14vw, 35vw);
         font-size: clamp(0.66rem, 1.5vw, 1.5rem);
-        border-radius: clamp(1rem, 2vw, 2rem);
+        border-radius: clamp(1rem, 2vw, 1.5rem);
       }
     }
   }
@@ -276,6 +282,18 @@ header {
 }
 
 @media (width <= 700px) {
+  header {
+    flex-direction: column;
+    height: auto;
+    h1,
+    h2 {
+      display: block;
+
+      margin-block-start: 0em;
+      margin-block-end: 0em;
+      margin: clamp(0.7rem, 0.7rem, 0.7rem);
+    }
+  }
   .top-divs {
     width: 80%;
     height: auto;
@@ -318,6 +336,9 @@ header {
 }
 
 @media (width <= 360px) {
+  header {
+    flex-direction: row;
+  }
   .cards {
     grid-template-columns: 1fr;
   }
