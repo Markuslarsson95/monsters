@@ -52,6 +52,13 @@ export const state = {
     ]);
     this.monsters.push(newMonster);
   },
+
+  //delete Monster
+  deleteMonster: function (index) {
+    if (confirm("Are you sure you want to delete this monster?")) {
+      this.monsters.splice(index, 1);
+    }
+  },
 };
 
 export const formHandler = {

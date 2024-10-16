@@ -50,9 +50,11 @@ const renderMonsterForm = () => {
     inputElement.max = "100";
     inputElement.step = "1";
     inputElement.required = true;
-    inputElement.addEventListener("input", function () {        // Lyssna på input-händelsen
-      this.value = this.value.replace(/[^0-9]/g, '');           // Ta bort allt som inte är siffror
-      if (this.value < 0) {                                     // Begränsa värden mellan 0 och 100
+    inputElement.addEventListener("input", function () {
+      // Lyssna på input-händelsen
+      this.value = this.value.replace(/[^0-9]/g, ""); // Ta bort allt som inte är siffror
+      if (this.value < 0) {
+        // Begränsa värden mellan 0 och 100
         this.value = 0;
       } else if (this.value > 100) {
         this.value = 100;
@@ -121,6 +123,9 @@ export const renderMonsterCards = () => {
     });
     content.push(
       `<button type="button" class="edit" data-index="${index}">Edit</button>`
+    );
+    content.push(
+      `<button type="button" class="delete" data-index="${index}">Delete</button>`
     );
     monster.innerHTML = content.join("");
     card.appendChild(monster);
