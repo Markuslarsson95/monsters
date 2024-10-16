@@ -60,9 +60,6 @@ const renderMonsterForm = () => {
         this.value = 100;
       }
     });
-
-    // inputElement.setAttribute("min", "0");
-    // inputElement.setAttribute("max", "3");
     inputElement.name = `${look}`;
     inputElement.className = `${look}`;
     inputElement.type = "number";
@@ -132,7 +129,7 @@ export const renderMonsterCards = () => {
   });
 };
 
-export const updateTypeCount = () => {
+const updateTypeCount = () => {
   // Om alla valts, visa totalt antal monster
   if (dataTypeDropdown.value === "All Types") {
     typeCountDisplay.innerHTML = `Monsters Roaming: <strong class="number">${state.monsters.length}</strong>`;
@@ -152,7 +149,7 @@ export const updateTypeCount = () => {
   }
 };
 // Uppdatera visningen av antalet monster i statisticsContainer baserat på färg
-export const updateColorCount = () => {
+const updateColorCount = () => {
   // Om "All" valts, visa totalt antal monster
   if (dataColorDropdown.value === "All Colors") {
     colorCountDisplay.innerHTML = `Monsters Roaming: <strong class="number">${state.monsters.length}</strong>`;
@@ -170,6 +167,10 @@ export const updateColorCount = () => {
       colorCountDisplay.innerHTML = `The world remains untouched by monsters of <em class="${dataColorDropdown.value}">${dataColorDropdown.value}</em>...`;
     }
   }
+};
+export const updateStatistics = () => {
+  updateTypeCount();
+  updateColorCount();
 };
 
 const renderMonsterStatistics = () => {
@@ -219,8 +220,7 @@ const renderMonsterStatistics = () => {
   }
 
   // Inledande uppdatering av monsterstatistik baserat på valda typer
-  updateTypeCount();
-  updateColorCount();
+  updateStatistics();
 
   dropdownsContainer.append(typeCountDisplay, colorCountDisplay);
 };
