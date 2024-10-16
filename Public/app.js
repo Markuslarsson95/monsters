@@ -3,41 +3,27 @@
 
 import { formHandler, state, config } from "./configAndState.js";
 
-import {
-  renderMonsterCards,
-  updateTypeCount,
-  updateColorCount,
-  render,
-} from "./monsterUI.js";
+import { renderMonsterCards, updateStatistics, render } from "./monsterUI.js";
 import { cancelButton, saveButton } from "./domElements.js";
 
-let isEditing = false;
 // initial render
 render();
 
 const submitButton = document.querySelector("#submit");
 
-//lyssnare för addMonster
-document.querySelector("#submit").addEventListener("click", (e) => {
+//lyssnare för submit knapp
+submitButton.addEventListener("click", (e) => {
   e.preventDefault();
 
-  // Om vi är i redigeringsläge, hoppa över denna händelse
-  if (isEditing) {
-    // Validera att alla fält är ifyllda
-    if (!formHandler.validateForm()) {
-      return; // Avbryt om något fält är tomt
-    }
+  // Validera att alla fält är ifyllda
+  if (!formHandler.validateForm()) {
+    return; // Avbryt om något fält är fel
   }
 
   cancelButton.style.display = "none";
   saveButton.style.display = "none";
   submitButton.textContent = "Add Monster";
   const formData = formHandler.getFormData();
-
-  // Validera att alla fält är ifyllda
-  if (!formHandler.validateForm()) {
-    return; // Avbryt om något fält är tomt
-  }
 
   // Kopiera monstret
   state.addMonster(...formData);
@@ -49,15 +35,14 @@ document.querySelector("#submit").addEventListener("click", (e) => {
   document.querySelector("footer").scrollIntoView({ behavior: "smooth" });
 
   // Uppdatera statistiken för typ och färg efter att ha lagt till ett nytt monster
-  updateTypeCount();
-  updateColorCount();
+  updateStatistics();
 });
 
 //lyssnare för editButton
 const cardContainer = document.querySelector(".cards");
 cardContainer.addEventListener("click", (event) => {
   if (event.target && event.target.classList.contains("edit")) {
-    isEditing = true;
+    // Läs in det valda monstret med hjälp av edit knappens "data-index"
     const index = event.target.getAttribute("data-index");
     const monster = state.monsters[index];
     formHandler.populateForm(monster);
@@ -77,6 +62,7 @@ cardContainer.addEventListener("click", (event) => {
 saveButton.addEventListener("click", (e) => {
   e.preventDefault();
 
+  // Läs in det valda monstret med hjälp av edit knappens "data-index"
   const index = saveButton.getAttribute("data-index");
   const formData = formHandler.getFormData();
 
@@ -90,7 +76,6 @@ saveButton.addEventListener("click", (e) => {
   if (!formHandler.validateForm()) {
     return; // Avbryt om något fält är tomt
   }
-  isEditing = false;
   submitButton.textContent = "Add Monster";
   state.monsters[index] = updatedMonster; // Tilldela det uppdaterade monstret till rätt index
 
@@ -102,17 +87,18 @@ saveButton.addEventListener("click", (e) => {
 
   const monsterElements = document.querySelectorAll(".cards > div");
   const monsterElement = monsterElements[index];
+  // Scrolla ner till monstret som redigerats
   if (monsterElement) {
     monsterElement.scrollIntoView({ behavior: "smooth" });
   }
-  updateTypeCount();
-  updateColorCount();
+
+  // Uppdatera statistiken för typ och färg efter att ha redigerat ett monster
+  updateStatistics();
 });
 
 //lyssnare cancelButton
 cancelButton.addEventListener("click", (e) => {
   e.preventDefault();
-  // document.getElementById("monster-form").reset();
   formHandler.resetForm();
   cancelButton.style.display = "none";
   saveButton.style.display = "none";
@@ -122,10 +108,12 @@ cancelButton.addEventListener("click", (e) => {
 //lyssnare deleteButton
 document.querySelector(".cards").addEventListener("click", (e) => {
   if (e.target && e.target.classList.contains("delete")) {
+    // Läs in det valda monstret med hjälp av edit knappens "data-index"
     const index = e.target.getAttribute("data-index");
     state.deleteMonster(index);
     renderMonsterCards();
-    updateTypeCount();
-    updateColorCount();
+
+    // Uppdatera statistiken för typ och färg efter att ha tagit bort ett monster
+    updateStatistics();
   }
 });

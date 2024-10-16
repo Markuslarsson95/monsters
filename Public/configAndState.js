@@ -13,7 +13,7 @@ export const config = {
   colorOptions: ["Blue", "Green", "Yellow", "Black", "Red"],
 
   // ändra denna för att kunna ändra på utseendealternativen
-  looks: ["legs", "eyes", "viciousness", "head", "life", "death"],
+  looks: ["legs", "eyes", "viciousness", "head"],
 
   fields: ["type", "name", "color"],
 };
@@ -82,27 +82,23 @@ export const formHandler = {
       document.querySelector(`.${field}`).value = monster[field];
     });
   },
-  //funktion för att validera att inputfälten inte är tomma
-  validateForm: () => {
-    let allFieldsFilled = true;
-    let allFieldsValid = true;
-    config.fields.forEach((field) => {
-      const value = document.querySelector(`.${field}`).value.trim();
-      if (!value) {
-        allFieldsFilled = false;
-      }
 
-      // Kolla om fältet innehåller ogiltiga tecken
-      const invalidCharacters = /[^a-zA-Z0-9 ]/; // Tillåt bara bokstäver, siffror och mellanslag
-      if (invalidCharacters.test(value)) {
-        allFieldsValid = false;
-        alert(`The ${field} field contains invalid characters.`);
-      }
+  // Validera att alla fält är ifyllda och har korrekta tecken
+  validateForm: () => {
+    const fieldsFilled = config.fields.every((field) => {
+      const value = document.querySelector(`.${field}`).value.trim();
+      return value !== "";
     });
-    if (allFieldsFilled && allFieldsValid) {
+
+    const fieldsValid = config.fields.every((field) => {
+      const value = document.querySelector(`.${field}`).value.trim();
+      return /[a-zA-Z0-9 ]/.test(value);
+    });
+
+    if (fieldsFilled && fieldsValid) {
       return true;
     } else {
-      alert("Complete all fields");
+      alert("Complete all fields and use only letters, numbers, and spaces.");
     }
   },
 };
