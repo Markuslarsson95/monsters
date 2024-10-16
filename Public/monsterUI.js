@@ -47,16 +47,25 @@ const renderMonsterForm = () => {
     inputElement.step = "1";
     inputElement.setAttribute("placeholder", "0-100");
     inputElement.required = true;
+    inputElement.maxLength = "3";
     const labelElement = document.createElement("label");
     labelElement.textContent = look.charAt(0).toUpperCase() + look.slice(1);
     labelElement.setAttribute("for", inputElement.id);
     inputElement.addEventListener("input", function () {
       // Lyssna på input-händelsen
       this.value = this.value.replace(/[^0-9]/g, ""); // Ta bort allt som inte är siffror
-      if (this.value < 0) {
-        // Begränsa värden mellan 0 och 100
-        this.value = 0;
-      } else if (this.value > 100) {
+      if (this.value.length > 1 && this.value.startsWith("0")) {
+        this.value = this.value.replace(/^0+/, "");
+      }
+
+      // Begränsa längden till 3 siffror
+      if (this.value.length > 3) {
+        this.value = this.value.slice(0, 3);
+      }
+
+      // Begränsa värdet till 100 om det är större än 100
+      const numValue = parseInt(this.value, 10);
+      if (numValue > 100) {
         this.value = 100;
       }
     });
