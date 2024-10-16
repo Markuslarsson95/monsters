@@ -28,7 +28,7 @@ footer {
   address {
     margin: 10px;
     h3 {
-      font-size: clamp(0.8rem, 1rem, 1.2rem);
+      font-size: 20.48px;
 
       color: white;
 
@@ -37,12 +37,15 @@ footer {
 
     li {
       font-style: normal;
+      font-size: 16px;
     }
   }
 }
 body {
   background: linear-gradient(to bottom, white, #488072);
   margin: 0;
+  font-family: 'Times New Roman';
+
   strong,
   em {
     color: #a7ed08;
@@ -269,7 +272,7 @@ footer {
   }
   li,
   p {
-    font-size: clamp(0.7rem, 0.8rem, 1.2rem);
+    font-size: 16px;
   }
 }
 header {
@@ -342,4 +345,12 @@ header {
   .cards {
     grid-template-columns: 1fr;
   }
+}
+a {
+  color: rgb(233, 223, 223);
+  text-decoration-line: none;
+}
+a:hover {
+  color: rgb(255, 255, 255);
+  text-decoration-line: none;
 }
