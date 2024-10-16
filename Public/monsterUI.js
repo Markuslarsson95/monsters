@@ -123,6 +123,9 @@ export const renderMonsterCards = () => {
     content.push(
       `<button type="button" class="edit" data-index="${index}">Edit</button>`
     );
+    content.push(
+      `<button type="button" class="delete" data-index="${index}">Delete</button>`
+    );
     monster.innerHTML = content.join("");
     card.appendChild(monster);
   });

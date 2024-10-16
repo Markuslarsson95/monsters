@@ -47,6 +47,13 @@ export const state = {
     const newMonster = createMonster(type, name, color, lookValues);
     this.monsters.push(newMonster);
   },
+
+  //delete Monster
+  deleteMonster: function (index) {
+    if (confirm("Are you sure you want to delete this monster?")) {
+      this.monsters.splice(index, 1);
+    }
+  },
 };
 
 export const formHandler = {

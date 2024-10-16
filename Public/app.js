@@ -125,3 +125,14 @@ cancelButton.addEventListener("click", (e) => {
   saveButton.style.display = "none";
   submitButton.textContent = "Add Monster"; //Gör så att texten återvänder till "add monster" istället för "copy monster"
 });
+
+//lyssnare deleteButton
+document.querySelector(".cards").addEventListener("click", (e) => {
+  if (e.target && e.target.classList.contains("delete")) {
+    const index = e.target.getAttribute("data-index");
+    state.deleteMonster(index);
+    renderMonsterCards();
+    updateTypeCount();
+    updateColorCount();
+  }
+});
