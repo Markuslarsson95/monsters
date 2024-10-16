@@ -45,6 +45,7 @@ const renderMonsterForm = () => {
     inputElement.min = "0";
     inputElement.max = "100";
     inputElement.step = "1";
+    inputElement.setAttribute("placeholder", "0-100");
     inputElement.required = true;
     const labelElement = document.createElement("label");
     labelElement.textContent = look.charAt(0).toUpperCase() + look.slice(1);
