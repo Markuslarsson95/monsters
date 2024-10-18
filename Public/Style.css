@@ -177,6 +177,7 @@ li {
 }
 
 button {
+  margin: 3px;
   padding: 3px;
   border-radius: 20px;
   border: solid 1px white;

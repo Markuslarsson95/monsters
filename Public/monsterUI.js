@@ -49,7 +49,8 @@ const renderMonsterForm = () => {
     inputElement.required = true;
     inputElement.maxLength = "3";
     const labelElement = document.createElement("label");
-    labelElement.textContent = look.charAt(0).toUpperCase() + look.slice(1);
+    labelElement.textContent =
+      look.charAt(0).toUpperCase() + look.slice(1) + ":";
     labelElement.setAttribute("for", inputElement.id);
     inputElement.addEventListener("input", function () {
       // Lyssna på input-händelsen
