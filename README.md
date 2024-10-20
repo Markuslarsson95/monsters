@@ -35,7 +35,6 @@ git clone https://github.com/Markuslarsson95/monsters.git
 ```
 
 ##### Navigate to the project directory
-```
 
 ```bash
 cd monsters
