@@ -45,11 +45,12 @@ cd monsters
 ### 5. User Instructions
 #### *How to use the project once it is running:*
 
-1. Once the application is running, fill in the monster attributes (type, name, color, etc.) and click "Add Monster."
+1. Once the application is running, fill in the monster attributes (type, name, color, etc.) and click "Add Monster".
 2. Click "Edit" to modify a monster.
-3. Click "Copy" to create a new monster from the one being edited.
-4. Use filters to sort and search through your monsters.
-5. Click "Delete" to remove a monster.
+3. Click "Save Monster" to save the edited version.
+4. Click "Copy Monster" to create a new monster from the one being edited.
+5. Use filters to sort and search through your monsters.
+6. Click "Delete" to remove a monster.
 
 ### 6. Project Structure
 #### *A brief description of the project's file and folder structure:*
