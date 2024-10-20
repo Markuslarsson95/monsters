@@ -33,15 +33,16 @@ For our final project in the course **Web Programming with JavaScript (40 YHP)**
 ```bash
 git clone https://github.com/Markuslarsson95/monsters.git
 ```
-```md
 
+```md
 ##### Navigate to the project directory
+```
 
 ```bash
 cd monsters
 ```
-```md
 
+```md
 Open index.html in the browser
 
 ### 5. User Instructions
