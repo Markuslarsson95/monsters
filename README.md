@@ -28,19 +28,19 @@ For our final project in the course **Web Programming with JavaScript (40 YHP)**
 ### 4. Installation and Usage
 #### *Steps for downloading, installing, and running the project locally:*
 
-##### Clone the project
+##### 1. Clone the project
 
 ```bash
 git clone https://github.com/Markuslarsson95/monsters.git
 ```
 
-##### Navigate to the project directory
+##### 2. Navigate to the project directory
 
 ```bash
 cd monsters
 ```
 
-Open index.html in the browser
+##### 3. Open index.html in the browser
 
 ### 5. User Instructions
 #### *How to use the project once it is running:*
