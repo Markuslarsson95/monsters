@@ -34,7 +34,6 @@ For our final project in the course **Web Programming with JavaScript (40 YHP)**
 git clone https://github.com/Markuslarsson95/monsters.git
 ```
 
-```md
 ##### Navigate to the project directory
 ```
 
@@ -42,7 +41,6 @@ git clone https://github.com/Markuslarsson95/monsters.git
 cd monsters
 ```
 
-```md
 Open index.html in the browser
 
 ### 5. User Instructions
@@ -70,7 +68,6 @@ Open index.html in the browser
     - LICENSE 
     - README.md
 ```
-```md
 
 
 ### 7. Contributing Developers
