@@ -357,7 +357,7 @@ header {
   }
 }
 
-@media (width <= 375px) {
+@media (width <= 370px) {
   header {
     flex-direction: row;
 
