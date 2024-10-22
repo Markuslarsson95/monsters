@@ -7,8 +7,10 @@ import {
   dropdownsContainer,
   dataTypeDropdown,
   dataColorDropdown,
+  addMonsterButton,
   cancelButton,
   saveButton,
+  cardContainer,
 } from "./domElements.js";
 import { config, state } from "./configAndState.js";
 
@@ -24,16 +26,12 @@ let colorCountDisplay = statisticsContainer.querySelector(".color-display");
 //////////////////////////////////||||||||||||||||||||||///////////////////////////////////
 
 //funktion för att bygga monster dynamiskt
-export const createMonster = (type, name, color, lookValues) => {
-  const monster = {
-    type,
-    name,
-    color,
-  };
+export const createMonster = (fieldValues) => {
+  const monster = {};
 
   //iterera igenom looks-egenskaper och tilldela värden
-  config.looks.forEach((look, index) => {
-    monster[look] = lookValues[index] !== undefined ? lookValues[index] : 0;
+  config.fields.forEach((field, index) => {
+    monster[field] = fieldValues[index] !== undefined ? fieldValues[index] : 0;
   });
   return monster;
 };
@@ -76,11 +74,8 @@ const renderMonsterForm = () => {
     monsterForm.appendChild(labelElement);
     labelElement.appendChild(inputElement);
   });
-  const buttonElement = document.createElement("button");
-  buttonElement.type = "submit";
-  buttonElement.id = "submit";
-  buttonElement.textContent = "Add Monster";
-  monsterForm.appendChild(buttonElement);
+
+  monsterForm.appendChild(addMonsterButton);
   monsterForm.appendChild(saveButton);
   monsterForm.appendChild(cancelButton);
 };
@@ -113,19 +108,18 @@ const renderColorOptions = () => {
 };
 
 export const renderMonsterCards = () => {
-  const card = document.querySelector(".cards");
-  card.innerHTML = "";
+  cardContainer.innerHTML = "";
 
   state.monsters.forEach((m, index) => {
     const monster = document.createElement("div");
     const content = [
       `<h2>${m.name}</h2>`,
-      `<p>Type: ${m.type}</p>`,
-      `<p>Color: ${m.color}</p>`,
+      `<p><strong>Type:</strong> ${m.type}</p>`,
+      `<p><strong>Color:</strong> ${m.color}</p>`,
     ];
     config.looks.forEach((look) => {
       content.push(
-        `<p>${look.charAt(0).toUpperCase() + look.slice(1)}: ${m[look]}</p>`
+        `<p><strong>${look.charAt(0).toUpperCase() + look.slice(1)}:</strong> ${m[look]}</p>`
       );
     });
     content.push(
@@ -135,7 +129,7 @@ export const renderMonsterCards = () => {
       `<button type="button" class="delete" data-index="${index}">Delete</button>`
     );
     monster.innerHTML = content.join("");
-    card.appendChild(monster);
+    cardContainer.appendChild(monster);
   });
 };
 
