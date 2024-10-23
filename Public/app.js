@@ -3,7 +3,12 @@
 
 import { formHandler, state, config } from "./configAndState.js";
 
-import { renderMonsterCards, updateStatistics, render } from "./monsterUI.js";
+import {
+  renderMonsterCards,
+  updateStatistics,
+  render,
+  getFilteredMonsters,
+} from "./monsterUI.js";
 import {
   monsterForm,
   cardContainer,
@@ -35,7 +40,7 @@ addMonsterButton.addEventListener("click", (e) => {
 
   formHandler.resetForm();
 
-  renderMonsterCards();
+  renderMonsterCards(getFilteredMonsters());
   //scrolla ner
   document.querySelector("footer").scrollIntoView({ behavior: "smooth" });
 
@@ -44,14 +49,15 @@ addMonsterButton.addEventListener("click", (e) => {
 });
 
 //lyssnare för editButton
-cardContainer.addEventListener("click", (event) => {
-  if (event.target && event.target.classList.contains("edit")) {
+cardContainer.addEventListener("click", (e) => {
+  if (e.target && e.target.classList.contains("edit")) {
     // Läs in det valda monstret med hjälp av edit knappens "data-index"
-    const index = event.target.getAttribute("data-index");
-    const monster = state.monsters[index];
+    const index = e.target.getAttribute("data-index");
+    const filteredMonsters = getFilteredMonsters();
+    const monster = filteredMonsters[index];
     formHandler.populateForm(monster);
 
-    saveButton.setAttribute("data-index", index);
+    saveButton.setAttribute("data-index", state.monsters.indexOf(monster));
     saveButton.style.display = "inline-block"; // Gör saveButton synlig
     cancelButton.style.display = "inline-block"; // Gör cancelButton synlig
 
@@ -87,7 +93,7 @@ saveButton.addEventListener("click", (e) => {
   saveButton.removeAttribute("data-index");
   saveButton.style.display = "none";
   cancelButton.style.display = "none";
-  renderMonsterCards(); // Rendera om listan
+  renderMonsterCards(getFilteredMonsters()); // Rendera om listan
 
   const monsterElements = document.querySelectorAll(".cards > div");
   const monsterElement = monsterElements[index];
@@ -112,10 +118,13 @@ cancelButton.addEventListener("click", (e) => {
 //lyssnare deleteButton
 cardContainer.addEventListener("click", (e) => {
   if (e.target && e.target.classList.contains("delete")) {
-    // Läs in det valda monstret med hjälp av edit knappens "data-index"
+    // Läs in det valda monstret med hjälp av delete knappens "data-index"
     const index = e.target.getAttribute("data-index");
-    state.deleteMonster(index);
-    renderMonsterCards();
+    const filteredMonsters = getFilteredMonsters();
+    const monster = filteredMonsters[index];
+    const originalIndex = state.monsters.indexOf(monster);
+    state.deleteMonster(originalIndex);
+    renderMonsterCards(getFilteredMonsters());
 
     // Uppdatera statistiken för typ och färg efter att ha tagit bort ett monster
     updateStatistics();
