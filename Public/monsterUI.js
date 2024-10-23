@@ -107,10 +107,10 @@ const renderColorOptions = () => {
   });
 };
 
-export const renderMonsterCards = () => {
+export const renderMonsterCards = (monsters) => {
   cardContainer.innerHTML = "";
 
-  state.monsters.forEach((m, index) => {
+  monsters.forEach((m, index) => {
     const monster = document.createElement("div");
     const content = [
       `<h2>${m.name}</h2>`,
@@ -119,7 +119,9 @@ export const renderMonsterCards = () => {
     ];
     config.looks.forEach((look) => {
       content.push(
-        `<p><strong>${look.charAt(0).toUpperCase() + look.slice(1)}:</strong> ${m[look]}</p>`
+        `<p><strong>${look.charAt(0).toUpperCase() + look.slice(1)}:</strong> ${
+          m[look]
+        }</p>`
       );
     });
     content.push(
@@ -136,12 +138,12 @@ export const renderMonsterCards = () => {
 const updateTypeCount = () => {
   // Om alla valts, visa totalt antal monster
   if (dataTypeDropdown.value === "All Types") {
-    typeCountDisplay.innerHTML = `Monsters Roaming: <strong class="number">${state.monsters.length}</strong>`;
+    typeCountDisplay.innerHTML = `Monsters Roaming: <strong class="number">${
+      getFilteredMonsters().length
+    }</strong>`;
   } else {
     // Filtrera baserat på det valda värdet
-    const filteredMonsters = state.monsters.filter(
-      (monster) => monster.type === dataTypeDropdown.value
-    );
+    const filteredMonsters = getFilteredMonsters();
     if (filteredMonsters.length > 1) {
       typeCountDisplay.innerHTML = `<strong>Behold!</strong> Your horde of <em>${dataTypeDropdown.value}s</em> now numbers <strong class="number">${filteredMonsters.length}</strong> strong!`;
     } else if (filteredMonsters.length === 1) {
@@ -156,12 +158,12 @@ const updateTypeCount = () => {
 const updateColorCount = () => {
   // Om "All" valts, visa totalt antal monster
   if (dataColorDropdown.value === "All Colors") {
-    colorCountDisplay.innerHTML = `Monsters Roaming: <strong class="number">${state.monsters.length}</strong>`;
+    colorCountDisplay.innerHTML = `Monsters Roaming: <strong class="number">${
+      getFilteredMonsters().length
+    }</strong>`;
   } else {
     // Filtrera baserat på det valda värdet
-    const filteredMonsters = state.monsters.filter(
-      (monster) => monster.color === dataColorDropdown.value
-    );
+    const filteredMonsters = getFilteredMonsters();
 
     if (filteredMonsters.length > 1) {
       colorCountDisplay.innerHTML = `The land echoes with the footsteps of <em class="${dataColorDropdown.value}">${dataColorDropdown.value}</em> monsters, now numbering <strong class="number">${filteredMonsters.length}</strong> strong!`;
@@ -172,6 +174,45 @@ const updateColorCount = () => {
     }
   }
 };
+
+// Funktion för att hämta monster från state som är filtrerade baserat på färg och typ
+export const getFilteredMonsters = () => {
+  const monsters = state.monsters;
+  // Returnerar alla monster om ingen typ eller färg valts
+  if (
+    dataTypeDropdown.value === "All Types" &&
+    dataColorDropdown.value === "All Colors"
+  ) {
+    return monsters;
+    // Om typ ej är vald så filtrera baserad endast på färg
+  } else if (dataTypeDropdown.value === "All Types") {
+    return monsters.filter((monster) =>
+      config.colorOptions.some(
+        (color) => dataColorDropdown.value === color && monster.color === color
+      )
+    );
+    // Om färg ej är vald så filtrera baserad endast på typ
+  } else if (dataColorDropdown.value === "All Colors") {
+    return monsters.filter((monster) =>
+      config.typeOptions.some(
+        (type) => dataTypeDropdown.value === type && monster.type === type
+      )
+    );
+    // Är båda valda filtrera på båda
+  } else {
+    return monsters.filter(
+      (monster) =>
+        config.typeOptions.some(
+          (type) => dataTypeDropdown.value === type && monster.type === type
+        ) &&
+        config.colorOptions.some(
+          (color) =>
+            dataColorDropdown.value === color && monster.color === color
+        )
+    );
+  }
+};
+
 export const updateStatistics = () => {
   updateTypeCount();
   updateColorCount();
@@ -214,12 +255,20 @@ const renderMonsterStatistics = () => {
 
   //Lägg till event-lyssnare för att uppdatera statistiken om de inte redan finns
   if (!dataTypeDropdown.hasAttribute("data-listener")) {
-    dataTypeDropdown.addEventListener("change", updateTypeCount);
+    dataTypeDropdown.addEventListener("change", () => {
+      updateTypeCount();
+      updateColorCount();
+      renderMonsterCards(getFilteredMonsters());
+    });
     dataTypeDropdown.setAttribute("data-listener", true);
   }
 
   if (!dataColorDropdown.hasAttribute("data-listener")) {
-    dataColorDropdown.addEventListener("change", updateColorCount);
+    dataColorDropdown.addEventListener("change", () => {
+      updateColorCount();
+      updateTypeCount();
+      renderMonsterCards(getFilteredMonsters());
+    });
     dataColorDropdown.setAttribute("data-listener", true);
   }
 
@@ -233,6 +282,6 @@ export const render = () => {
   renderMonsterForm();
   renderTypeOptions();
   renderColorOptions();
-  renderMonsterCards();
+  renderMonsterCards(state.monsters);
   renderMonsterStatistics();
 };
