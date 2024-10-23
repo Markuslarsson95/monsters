@@ -30,8 +30,6 @@ export const state = {
       100,
       50,
       4,
-      22,
-      32,
     ]),
     createMonster([
       config.typeOptions[1],
