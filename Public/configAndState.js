@@ -10,10 +10,10 @@ import { createMonster } from "./monsterUI.js";
 export const config = {
   typeOptions: ["Maritime Monster", "Terrestrial Beast", "Winged Horror"],
 
-  colorOptions: ["Blue", "Green", "Yellow", "Black", "Red"],
+  colorOptions: ["Blue", "Green", "Yellow", "Pink", "Red"],
 
   // ändra denna för att kunna ändra på utseendealternativen
-  looks: ["legs", "eyes", "viciousness", "head"],
+  looks: ["size", "strength", "viciousness", "Charisma"],
 
   fields: ["type", "name", "color"],
 };
@@ -22,29 +22,40 @@ config.fields.push(...config.looks);
 // state- Skapa array med objekt(monster)
 export const state = {
   monsters: [
-    createMonster(
+    createMonster([
       config.typeOptions[0],
       "Kraken",
       config.colorOptions[0],
-      [50, 100, 50, 4, 22, 32]
-    ),
-    createMonster(
+      50,
+      100,
+      50,
+      4,
+      22,
+      32,
+    ]),
+    createMonster([
       config.typeOptions[1],
       "Mudfang",
       config.colorOptions[4],
-      [30, 5, 51, 1]
-    ),
-    createMonster(
+      30,
+      5,
+      51,
+      67,
+    ]),
+    createMonster([
       config.typeOptions[2],
       "Grimflap",
       config.colorOptions[3],
-      [30, 5, 51, 1]
-    ),
+      3,
+      5,
+      100,
+      1,
+    ]),
   ],
 
   //add Monster
-  addMonster: function (type, name, color, ...lookValues) {
-    const newMonster = createMonster(type, name, color, lookValues);
+  addMonster: function (...lookValues) {
+    const newMonster = createMonster(lookValues);
     this.monsters.push(newMonster);
   },
 
