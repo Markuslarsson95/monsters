@@ -122,9 +122,9 @@ export const renderMonsterCards = (monsters) => {
       ];
       config.looks.forEach((look) => {
         content.push(
-          `<p><strong>${look.charAt(0).toUpperCase() + look.slice(1)}:</strong> ${
-            m[look]
-          }</p>`
+          `<p><strong>${
+            look.charAt(0).toUpperCase() + look.slice(1)
+          }:</strong> ${m[look]}</p>`
         );
       });
       content.push(
@@ -182,31 +182,29 @@ const updateColorCount = () => {
 // Funktion för att hämta monster från state som är filtrerade baserat på färg och typ
 export const getFilteredMonsters = () => {
   const monsters = state.monsters;
-  console.log("All monsters in state before filtering:", monsters); // Här kan du se alla monster innan filtreringen
-  let filteredMonsters;
   // Returnerar alla monster om ingen typ eller färg valts
   if (
     dataTypeDropdown.value === "All Types" &&
     dataColorDropdown.value === "All Colors"
   ) {
-    filteredMonsters = monsters;
+    return monsters;
     // Om typ ej är vald så filtrera baserad endast på färg
   } else if (dataTypeDropdown.value === "All Types") {
-    filteredMonsters = monsters.filter((monster) =>
+    return monsters.filter((monster) =>
       config.colorOptions.some(
         (color) => dataColorDropdown.value === color && monster.color === color
       )
     );
     // Om färg ej är vald så filtrera baserad endast på typ
   } else if (dataColorDropdown.value === "All Colors") {
-    filteredMonsters = monsters.filter((monster) =>
+    return monsters.filter((monster) =>
       config.typeOptions.some(
         (type) => dataTypeDropdown.value === type && monster.type === type
       )
     );
     // Är båda valda filtrera på båda
   } else {
-    filteredMonsters = monsters.filter(
+    return monsters.filter(
       (monster) =>
         config.typeOptions.some(
           (type) => dataTypeDropdown.value === type && monster.type === type
@@ -217,12 +215,6 @@ export const getFilteredMonsters = () => {
         )
     );
   }
-  // Logga igen efter filtreringen för att verifiera att state inte förändras
-  console.log(
-    "State of monsters after filtering (should be unchanged):",
-    state.monsters
-  );
-  return filteredMonsters;
 };
 
 export const updateStatistics = () => {
@@ -295,7 +287,5 @@ export const render = () => {
   renderTypeOptions();
   renderColorOptions();
   renderMonsterCards(state.monsters);
-  // Console logga state för att se att alla monster finns kvar
-  console.log("Current state of monsters:", state.monsters);
   renderMonsterStatistics();
 };
