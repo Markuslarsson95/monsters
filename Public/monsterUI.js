@@ -110,29 +110,33 @@ const renderColorOptions = () => {
 export const renderMonsterCards = (monsters) => {
   cardContainer.innerHTML = "";
 
-  monsters.forEach((m, index) => {
-    const monster = document.createElement("div");
-    const content = [
-      `<h2>${m.name}</h2>`,
-      `<p><strong>Type:</strong> ${m.type}</p>`,
-      `<p><strong>Color:</strong> ${m.color}</p>`,
-    ];
-    config.looks.forEach((look) => {
+  if (monsters.length === 0) {
+    cardContainer.innerHTML = "<p>No monsters found matching your filters.</p>";
+  } else {
+    monsters.forEach((m, index) => {
+      const monster = document.createElement("div");
+      const content = [
+        `<h2>${m.name}</h2>`,
+        `<p><strong>Type:</strong> ${m.type}</p>`,
+        `<p><strong>Color:</strong> ${m.color}</p>`,
+      ];
+      config.looks.forEach((look) => {
+        content.push(
+          `<p><strong>${look.charAt(0).toUpperCase() + look.slice(1)}:</strong> ${
+            m[look]
+          }</p>`
+        );
+      });
       content.push(
-        `<p><strong>${look.charAt(0).toUpperCase() + look.slice(1)}:</strong> ${
-          m[look]
-        }</p>`
+        `<button type="button" class="edit" data-index="${index}">Edit</button>`
       );
+      content.push(
+        `<button type="button" class="delete" data-index="${index}">Delete</button>`
+      );
+      monster.innerHTML = content.join("");
+      cardContainer.appendChild(monster);
     });
-    content.push(
-      `<button type="button" class="edit" data-index="${index}">Edit</button>`
-    );
-    content.push(
-      `<button type="button" class="delete" data-index="${index}">Delete</button>`
-    );
-    monster.innerHTML = content.join("");
-    cardContainer.appendChild(monster);
-  });
+  }
 };
 
 const updateTypeCount = () => {
@@ -177,40 +181,19 @@ const updateColorCount = () => {
 
 // Funktion för att hämta monster från state som är filtrerade baserat på färg och typ
 export const getFilteredMonsters = () => {
-  const monsters = state.monsters;
-  // Returnerar alla monster om ingen typ eller färg valts
-  if (
-    dataTypeDropdown.value === "All Types" &&
-    dataColorDropdown.value === "All Colors"
-  ) {
-    return monsters;
-    // Om typ ej är vald så filtrera baserad endast på färg
-  } else if (dataTypeDropdown.value === "All Types") {
-    return monsters.filter((monster) =>
-      config.colorOptions.some(
-        (color) => dataColorDropdown.value === color && monster.color === color
-      )
-    );
-    // Om färg ej är vald så filtrera baserad endast på typ
-  } else if (dataColorDropdown.value === "All Colors") {
-    return monsters.filter((monster) =>
-      config.typeOptions.some(
-        (type) => dataTypeDropdown.value === type && monster.type === type
-      )
-    );
-    // Är båda valda filtrera på båda
-  } else {
-    return monsters.filter(
-      (monster) =>
-        config.typeOptions.some(
-          (type) => dataTypeDropdown.value === type && monster.type === type
-        ) &&
-        config.colorOptions.some(
-          (color) =>
-            dataColorDropdown.value === color && monster.color === color
-        )
-    );
-  }
+  const typeFilter = dataTypeDropdown.value || "All Types";
+  const colorFilter = dataColorDropdown.value || "All Colors";
+
+  // Filtrera baserat på både typ och färg
+  const filteredMonsters = state.monsters.filter((monster) => {
+    const matchesType =
+      typeFilter === "All Types" || monster.type === typeFilter;
+    const matchesColor =
+      colorFilter === "All Colors" || monster.color === colorFilter;
+    return matchesType && matchesColor; // Monster måste matcha båda filtren
+  });
+
+  return filteredMonsters; // Returnera de filtrerade monstren
 };
 
 export const updateStatistics = () => {
@@ -278,10 +261,21 @@ const renderMonsterStatistics = () => {
   dropdownsContainer.append(typeCountDisplay, colorCountDisplay);
 };
 
+const updateDisplayedMonsters = () => {
+  const filteredMonsters = getFilteredMonsters(); // Hämta de filtrerade monstren
+  renderMonsterCards(filteredMonsters); // Skicka filtrerade monster till renderMonsterCards
+};
 export const render = () => {
   renderMonsterForm();
   renderTypeOptions();
   renderColorOptions();
-  renderMonsterCards(state.monsters);
+
+  // Sätt initiala värden för dropdown-menyerna
+  dataTypeDropdown.value = "All Types";
+  dataColorDropdown.value = "All Colors";
+
+  // Initial rendering
+  updateDisplayedMonsters();
+
   renderMonsterStatistics();
 };
