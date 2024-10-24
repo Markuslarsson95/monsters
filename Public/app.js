@@ -5,11 +5,13 @@ import { formHandler, state, config } from "./configAndState.js";
 
 import { renderMonsterCards, updateStatistics, render } from "./monsterUI.js";
 import {
-  monsterForm,
   cardContainer,
+  monsterElements,
   addMonsterButton,
   cancelButton,
   saveButton,
+  topDivs,
+  footer,
 } from "./domElements.js";
 
 // initial render
@@ -37,7 +39,7 @@ addMonsterButton.addEventListener("click", (e) => {
 
   renderMonsterCards();
   //scrolla ner
-  document.querySelector("footer").scrollIntoView({ behavior: "smooth" });
+  footer.scrollIntoView({ behavior: "smooth" });
 
   // Uppdatera statistiken för typ och färg efter att ha lagt till ett nytt monster
   updateStatistics();
@@ -56,7 +58,7 @@ cardContainer.addEventListener("click", (event) => {
     cancelButton.style.display = "inline-block"; // Gör cancelButton synlig
 
     //för att scrolla upp
-    document.querySelector(".top-divs").scrollIntoView({ behavior: "smooth" });
+    topDivs.scrollIntoView({ behavior: "smooth" });
 
     addMonsterButton.textContent = "Copy Monster";
   }
@@ -89,7 +91,6 @@ saveButton.addEventListener("click", (e) => {
   cancelButton.style.display = "none";
   renderMonsterCards(); // Rendera om listan
 
-  const monsterElements = document.querySelectorAll(".cards > div");
   const monsterElement = monsterElements[index];
   // Scrolla ner till monstret som redigerats
   if (monsterElement) {

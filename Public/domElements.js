@@ -3,11 +3,22 @@
 
 export const monsterForm = document.querySelector("#monster-form");
 export const cardContainer = document.querySelector(".cards");
+export const monsterElements = cardContainer.querySelectorAll(".cards > div");
+export const topDivs = document.querySelector(".top-divs");
+export const footer = document.querySelector(".footer");
 export const formTypeDropdown = document.querySelector(".type");
 export const formColorDropdown = document.querySelector(".color");
 export const statisticsContainer = document.querySelector("#statistics-form");
 export const dataTypeDropdown = document.querySelector("#type-data");
+export const allTypesOptionElement = dataTypeDropdown.querySelector(
+  "option[value='All Types']"
+);
+export const typeSelectors = document.querySelectorAll(".type");
 export const dataColorDropdown = document.querySelector("#color-data");
+export const allColorOptionElement = dataColorDropdown.querySelector(
+  "option[value='All Colors']"
+);
+export const colorSelectors = document.querySelectorAll(".color");
 export const dropdownsContainer = document.querySelector(".dropdowns");
 
 //Deklarera addMonsterButton globalt
